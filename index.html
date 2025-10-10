@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>horr1ble - разработчик</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-white text-gray-900">
+    <!-- Переключатель темы -->
+    <div class="theme-switcher-container">
+        <label class="switch">
+            <input type="checkbox" id="theme-switch" class="checkbox">
+            <span class="slider"></span>
+        </label>
+    </div>
+
+    <!-- Основной контент -->
+    <div id="main-content">
+        <!-- Секция 1: Аватар, ник, иконки -->
+        <section id="hero" class="h-screen flex items-center justify-center">
+            <div class="text-center z-10 px-4">
+                <!-- Фото профиля -->
+                <div class="mb-8 flex justify-center">
+                    <div class="avatar-container">
+                        <img src="images/avatar.jpg" alt="horr1ble" class="avatar-image">
+                    </div>
+                </div>
+
+                <!-- Главный заголовок -->
+                <h1 class="text-8xl font-black mb-4 tracking-tight hero-title">
+                    horr1ble
+                </h1>
+                <!-- ИСПРАВЛЕННАЯ НАДПИСЬ -->
+                <p class="text-xl text-gray-600 mb-12 font-light tracking-wide hero-subtitle">
+                    разработчик telegram ботов<br>ну и заворкал этот сайт
+                </p>
+
+                <!-- Иконки соцсетей -->
+                <div class="social-icons-container">
+                    <!-- Telegram -->
+                    <a href="https://t.me/zxchorrible" target="_blank" class="social-icon telegram-icon">
+                        <svg viewBox="0 0 24 24" width="32" height="32">
+                            <path fill="#FFFFFF" d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.509l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.05 5.56-5.022c.242-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.534-.196 1.006.128.832.941z"/>
+                        </svg>
+                    </a>
+
+                    <!-- GitHub -->
+                    <a href="https://github.com/horr1ble171" target="_blank" class="social-icon github-icon">
+                        <svg viewBox="0 0 24 24" width="32" height="32">
+                            <path fill="#FFFFFF" d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                    </a>
+
+                    <!-- Steam -->
+                    <a href="https://steamcommunity.com/profiles/76561199253388936/" target="_blank" class="social-icon steam-icon">
+                        <svg viewBox="0 0 24 24" width="32" height="32">
+                            <path fill="#FFFFFF" d="M11.979 0C5.678 0 .511 4.86.022 11.037l6.432 2.658c.545-.371 1.203-.59 1.912-.59.063 0 .125.004.188.006l2.861-4.142V8.91c0-2.495 2.028-4.524 4.524-4.524 2.494 0 4.524 2.031 4.524 4.527s-2.03 4.525-4.524 4.525h-.105l-4.076 2.911c0 .052.004.105.004.159 0 1.875-1.515 3.396-3.39 3.396-1.635 0-3.016-1.173-3.331-2.727L.436 15.27C1.862 20.307 6.486 24 11.979 24c6.627 0 12-5.373 12-12s-5.373-12-12-12z"/>
+                            <!-- Два белых кружка -->
+                            <circle cx="8.4" cy="16.5" r="1.8" fill="#FFFFFF"/>
+                            <circle cx="15.9" cy="9" r="2.8" fill="#FFFFFF"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Секция 2: Проекты -->
+        <section id="projects-section" class="h-screen flex items-center justify-center">
+            <div class="text-center px-4 w-full max-w-4xl">
+                <h2 class="text-3xl font-bold mb-8">Мои проекты</h2>
+
+                <div class="projects-section" style="opacity: 1; transform: none;">
+                    <div class="project-item" onclick="toggleProject('project1-details')" style="opacity: 1; transform: none;">
+                        <div class="project-header">
+                            <h3 class="project-title">Телеграм бот для добавления метаданных в музыку</h3>
+                        </div>
+                        <div id="project1-details" class="project-details">
+                            <div class="text-center">
+                                <p class="project-bot-name">@music_horr1ble_bot</p>
+                                <p class="project-description">Музыкальный бот с крутыми функциями</p>
+                                <a href="https://t.me/music_horr1ble_bot" target="_blank" class="project-button">
+                                    Попробовать бота
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Секция 3: Spotify -->
+        <section id="spotify" class="h-screen flex items-center justify-center">
+            <div class="container mx-auto px-4">
+                <div class="flex flex-col items-center justify-center">
+                    <h2 class="text-3xl font-bold mb-8 spotify-title">Мой плейлист на спотике</h2>
+
+                    <div class="spotify-player">
+                        <div class="flex items-center justify-between mb-8">
+                            <div class="flex items-center">
+                                <div class="spotify-logo-small mr-4">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-2-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
+                                    </svg>
+                                </div>
+                                <h3 class="text-2xl font-bold">Spotify</h3>
+                            </div>
+                            <span class="text-green-600 text-sm font-medium">● Сейчас играет</span>
+                        </div>
+
+                        <div class="mb-8">
+                            <div class="flex items-center mb-6">
+                                <div class="album-cover-container">
+                                    <img src="images/album-cover.jpg"
+                                         alt="horri album cover"
+                                         class="album-cover-image">
+                                </div>
+                                <div class="flex-1">
+                                    <p class="font-bold text-xl mb-1">horri album</p>
+                                    <p class="text-base">horr1ble</p>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <div class="flex justify-between text-sm mb-2">
+                                    <span>1:23</span>
+                                    <span>4:56</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-bar-fill"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-center gap-6 mb-8">
+                            <button class="spotify-control-btn">
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                </svg>
+                            </button>
+                            <button class="spotify-play-btn">
+                                <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
+                                </svg>
+                            </button>
+                            <button class="spotify-control-btn">
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+                                </svg>
+                            </button>
+                        </div>
+
+                        <div class="text-center">
+                            <a href="https://open.spotify.com/playlist/4LzDttNh1SdKB9YtCxHNPY?si=d463d49363594abd"
+                               target="_blank"
+                               class="spotify-link-btn inline-flex items-center text-lg py-3 px-8">
+                                <span>Открыть в Spotify</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
