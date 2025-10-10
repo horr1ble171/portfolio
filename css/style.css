@@ -112,18 +112,44 @@ body.dark-theme .text-gray-500 {
     width: 200px;
     height: 200px;
     border-radius: 20px;
+    -webkit-border-radius: 20px;
+    overflow: hidden;
     position: relative;
     z-index: 20;
     opacity: 0;
     transform: translateY(30px);
-    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
 }
 
 .avatar-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.1));
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    display: block;
+}
+
+/* Для мобильных */
+@media (max-width: 768px) {
+    .avatar-container {
+        width: 160px;
+        height: 160px;
+        border-radius: 20px !important;
+        -webkit-border-radius: 20px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .avatar-container {
+        width: 140px;
+        height: 140px;
+        border-radius: 18px !important;
+        -webkit-border-radius: 18px !important;
+    }
 }
 
 /* Стили для стеклянного эффекта */
@@ -894,3 +920,4 @@ body.dark-theme .social-icon {
         will-change: transform;
     }
 }
+
