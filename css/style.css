@@ -1025,3 +1025,28 @@ body.dark-theme .social-icon {
         height: 28px !important;
     }
 }
+/* ФИКС ДЛЯ ТЕМНОЙ ТЕМЫ - ИКОНКИ НЕ МЕНЯЮТ ЦВЕТ */
+body.dark-theme .telegram-icon {
+    background: #229ED9 !important;
+}
+
+body.dark-theme .github-icon {
+    background: #000000 !important;
+}
+
+body.dark-theme .steam-icon {
+    background: linear-gradient(135deg, #000000 0%, #1b2838 70%, #00adee 100%) !important;
+}
+
+/* Ховер эффекты в темной теме */
+body.dark-theme .telegram-icon:hover {
+    background: #1e8fc7 !important;
+}
+
+body.dark-theme .github-icon:hover {
+    background: #333333 !important;
+}
+
+body.dark-theme .steam-icon:hover {
+    background: linear-gradient(135deg, #111111 0%, #2a3f5a 70%, #00b8ff 100%) !important;
+}
