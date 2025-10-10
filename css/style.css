@@ -920,4 +920,57 @@ body.dark-theme .social-icon {
         will-change: transform;
     }
 }
+/* ВОССТАНОВЛЕНИЕ СТИЛЕЙ ДЛЯ КНОПОК */
+.social-icon {
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    background: rgba(255, 255, 255, 0.7) !important;
+}
 
+/* Темная тема для кнопок */
+body.dark-theme .social-icon {
+    background: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Специфичные стили для каждой иконки */
+.telegram-icon {
+    background: #229ED9 !important;
+}
+
+.github-icon {
+    background: #000000 !important;
+}
+
+.steam-icon {
+    background: linear-gradient(135deg, #000000 0%, #1b2838 70%, #00adee 100%) !important;
+}
+
+/* Ховер эффекты */
+.telegram-icon:hover {
+    background: #1e8fc7 !important;
+}
+
+.github-icon:hover {
+    background: #333333 !important;
+}
+
+.steam-icon:hover {
+    background: linear-gradient(135deg, #111111 0%, #2a3f5a 70%, #00b8ff 100%) !important;
+}
+
+/* Для мобильных - улучшение кнопок */
+@media (max-width: 768px) {
+    .social-icon {
+        width: 60px !important;
+        height: 60px !important;
+        backdrop-filter: blur(10px) !important;
+        -webkit-backdrop-filter: blur(10px) !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .social-icon {
+        width: 50px !important;
+        height: 50px !important;
+    }
+}
