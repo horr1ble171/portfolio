@@ -974,3 +974,54 @@ body.dark-theme .social-icon {
         height: 50px !important;
     }
 }
+/* ВОССТАНОВЛЕНИЕ ИКОНОК */
+.social-icon {
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    background: rgba(255, 255, 255, 0.7) !important;
+    border-radius: 20px !important;
+}
+
+/* Темная тема для иконок */
+body.dark-theme .social-icon {
+    background: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* ЦВЕТА ФОНА ДЛЯ КАЖДОЙ ИКОНКИ */
+.telegram-icon {
+    background: #229ED9 !important;
+}
+
+.github-icon {
+    background: #000000 !important;
+}
+
+.steam-icon {
+    background: linear-gradient(135deg, #000000 0%, #1b2838 70%, #00adee 100%) !important;
+}
+
+/* Убедись что SVG видны */
+.social-icon svg {
+    display: block !important;
+    width: 32px !important;
+    height: 32px !important;
+}
+
+/* Белый цвет для всех SVG внутри иконок */
+.social-icon svg path,
+.social-icon svg circle {
+    fill: #FFFFFF !important;
+}
+
+/* Для мобильных */
+@media (max-width: 768px) {
+    .social-icon {
+        width: 60px !important;
+        height: 60px !important;
+    }
+    
+    .social-icon svg {
+        width: 28px !important;
+        height: 28px !important;
+    }
+}
