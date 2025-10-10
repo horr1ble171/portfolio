@@ -790,4 +790,107 @@ body.dark-theme .social-icon {
 #projects-section .projects-title {
     opacity: 1 !important;
     transform: none !important;
+
+}
+/* Исправления для мобильных устройств */
+@media (max-width: 768px) {
+    .avatar-container {
+        border-radius: 20px !important;
+        overflow: hidden !important;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1) !important;
+    }
+    
+    .avatar-image {
+        border-radius: 20px !important;
+    }
+    
+    /* Улучшение стеклянного эффекта для мобильных */
+    .glass-panel,
+    .project-item,
+    .spotify-player,
+    .social-icon {
+        backdrop-filter: blur(10px) !important;
+        -webkit-backdrop-filter: blur(10px) !important;
+        background: rgba(255, 255, 255, 0.9) !important;
+    }
+    
+    body.dark-theme .glass-panel,
+    body.dark-theme .project-item,
+    body.dark-theme .spotify-player,
+    body.dark-theme .social-icon {
+        background: rgba(255, 255, 255, 0.1) !important;
+    }
+    
+    /* Улучшение читаемости текста */
+    h1 {
+        font-size: 3.5rem !important;
+        line-height: 1.2 !important;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.1rem !important;
+        line-height: 1.5 !important;
+    }
+    
+    /* Улучшение кнопок */
+    .social-icon {
+        width: 60px !important;
+        height: 60px !important;
+    }
+    
+    .project-button,
+    .glass-button {
+        padding: 0.9rem 1.8rem !important;
+        font-size: 1rem !important;
+    }
+}
+
+/* Дополнительные исправления для очень маленьких экранов */
+@media (max-width: 480px) {
+    .avatar-container {
+        width: 140px !important;
+        height: 140px !important;
+        border-radius: 18px !important;
+    }
+    
+    .avatar-image {
+        border-radius: 18px !important;
+    }
+    
+    h1 {
+        font-size: 2.8rem !important;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem !important;
+    }
+    
+    .social-icon {
+        width: 55px !important;
+        height: 55px !important;
+    }
+    
+    .social-icons-container {
+        gap: 1rem !important;
+    }
+}
+
+/* Гарантия закруглений для всех элементов */
+.avatar-container,
+.avatar-image,
+.glass-panel,
+.project-item,
+.spotify-player,
+.social-icon {
+    border-radius: 20px !important;
+}
+
+/* Улучшение производительности на мобильных */
+@media (max-width: 768px) {
+    .glass-panel,
+    .project-item,
+    .spotify-player {
+        transform: translateZ(0);
+        will-change: transform;
+    }
 }
