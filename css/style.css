@@ -303,31 +303,6 @@ body.dark-theme .glass-button:hover {
     fill: #FFFFFF !important;
 }
 
-/* Темная тема для иконок - цвета НЕ меняются */
-body.dark-theme .telegram-icon {
-    background: #229ED9 !important;
-}
-
-body.dark-theme .telegram-icon:hover {
-    background: #1e8fc7 !important;
-}
-
-body.dark-theme .github-icon {
-    background: #000000 !important;
-}
-
-body.dark-theme .github-icon:hover {
-    background: #333333 !important;
-}
-
-body.dark-theme .steam-icon {
-    background: linear-gradient(135deg, #000000 0%, #1b2838 70%, #00adee 100%) !important;
-}
-
-body.dark-theme .steam-icon:hover {
-    background: linear-gradient(135deg, #111111 0%, #2a3f5a 70%, #00b8ff 100%) !important;
-}
-
 /* Стили для секции проектов */
 .projects-section {
     width: 100%;
@@ -1098,4 +1073,34 @@ body.dark-theme .steam-icon:hover {
 .social-icon {
     opacity: 1 !important;
     background: transparent !important;
+}
+/* ФИНАЛЬНЫЙ ФИКС - ИКОНКИ ВСЕГДА ОДИНАКОВЫЕ */
+.telegram-icon,
+body.dark-theme .telegram-icon {
+    background: #229ED9 !important;
+}
+
+.telegram-icon:hover,
+body.dark-theme .telegram-icon:hover {
+    background: #1e8fc7 !important;
+}
+
+.github-icon,
+body.dark-theme .github-icon {
+    background: #000000 !important;
+}
+
+.github-icon:hover,
+body.dark-theme .github-icon:hover {
+    background: #333333 !important;
+}
+
+.steam-icon,
+body.dark-theme .steam-icon {
+    background: linear-gradient(135deg, #000000 0%, #1b2838 70%, #00adee 100%) !important;
+}
+
+.steam-icon:hover,
+body.dark-theme .steam-icon:hover {
+    background: linear-gradient(135deg, #111111 0%, #2a3f5a 70%, #00b8ff 100%) !important;
 }
