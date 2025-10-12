@@ -1180,3 +1180,12 @@ body.dark-theme .steam-icon:hover {
         transform: translateY(30px);
     }
 }
+/* ФИКС ДЛЯ РАВНЫХ ОТСТУПОВ В ПРОЕКТАХ */
+.project-header {
+    padding: 1rem 0 !important;
+}
+
+.project-title {
+    margin: 0 !important;
+    line-height: 1.4 !important;
+}
