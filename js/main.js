@@ -204,13 +204,15 @@ function toggleProject(projectId) {
     // Закрываем все другие открытые проекты
     allProjectDetails.forEach(detail => {
         if (detail.id !== projectId && detail.style.display === 'block') {
-            gsap.to(detail, {
-                height: 0,
-                opacity: 0,
+            // Анимация закрытия
+            gsap.to(detail.querySelector('.project-details-content'), {
                 duration: 0.3,
+                opacity: 0,
+                y: -20,
                 ease: "power2.inOut",
                 onComplete: () => {
                     detail.style.display = 'none';
+                    detail.classList.remove('animated');
                 }
             });
         }
@@ -218,22 +220,61 @@ function toggleProject(projectId) {
 
     // Открываем/закрываем выбранный проект
     if (projectDetails.style.display === 'block') {
-        gsap.to(projectDetails, {
-            height: 0,
-            opacity: 0,
+        // Анимация закрытия
+        gsap.to(projectDetails.querySelector('.project-details-content'), {
             duration: 0.3,
+            opacity: 0,
+            y: -20,
             ease: "power2.inOut",
             onComplete: () => {
                 projectDetails.style.display = 'none';
+                projectDetails.classList.remove('animated');
             }
         });
     } else {
+        // Сначала показываем контейнер
         projectDetails.style.display = 'block';
-        gsap.fromTo(projectDetails,
-            { height: 0, opacity: 0 },
-            { height: 'auto', opacity: 1, duration: 0.4, ease: "power2.out" }
+        projectDetails.classList.add('animated');
+        
+        // Затем анимируем появление контента
+        gsap.fromTo(projectDetails.querySelector('.project-details-content'),
+            { 
+                opacity: 0, 
+                y: -20 
+            },
+            { 
+                opacity: 1, 
+                y: 0, 
+                duration: 0.6, 
+                ease: "power2.out",
+                delay: 0.1
+            }
         );
     }
+}
+
+// Анимация элементов внутри открытого проекта
+function animateProjectElements(projectDetails) {
+    const tl = gsap.timeline();
+    
+    tl.to(projectDetails.querySelector('.project-bot-name'), {
+        duration: 0.4,
+        opacity: 1,
+        y: 0,
+        ease: "power2.out"
+    })
+    .to(projectDetails.querySelector('.project-description'), {
+        duration: 0.4,
+        opacity: 1,
+        y: 0,
+        ease: "power2.out"
+    }, "-=0.2")
+    .to(projectDetails.querySelector('.project-button'), {
+        duration: 0.4,
+        opacity: 1,
+        y: 0,
+        ease: "power2.out"
+    }, "-=0.2");
 }
 
 // Инициализация
