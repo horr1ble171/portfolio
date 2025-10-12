@@ -92,26 +92,11 @@ function initPageAnimations() {
             toggleActions: "play none none reverse"
         }
     });
-
-    // Анимация третьей секции (spotify)
-    gsap.fromTo(".spotify-title", {
-        opacity: 0,
-        y: 50
-    }, {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        scrollTrigger: {
-            trigger: "#spotify",
-            start: "top 80%",
-            end: "bottom 20%",
-            toggleActions: "play none none reverse"
-        }
-    });
 }
 
 // Анимация появления Spotify секции
 function initSpotifyAnimation() {
+    // Анимация заголовка Spotify
     gsap.fromTo(".spotify-title", {
         opacity: 0,
         y: 50
@@ -126,6 +111,57 @@ function initSpotifyAnimation() {
             toggleActions: "play none none reverse"
         }
     });
+
+    // Анимация самого плеера с задержкой
+    gsap.fromTo(".spotify-player", {
+        opacity: 0,
+        y: 50
+    }, {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        delay: 0.3,
+        scrollTrigger: {
+            trigger: "#spotify",
+            start: "top 70%",
+            end: "bottom 20%",
+            toggleActions: "play none none reverse"
+        },
+        onComplete: function() {
+            document.querySelector('.spotify-player').classList.add('animated');
+            animateSpotifyElements();
+        }
+    });
+}
+
+// Анимация внутренних элементов Spotify плеера
+function animateSpotifyElements() {
+    const tl = gsap.timeline();
+    
+    tl.to(".spotify-header", {
+        duration: 0.6,
+        opacity: 1,
+        y: 0,
+        ease: "power2.out"
+    })
+    .to(".spotify-content", {
+        duration: 0.6,
+        opacity: 1,
+        y: 0,
+        ease: "power2.out"
+    }, "-=0.3")
+    .to(".spotify-controls", {
+        duration: 0.6,
+        opacity: 1,
+        y: 0,
+        ease: "power2.out"
+    }, "-=0.3")
+    .to(".spotify-link", {
+        duration: 0.6,
+        opacity: 1,
+        y: 0,
+        ease: "power2.out"
+    }, "-=0.3");
 }
 
 // Плавный параллакс эффект для мыши
