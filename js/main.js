@@ -1,19 +1,30 @@
 // Регистрируем плагин ScrollTrigger
 gsap.registerPlugin(ScrollTrigger);
 
-// Функционал смены темы
+// Основная функция инициализации
+function initPortfolio() {
+    console.log('🚀 horr1ble portfolio loaded');
+    
+    initThemeSwitcher();
+    initAnimations();
+    initSpotifyAnimations();
+    updateParallax();
+    initAvatarFallback();
+}
+
+// Управление темой
 function initThemeSwitcher() {
     const themeSwitch = document.getElementById('theme-switch');
     const body = document.body;
 
-    // Проверяем сохраненную тему
+    // Восстанавливаем сохраненную тему
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'dark') {
         themeSwitch.checked = true;
         body.classList.add('dark-theme');
     }
 
-    // Обработчик изменения темы
+    // Обработчик переключения
     themeSwitch.addEventListener('change', function() {
         if (this.checked) {
             body.classList.add('dark-theme');
@@ -37,32 +48,28 @@ function initThemeSwitcher() {
     });
 }
 
-// Плавная анимация появления при загрузке
-function initPageAnimations() {
+// Основные анимации
+function initAnimations() {
     const tl = gsap.timeline();
 
-    // Анимация аватара
     tl.to(".avatar-container", {
         duration: 1.2,
         opacity: 1,
         y: 0,
         ease: "back.out(1.4)"
     })
-    // Анимация заголовка
     .to(".hero-title", {
         duration: 1,
         opacity: 1,
         y: 0,
         ease: "power2.out"
     }, "-=0.8")
-    // Анимация подзаголовка
     .to(".hero-subtitle", {
         duration: 0.8,
         opacity: 1,
         y: 0,
         ease: "power2.out"
     }, "-=0.6")
-    // Анимация иконок соцсетей
     .to(".social-icons-container", {
         duration: 0.8,
         opacity: 1,
@@ -77,7 +84,7 @@ function initPageAnimations() {
         ease: "back.out(1.2)"
     }, "-=0.6");
 
-    // Анимация второй секции (проекты)
+    // Анимация секции проектов
     gsap.fromTo("#projects-section", {
         opacity: 0,
         y: 50
@@ -88,31 +95,14 @@ function initPageAnimations() {
         scrollTrigger: {
             trigger: "#projects-section",
             start: "top 80%",
-            end: "bottom 20%",
-            toggleActions: "play none none reverse"
-        }
-    });
-
-    // Анимация третьей секции (spotify)
-    gsap.fromTo(".spotify-title", {
-        opacity: 0,
-        y: 50
-    }, {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        scrollTrigger: {
-            trigger: "#spotify",
-            start: "top 80%",
-            end: "bottom 20%",
             toggleActions: "play none none reverse"
         }
     });
 }
 
-// Анимация появления Spotify секции
-function initSpotifyAnimation() {
-    // Анимация заголовка Spotify
+// Анимации Spotify
+function initSpotifyAnimations() {
+    // Заголовок
     gsap.fromTo(".spotify-title", {
         opacity: 0,
         y: 50
@@ -123,12 +113,11 @@ function initSpotifyAnimation() {
         scrollTrigger: {
             trigger: "#spotify",
             start: "top 80%",
-            end: "bottom 20%",
             toggleActions: "play none none reverse"
         }
     });
 
-    // Анимация самого плеера с задержкой
+    // Плеер
     gsap.fromTo(".spotify-player", {
         opacity: 0,
         y: 50
@@ -140,7 +129,6 @@ function initSpotifyAnimation() {
         scrollTrigger: {
             trigger: "#spotify",
             start: "top 70%",
-            end: "bottom 20%",
             toggleActions: "play none none reverse"
         },
         onComplete: function() {
@@ -150,7 +138,7 @@ function initSpotifyAnimation() {
     });
 }
 
-// Анимация внутренних элементов Spotify плеера
+// Анимация элементов Spotify
 function animateSpotifyElements() {
     const tl = gsap.timeline();
     
@@ -180,11 +168,8 @@ function animateSpotifyElements() {
     }, "-=0.3");
 }
 
-// Плавный параллакс эффект для мыши
-let mouseX = 0;
-let mouseY = 0;
-let targetX = 0;
-let targetY = 0;
+// Параллакс эффект
+let mouseX = 0, mouseY = 0, targetX = 0, targetY = 0;
 
 document.addEventListener('mousemove', (e) => {
     targetX = (e.clientX - window.innerWidth / 2) * 0.002;
@@ -212,15 +197,14 @@ function updateParallax() {
     requestAnimationFrame(updateParallax);
 }
 
-// Функция для открытия/закрытия проекта
+// Управление проектами
 function toggleProject(projectId) {
     const projectDetails = document.getElementById(projectId);
     const allProjectDetails = document.querySelectorAll('.project-details');
 
-    // Закрываем все другие открытые проекты
+    // Закрываем другие проекты
     allProjectDetails.forEach(detail => {
         if (detail.id !== projectId && detail.classList.contains('open')) {
-            // Анимация закрытия
             gsap.to(detail, {
                 duration: 0.3,
                 maxHeight: 0,
@@ -234,9 +218,8 @@ function toggleProject(projectId) {
         }
     });
 
-    // Открываем/закрываем выбранный проект
+    // Открываем/закрываем выбранный
     if (projectDetails.classList.contains('open')) {
-        // Анимация закрытия
         gsap.to(projectDetails, {
             duration: 0.3,
             maxHeight: 0,
@@ -248,10 +231,8 @@ function toggleProject(projectId) {
             }
         });
     } else {
-        // Сразу добавляем класс open чтобы контент был виден
         projectDetails.classList.add('open');
         
-        // Анимация открытия контейнера
         gsap.fromTo(projectDetails,
             { 
                 maxHeight: 0,
@@ -269,21 +250,8 @@ function toggleProject(projectId) {
     }
 }
 
-// Инициализация
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('🚀 horr1ble portfolio loaded');
-
-    // Инициализируем переключатель темы
-    initThemeSwitcher();
-
-    // Инициализируем анимации
-    initPageAnimations();
-    initSpotifyAnimation();
-
-    // Запускаем параллакс
-    updateParallax();
-
-    // Проверяем наличие аватара
+// Фолбэк для аватара
+function initAvatarFallback() {
     const avatarImg = document.querySelector('.avatar-image');
     if (avatarImg) {
         avatarImg.onerror = function() {
@@ -291,10 +259,10 @@ document.addEventListener('DOMContentLoaded', function() {
             this.parentElement.innerHTML = '<div class="avatar-placeholder">H</div>';
         };
     }
-});
+}
 
-// Ресайз окна
-window.addEventListener('resize', function() {
-    // Обновляем анимации при ресайзе
-    ScrollTrigger.refresh();
-});
+// Инициализация при загрузке
+document.addEventListener('DOMContentLoaded', initPortfolio);
+
+// Обновление анимаций при ресайзе
+window.addEventListener('resize', () => ScrollTrigger.refresh());
