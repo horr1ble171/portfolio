@@ -78,19 +78,18 @@
         </section>
 
         <!-- Секция 2: Проекты -->
-        <section id="projects-section" class="h-screen flex items-center justify-center">
-            <div class="text-center px-4 w-full max-w-4xl">
-                <h2 class="text-3xl font-bold mb-8">Мои проекты</h2>
+        <section id="projects-section" style="height: 100vh; display: flex; align-items: center; justify-content: center;">
+            <div style="text-align: center; padding: 0 1rem; width: 100%; max-width: 800px;">
+                <h2 style="font-size: 2rem; font-weight: bold; margin-bottom: 2rem;">Мои проекты</h2>
 
                 <div class="projects-section">
                     <div class="project-item" onclick="toggleProject('project1-details')">
-                        <div class="project-header">
-                            <h3 class="project-title">
-                                Телеграм бот для добавления метаданных в музыку
-                            </h3>
-                        </div>
+                        <!-- ПРОСТОЙ ЗАГОЛОВОК БЕЗ ЛИШНИХ ОБЕРТОК -->
+                        <h3 class="project-title">
+                            Телеграм бот для добавления метаданных в музыку
+                        </h3>
                         <div id="project1-details" class="project-details">
-                            <div class="project-details-content text-center">
+                            <div style="text-align: center;">
                                 <p class="project-bot-name">@music_horr1ble_bot</p>
                                 <p class="project-description">Музыкальный бот с крутыми функциями</p>
                                 <a href="https://t.me/music_horr1ble_bot" target="_blank" class="project-button">
