@@ -203,51 +203,56 @@ function toggleProject(projectId) {
 
     // Закрываем все другие открытые проекты
     allProjectDetails.forEach(detail => {
-        if (detail.id !== projectId && detail.style.display === 'block') {
+        if (detail.id !== projectId && detail.classList.contains('open')) {
             // Анимация закрытия
-            gsap.to(detail.querySelector('.project-details-content'), {
+            gsap.to(detail, {
                 duration: 0.3,
+                maxHeight: 0,
                 opacity: 0,
-                y: -20,
+                y: -10,
                 ease: "power2.inOut",
                 onComplete: () => {
-                    detail.style.display = 'none';
-                    detail.classList.remove('animated');
+                    detail.classList.remove('open');
                 }
             });
         }
     });
 
     // Открываем/закрываем выбранный проект
-    if (projectDetails.style.display === 'block') {
+    if (projectDetails.classList.contains('open')) {
         // Анимация закрытия
-        gsap.to(projectDetails.querySelector('.project-details-content'), {
+        gsap.to(projectDetails, {
             duration: 0.3,
+            maxHeight: 0,
             opacity: 0,
-            y: -20,
+            y: -10,
             ease: "power2.inOut",
             onComplete: () => {
-                projectDetails.style.display = 'none';
-                projectDetails.classList.remove('animated');
+                projectDetails.classList.remove('open');
             }
         });
     } else {
-        // Сначала показываем контейнер
+        // Сначала показываем контейнер с анимацией
         projectDetails.style.display = 'block';
-        projectDetails.classList.add('animated');
         
-        // Затем анимируем появление контента
-        gsap.fromTo(projectDetails.querySelector('.project-details-content'),
+        // Анимация открытия контейнера
+        gsap.fromTo(projectDetails,
             { 
-                opacity: 0, 
-                y: -20 
+                maxHeight: 0,
+                opacity: 0,
+                y: -10
             },
             { 
-                opacity: 1, 
-                y: 0, 
-                duration: 0.6, 
+                maxHeight: 500,
+                opacity: 1,
+                y: 0,
+                duration: 0.4,
                 ease: "power2.out",
-                delay: 0.1
+                onComplete: function() {
+                    projectDetails.classList.add('open');
+                    // После открытия контейнера анимируем появление контента
+                    animateProjectElements(projectDetails);
+                }
             }
         );
     }
@@ -255,26 +260,25 @@ function toggleProject(projectId) {
 
 // Анимация элементов внутри открытого проекта
 function animateProjectElements(projectDetails) {
-    const tl = gsap.timeline();
+    const content = projectDetails.querySelector('.project-details-content');
     
-    tl.to(projectDetails.querySelector('.project-bot-name'), {
-        duration: 0.4,
-        opacity: 1,
-        y: 0,
-        ease: "power2.out"
-    })
-    .to(projectDetails.querySelector('.project-description'), {
-        duration: 0.4,
-        opacity: 1,
-        y: 0,
-        ease: "power2.out"
-    }, "-=0.2")
-    .to(projectDetails.querySelector('.project-button'), {
-        duration: 0.4,
-        opacity: 1,
-        y: 0,
-        ease: "power2.out"
-    }, "-=0.2");
+    // Сначала убедимся что контент видим
+    content.style.display = 'block';
+    
+    // Затем анимируем появление
+    gsap.fromTo(content,
+        { 
+            opacity: 0,
+            y: -10
+        },
+        { 
+            opacity: 1,
+            y: 0,
+            duration: 0.4,
+            ease: "power2.out",
+            delay: 0.1
+        }
+    );
 }
 
 // Инициализация
