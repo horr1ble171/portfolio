@@ -1189,3 +1189,13 @@ body.dark-theme .steam-icon:hover {
     margin: 0 !important;
     line-height: 1.4 !important;
 }
+/* СУПЕР-ФИКС ДЛЯ ОТСТУПОВ */
+#projects-section .project-item .project-header {
+    padding: 1rem 0 !important;
+}
+
+#projects-section .project-item .project-title {
+    margin: 0 !important;
+    line-height: 1.4 !important;
+    padding: 0 !important;
+}
