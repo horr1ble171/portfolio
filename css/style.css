@@ -303,6 +303,165 @@ body.dark-theme .glass-button:hover {
     fill: #FFFFFF !important;
 }
 
+/* НОВЫЕ СТИЛИ ДЛЯ ПРОЕКТОВ */
+.projects-section {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.projects-title {
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.project-item {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 24px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow:
+        0 8px 32px 0 rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.project-item:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        0 12px 40px 0 rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.3);
+}
+
+.project-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 0; /* РАВНЫЕ ОТСТУПЫ СВЕРХУ И СНИЗУ */
+}
+
+.project-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1a202c;
+    text-align: center;
+    margin: 0; /* УБРАН ЛИШНИЙ MARGIN */
+    line-height: 1.4; /* УЛУЧШЕН МЕЖСТРОЧНЫЙ ИНТЕРВАЛ */
+}
+
+/* Анимации для деталей проекта */
+.project-details {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.project-details.open {
+    max-height: 500px;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.project-details-content {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.project-description {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    color: #4a5568;
+    text-align: center;
+    line-height: 1.6;
+}
+
+.project-bot-name {
+    font-family: monospace;
+    font-size: 1.2rem;
+    background: rgba(0, 0, 0, 0.05);
+    padding: 0.8rem 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    display: inline-block;
+    text-align: center;
+}
+
+.project-button {
+    background: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 16px;
+    padding: 1rem 2rem;
+    color: white;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow:
+        0 4px 16px 0 rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
+
+.project-button:hover {
+    background: rgba(0, 0, 0, 1);
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    transform: translateY(-2px);
+    box-shadow:
+        0 8px 32px 0 rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
+}
+
+/* Темная тема для проектов */
+body.dark-theme .project-item {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+body.dark-theme .project-title {
+    color: white;
+}
+
+body.dark-theme .project-description {
+    color: #e2e8f0;
+}
+
+body.dark-theme .project-bot-name {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+body.dark-theme .project-details {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body.dark-theme .project-button {
+    background: rgba(255, 255, 255, 0.9);
+    color: black;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+body.dark-theme .project-button:hover {
+    background: rgba(255, 255, 255, 1);
+}
+
 /* Стили для Spotify плеера */
 .spotify-player {
     background: rgba(255, 255, 255, 0.7);
@@ -499,6 +658,15 @@ body.dark-theme .progress-bar {
     .projects-title {
         font-size: 1.8rem;
     }
+    
+    .project-bot-name {
+        font-size: 1.1rem;
+        padding: 0.7rem 1.2rem;
+    }
+    
+    .project-header {
+        padding: 0.8rem 0;
+    }
 }
 
 @media (max-width: 480px) {
@@ -528,9 +696,17 @@ body.dark-theme .progress-bar {
     }
 
     .project-button {
-        width: 180px;
-        padding: 0.8rem 1.5rem;
+        padding: 0.9rem 1.8rem;
         font-size: 1rem;
+    }
+    
+    .project-bot-name {
+        font-size: 1rem;
+        padding: 0.6rem 1rem;
+    }
+    
+    .project-header {
+        padding: 0.6rem 0;
     }
 }
 
@@ -999,262 +1175,8 @@ body.dark-theme .steam-icon:hover {
     .spotify-title {
         transform: translateY(30px);
     }
-
+    
     .spotify-player {
         transform: translateY(30px);
     }
 }
-/* Анимации для Spotify секции */
-.spotify-title {
-    opacity: 0;
-    transform: translateY(50px);
-}
-
-.spotify-player {
-    opacity: 0;
-    transform: translateY(50px);
-    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.spotify-player.animated {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Анимации для элементов внутри плеера */
-.spotify-header {
-    opacity: 0;
-    transform: translateY(20px);
-}
-
-.spotify-content {
-    opacity: 0;
-    transform: translateY(20px);
-}
-
-.spotify-controls {
-    opacity: 0;
-    transform: translateY(20px);
-}
-
-.spotify-link {
-    opacity: 0;
-    transform: translateY(20px);
-}
-
-/* Адаптивность для Spotify */
-@media (max-width: 768px) {
-    .spotify-title {
-        transform: translateY(30px);
-    }
-
-    .spotify-player {
-        transform: translateY(30px);
-    }
-}
-/* НОВЫЕ СТИЛИ ДЛЯ ПРОЕКТОВ */
-.projects-section {
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.projects-title {
-    font-size: 2rem;
-    font-weight: 700;
-    text-align: center;
-    margin-bottom: 2rem;
-}
-
-.project-item {
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    border-radius: 24px;
-    padding: 2rem;
-    margin-bottom: 2rem;
-    box-shadow:
-        0 8px 32px 0 rgba(0, 0, 0, 0.1),
-        inset 0 1px 0 0 rgba(255, 255, 255, 0.3);
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.project-item:hover {
-    transform: translateY(-2px);
-    box-shadow:
-        0 12px 40px 0 rgba(0, 0, 0, 0.15),
-        inset 0 1px 0 0 rgba(255, 255, 255, 0.3);
-}
-
-.project-header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.project-title {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #1a202c;
-    text-align: center;
-}
-
-/* Анимации для деталей проекта */
-.project-details {
-    margin-top: 1.5rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    max-height: 0;
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.project-details.open {
-    max-height: 500px;
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.project-details-content {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.project-description {
-    font-size: 1.1rem;
-    margin-bottom: 1.5rem;
-    color: #4a5568;
-    text-align: center;
-    line-height: 1.6;
-}
-
-.project-bot-name {
-    font-family: monospace;
-    font-size: 1.2rem;
-    background: rgba(0, 0, 0, 0.05);
-    padding: 0.8rem 1.5rem;
-    border-radius: 12px;
-    margin-bottom: 1.5rem;
-    display: inline-block;
-    text-align: center;
-    /* Убрана ширина 100% - теперь рамка по ширине текста */
-}
-
-.project-button {
-    background: rgba(0, 0, 0, 0.9);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(0, 0, 0, 0.3);
-    border-radius: 16px;
-    padding: 1rem 2rem;
-    color: white;
-    font-weight: 600;
-    font-size: 1.1rem;
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    box-shadow:
-        0 4px 16px 0 rgba(0, 0, 0, 0.2),
-        inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    cursor: pointer;
-    border: none;
-    outline: none;
-    /* Убрана фиксированная ширина и margin: 0 auto */
-}
-
-.project-button:hover {
-    background: rgba(0, 0, 0, 1);
-    border: 1px solid rgba(0, 0, 0, 0.5);
-    transform: translateY(-2px);
-    box-shadow:
-        0 8px 32px 0 rgba(0, 0, 0, 0.3),
-        inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
-}
-
-/* Темная тема для проектов */
-body.dark-theme .project-item {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-body.dark-theme .project-title {
-    color: white;
-}
-
-body.dark-theme .project-description {
-    color: #e2e8f0;
-}
-
-body.dark-theme .project-bot-name {
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
-}
-
-body.dark-theme .project-details {
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-body.dark-theme .project-button {
-    background: rgba(255, 255, 255, 0.9);
-    color: black;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-body.dark-theme .project-button:hover {
-    background: rgba(255, 255, 255, 1);
-}
-
-/* Адаптивность для проектов */
-@media (max-width: 768px) {
-    .projects-section {
-        padding: 0 1rem;
-    }
-
-    .project-item {
-        padding: 1.5rem;
-    }
-
-    .project-title {
-        font-size: 1.3rem;
-    }
-
-    .projects-title {
-        font-size: 1.8rem;
-    }
-    
-    .project-bot-name {
-        font-size: 1.1rem;
-        padding: 0.7rem 1.2rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .project-item {
-        padding: 1rem;
-    }
-
-    .project-title {
-        font-size: 1.1rem;
-    }
-
-    .projects-title {
-        font-size: 1.5rem;
-    }
-
-    .project-button {
-        padding: 0.9rem 1.8rem;
-        font-size: 1rem;
-    }
-    
-    .project-bot-name {
-        font-size: 1rem;
-        padding: 0.6rem 1rem;
-    }
-}
-
