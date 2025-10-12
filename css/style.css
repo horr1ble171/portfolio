@@ -339,11 +339,13 @@ body.dark-theme .glass-button:hover {
         inset 0 1px 0 0 rgba(255, 255, 255, 0.3);
 }
 
+/* ФИКС ДЛЯ РАВНЫХ ОТСТУПОВ - ПЕРЕОПРЕДЕЛЯЕМ СТИЛИ */
 .project-header {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 1rem 0; /* РАВНЫЕ ОТСТУПЫ СВЕРХУ И СНИЗУ */
+    padding: 1rem 0 !important;
+    margin: 0 !important;
 }
 
 .project-title {
@@ -351,8 +353,9 @@ body.dark-theme .glass-button:hover {
     font-weight: 600;
     color: #1a202c;
     text-align: center;
-    margin: 0; /* УБРАН ЛИШНИЙ MARGIN */
-    line-height: 1.4; /* УЛУЧШЕН МЕЖСТРОЧНЫЙ ИНТЕРВАЛ */
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: 1.4 !important;
 }
 
 /* Анимации для деталей проекта */
@@ -665,7 +668,7 @@ body.dark-theme .progress-bar {
     }
     
     .project-header {
-        padding: 0.8rem 0;
+        padding: 0.8rem 0 !important;
     }
 }
 
@@ -706,7 +709,7 @@ body.dark-theme .progress-bar {
     }
     
     .project-header {
-        padding: 0.6rem 0;
+        padding: 0.6rem 0 !important;
     }
 }
 
@@ -1180,25 +1183,7 @@ body.dark-theme .steam-icon:hover {
         transform: translateY(30px);
     }
 }
-/* ФИКС ДЛЯ РАВНЫХ ОТСТУПОВ В ПРОЕКТАХ */
-.project-header {
-    padding: 1rem 0 !important;
-}
 
-.project-title {
-    margin: 0 !important;
-    line-height: 1.4 !important;
-}
-/* СУПЕР-ФИКС ДЛЯ ОТСТУПОВ */
-#projects-section .project-item .project-header {
-    padding: 1rem 0 !important;
-}
-
-#projects-section .project-item .project-title {
-    margin: 0 !important;
-    line-height: 1.4 !important;
-    padding: 0 !important;
-}
 /* СУПЕР-ФИКС ДЛЯ ОТСТУПОВ - ПЕРЕБИВАЕМ TAILWIND */
 #projects-section .project-item .project-header {
     padding-top: 1rem !important;
