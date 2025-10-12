@@ -1,4 +1,4 @@
-/* Сброс стилей */
+/* Сброс и базовые стили */
 * {
     margin: 0;
     padding: 0;
@@ -17,7 +17,7 @@ body {
     transition: all 0.3s ease;
 }
 
-/* Темная тема - простой инверс */
+/* Темная тема */
 body.dark-theme {
     background: black;
     color: white;
@@ -34,7 +34,7 @@ body.dark-theme .text-gray-500 {
     color: #cccccc;
 }
 
-/* Контейнер для переключателя темы */
+/* Переключатель темы */
 .theme-switcher-container {
     position: fixed;
     top: 20px;
@@ -50,78 +50,69 @@ body.dark-theme .text-gray-500 {
     transform: translateY(0);
 }
 
-/* From Uiverse.io by artginzburg */
-/* The switch - the box around the slider */
 .switch {
-  --container-width: 3.5em;
-  font-size: 17px;
-  position: relative;
-  display: inline-block;
-  width: var(--container-width);
-  height: 2em;
+    --container-width: 3.5em;
+    font-size: 17px;
+    position: relative;
+    display: inline-block;
+    width: var(--container-width);
+    height: 2em;
 }
 
-/* Hide default HTML checkbox */
 .switch .checkbox {
-  opacity: 0;
-  width: 0;
-  height: 0;
+    opacity: 0;
+    width: 0;
+    height: 0;
 }
 
-/* The slider */
 .slider {
-  --width: 0.4em;
-  --offset: 0.3em;
-  --transition-duration: 0.4s;
-  position: absolute;
-  cursor: pointer;
-  inset: 0;
-  background-color: #ccc;
-  box-shadow: inset 2px 5px 10px rgba(0, 0, 0, 0.3);
-  transition: var(--transition-duration);
-  transition-property: background-color, box-shadow;
-  border-radius: 5px;
+    --width: 0.4em;
+    --offset: 0.3em;
+    --transition-duration: 0.4s;
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background-color: #ccc;
+    box-shadow: inset 2px 5px 10px rgba(0, 0, 0, 0.3);
+    transition: var(--transition-duration);
+    transition-property: background-color, box-shadow;
+    border-radius: 5px;
 }
 
 .slider::before {
-  position: absolute;
-  content: "";
-  height: 1.4em;
-  width: var(--width);
-  border-radius: 0.1em;
-  left: var(--offset);
-  bottom: var(--offset);
-  background-color: white;
-  transition: transform var(--transition-duration);
+    position: absolute;
+    content: "";
+    height: 1.4em;
+    width: var(--width);
+    border-radius: 0.1em;
+    left: var(--offset);
+    bottom: var(--offset);
+    background-color: white;
+    transition: transform var(--transition-duration);
 }
 
 .checkbox:checked + .slider {
-  background-color: #171717;
-  box-shadow: inset 2px 5px 10px transparent;
+    background-color: #171717;
+    box-shadow: inset 2px 5px 10px transparent;
 }
 
 .checkbox:checked + .slider::before {
-  transform: translateX(
-      calc(var(--container-width) - var(--offset) * 2 - var(--width))
-    )
-    rotate(1turn);
+    transform: translateX(
+        calc(var(--container-width) - var(--offset) * 2 - var(--width))
+    ) rotate(1turn);
 }
 
-/* Стили для аватара */
+/* Аватар */
 .avatar-container {
     width: 200px;
     height: 200px;
     border-radius: 20px;
-    -webkit-border-radius: 20px;
     overflow: hidden;
     position: relative;
     z-index: 20;
     opacity: 0;
     transform: translateY(30px);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-    background: transparent;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
 }
 
 .avatar-image {
@@ -129,45 +120,55 @@ body.dark-theme .text-gray-500 {
     height: 100%;
     object-fit: cover;
     border-radius: 20px;
-    -webkit-border-radius: 20px;
     display: block;
 }
 
-/* Для мобильных */
-@media (max-width: 768px) {
-    .avatar-container {
-        width: 160px;
-        height: 160px;
-        border-radius: 20px !important;
-        -webkit-border-radius: 20px !important;
-    }
+.avatar-placeholder {
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    background: linear-gradient(45deg, #f8fafc, #e2e8f0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #cbd5e0;
+    font-size: 3rem;
+    font-weight: bold;
 }
 
-@media (max-width: 480px) {
-    .avatar-container {
-        width: 140px;
-        height: 140px;
-        border-radius: 18px !important;
-        -webkit-border-radius: 18px !important;
-    }
-}
-
-/* Стили для стеклянного эффекта */
-.glass-panel {
+/* Стеклянный эффект */
+.glass-panel,
+.spotify-player,
+.project-item,
+.social-icon {
     background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(0, 0, 0, 0.2);
-    border-radius: 24px;
-    padding: 2rem;
-    box-shadow:
+    border-radius: 20px;
+    box-shadow: 
         0 8px 32px 0 rgba(0, 0, 0, 0.1),
         inset 0 1px 0 0 rgba(255, 255, 255, 0.3);
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+body.dark-theme .glass-panel,
+body.dark-theme .spotify-player,
+body.dark-theme .project-item,
+body.dark-theme .social-icon {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 
+        0 8px 32px 0 rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+}
+
+.glass-panel {
+    padding: 2rem;
     max-width: 500px;
     margin: 0 auto;
     opacity: 0;
     transform: translateY(20px);
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .glass-panel.active {
@@ -176,52 +177,50 @@ body.dark-theme .text-gray-500 {
 }
 
 /* Кнопки */
-.glass-button {
+.glass-button,
+.project-button {
     background: rgba(0, 0, 0, 0.9);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(0, 0, 0, 0.3);
     border-radius: 16px;
     padding: 1rem 2rem;
     color: white;
     font-weight: 600;
     font-size: 1.1rem;
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    box-shadow:
-        0 4px 16px 0 rgba(0, 0, 0, 0.2),
-        inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
     display: flex;
     align-items: center;
     justify-content: center;
     text-decoration: none;
     cursor: pointer;
-    border: none;
-    outline: none;
     opacity: 0;
     transform: translateY(20px);
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: 
+        0 4px 16px 0 rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
 }
 
-.glass-button:hover {
+.glass-button:hover,
+.project-button:hover {
     background: rgba(0, 0, 0, 1);
-    border: 1px solid rgba(0, 0, 0, 0.5);
     transform: translateY(-2px);
-    box-shadow:
+    box-shadow: 
         0 8px 32px 0 rgba(0, 0, 0, 0.3),
         inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
 }
 
-/* Темная тема для кнопок */
-body.dark-theme .glass-button {
+body.dark-theme .glass-button,
+body.dark-theme .project-button {
     background: rgba(255, 255, 255, 0.9);
     color: black;
     border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-body.dark-theme .glass-button:hover {
+body.dark-theme .glass-button:hover,
+body.dark-theme .project-button:hover {
     background: rgba(255, 255, 255, 1);
 }
 
-/* ИСПРАВЛЕННЫЕ СТИЛИ ДЛЯ ИКОНОК СОЦСЕТЕЙ */
+/* Соцсети */
 .social-icons-container {
     display: flex;
     justify-content: center;
@@ -234,76 +233,40 @@ body.dark-theme .glass-button:hover {
 .social-icon {
     width: 70px;
     height: 70px;
-    border-radius: 20px;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    box-shadow:
-        0 4px 16px 0 rgba(0, 0, 0, 0.2),
-        inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
     cursor: pointer;
     text-decoration: none;
     opacity: 0;
     transform: translateY(20px);
-    border: none;
 }
 
 .social-icon:hover {
     transform: translateY(-2px) scale(1.05);
-    box-shadow:
-        0 8px 32px 0 rgba(0, 0, 0, 0.3),
-        inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
 }
 
-/* Telegram - синий цвет бренда */
-.telegram-icon {
-    background: #229ED9 !important;
-}
-
-.telegram-icon:hover {
-    background: #1e8fc7 !important;
-}
-
-.telegram-icon svg {
+.social-icon svg {
     width: 32px;
     height: 32px;
+    display: block;
+}
+
+.social-icon svg path,
+.social-icon svg circle {
     fill: #FFFFFF !important;
 }
 
-/* GitHub - черный цвет бренда */
-.github-icon {
-    background: #000000 !important;
-}
+.telegram-icon { background: #229ED9 !important; }
+.telegram-icon:hover { background: #1e8fc7 !important; }
 
-.github-icon:hover {
-    background: #333333 !important;
-}
+.github-icon { background: #000000 !important; }
+.github-icon:hover { background: #333333 !important; }
 
-.github-icon svg {
-    width: 32px;
-    height: 32px;
-    fill: #FFFFFF !important;
-}
+.steam-icon { background: linear-gradient(135deg, #000000 0%, #1b2838 70%, #00adee 100%) !important; }
+.steam-icon:hover { background: linear-gradient(135deg, #111111 0%, #2a3f5a 70%, #00b8ff 100%) !important; }
 
-/* Steam - градиент как на иконке Windows */
-.steam-icon {
-    background: linear-gradient(135deg, #000000 0%, #1b2838 70%, #00adee 100%) !important;
-}
-
-.steam-icon:hover {
-    background: linear-gradient(135deg, #111111 0%, #2a3f5a 70%, #00b8ff 100%) !important;
-}
-
-.steam-icon svg {
-    width: 32px;
-    height: 32px;
-    fill: #FFFFFF !important;
-}
-
-/* НОВЫЕ СТИЛИ ДЛЯ ПРОЕКТОВ */
+/* Проекты */
 .projects-section {
     width: 100%;
     max-width: 800px;
@@ -318,34 +281,17 @@ body.dark-theme .glass-button:hover {
 }
 
 .project-item {
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    border-radius: 24px;
     padding: 2rem;
     margin-bottom: 2rem;
-    box-shadow:
-        0 8px 32px 0 rgba(0, 0, 0, 0.1),
-        inset 0 1px 0 0 rgba(255, 255, 255, 0.3);
     cursor: pointer;
-    transition: all 0.3s ease;
 }
 
 .project-item:hover {
     transform: translateY(-2px);
-    box-shadow:
-        0 12px 40px 0 rgba(0, 0, 0, 0.15),
-        inset 0 1px 0 0 rgba(255, 255, 255, 0.3);
 }
 
-/* ФИКС ДЛЯ РАВНЫХ ОТСТУПОВ - ПЕРЕОПРЕДЕЛЯЕМ СТИЛИ */
 .project-header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     padding: 1rem 0 !important;
-    margin: 0 !important;
 }
 
 .project-title {
@@ -354,11 +300,13 @@ body.dark-theme .glass-button:hover {
     color: #1a202c;
     text-align: center;
     margin: 0 !important;
-    padding: 0 !important;
-    line-height: 1.4 !important;
+    line-height: 1.4;
 }
 
-/* Анимации для деталей проекта */
+body.dark-theme .project-title {
+    color: white;
+}
+
 .project-details {
     margin-top: 1.5rem;
     padding-top: 1.5rem;
@@ -370,13 +318,12 @@ body.dark-theme .glass-button:hover {
     transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.project-details.open {
-    max-height: 500px;
-    opacity: 1;
-    transform: translateY(0);
+body.dark-theme .project-details {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.project-details-content {
+.project-details.open {
+    max-height: 500px;
     opacity: 1;
     transform: translateY(0);
 }
@@ -387,6 +334,10 @@ body.dark-theme .glass-button:hover {
     color: #4a5568;
     text-align: center;
     line-height: 1.6;
+}
+
+body.dark-theme .project-description {
+    color: #e2e8f0;
 }
 
 .project-bot-name {
@@ -400,97 +351,31 @@ body.dark-theme .glass-button:hover {
     text-align: center;
 }
 
-.project-button {
-    background: rgba(0, 0, 0, 0.9);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(0, 0, 0, 0.3);
-    border-radius: 16px;
-    padding: 1rem 2rem;
-    color: white;
-    font-weight: 600;
-    font-size: 1.1rem;
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    box-shadow:
-        0 4px 16px 0 rgba(0, 0, 0, 0.2),
-        inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    cursor: pointer;
-    border: none;
-    outline: none;
-}
-
-.project-button:hover {
-    background: rgba(0, 0, 0, 1);
-    border: 1px solid rgba(0, 0, 0, 0.5);
-    transform: translateY(-2px);
-    box-shadow:
-        0 8px 32px 0 rgba(0, 0, 0, 0.3),
-        inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
-}
-
-/* Темная тема для проектов */
-body.dark-theme .project-item {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-body.dark-theme .project-title {
-    color: white;
-}
-
-body.dark-theme .project-description {
-    color: #e2e8f0;
-}
-
 body.dark-theme .project-bot-name {
     background: rgba(255, 255, 255, 0.1);
     color: white;
 }
 
-body.dark-theme .project-details {
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-body.dark-theme .project-button {
-    background: rgba(255, 255, 255, 0.9);
-    color: black;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-body.dark-theme .project-button:hover {
-    background: rgba(255, 255, 255, 1);
-}
-
-/* Стили для Spotify плеера */
+/* Spotify */
 .spotify-player {
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    border-radius: 24px;
     padding: 2.5rem;
     width: 100%;
     max-width: 500px;
+    opacity: 0;
+    transform: translateY(50px);
+}
+
+.spotify-player.animated {
     opacity: 1;
     transform: translateY(0);
-    box-shadow:
-        0 8px 32px 0 rgba(0, 0, 0, 0.1),
-        inset 0 1px 0 0 rgba(255, 255, 255, 0.3);
 }
 
-.spotify-logo-small {
-    width: 32px;
-    height: 32px;
-    color: #1DB954;
-}
-
-/* Обложка альбома с картинкой */
-.album-cover-container {
-    margin-right: 1.5rem;
+.spotify-header,
+.spotify-content,
+.spotify-controls,
+.spotify-link {
+    opacity: 0;
+    transform: translateY(20px);
 }
 
 .album-cover-image {
@@ -502,19 +387,21 @@ body.dark-theme .project-button:hover {
     border: 2px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Темная тема для обложки */
 body.dark-theme .album-cover-image {
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     border: 2px solid rgba(255, 255, 255, 0.2);
 }
 
-/* Прогресс бар */
 .progress-bar {
     width: 100%;
     background: rgba(0, 0, 0, 0.1);
     border-radius: 4px;
     height: 8px;
     overflow: hidden;
+}
+
+body.dark-theme .progress-bar {
+    background: rgba(255, 255, 255, 0.1);
 }
 
 .progress-bar-fill {
@@ -524,11 +411,6 @@ body.dark-theme .album-cover-image {
     width: 45%;
 }
 
-body.dark-theme .progress-bar {
-    background: rgba(255, 255, 255, 0.1);
-}
-
-/* Кнопки управления Spotify */
 .spotify-control-btn {
     background: rgba(255, 255, 255, 0.6);
     border: 1px solid rgba(0, 0, 0, 0.2);
@@ -543,9 +425,19 @@ body.dark-theme .progress-bar {
     cursor: pointer;
 }
 
+body.dark-theme .spotify-control-btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
 .spotify-control-btn:hover {
     background: rgba(255, 255, 255, 0.8);
     transform: scale(1.1);
+}
+
+body.dark-theme .spotify-control-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
 }
 
 .spotify-play-btn {
@@ -571,8 +463,6 @@ body.dark-theme .progress-bar {
 
 .spotify-link-btn {
     background: rgba(29, 185, 84, 0.1);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(29, 185, 84, 0.2);
     border-radius: 16px;
     padding: 1rem 2rem;
@@ -589,75 +479,75 @@ body.dark-theme .progress-bar {
     transform: translateY(-2px);
 }
 
-/* Убрана полоска скролла */
-.scroll-indicator-container {
-    display: none;
-}
-
-/* Анимации для появления элементов */
-.hero-title {
-    opacity: 0;
-    transform: translateY(20px);
-}
-
-.hero-subtitle {
-    opacity: 0;
-    transform: translateY(20px);
-}
-
+/* Анимации */
+.hero-title,
+.hero-subtitle,
 .spotify-title {
     opacity: 0;
-    transform: translateY(50px);
+    transform: translateY(20px);
+}
+
+/* Секции */
+#hero,
+#projects-section,
+#spotify {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Адаптивность */
 @media (max-width: 768px) {
-    h1 {
-        font-size: 4rem !important;
-    }
-
+    h1 { font-size: 4rem !important; }
+    
     .avatar-container {
         width: 160px;
         height: 160px;
     }
-
+    
     .social-icon {
         width: 60px;
         height: 60px;
     }
-
+    
+    .social-icon svg {
+        width: 28px;
+        height: 28px;
+    }
+    
     .spotify-player {
         margin: 0 1rem;
         padding: 2rem 1.5rem;
     }
-
+    
     .spotify-control-btn {
         width: 45px;
         height: 45px;
     }
-
+    
     .spotify-play-btn {
         width: 55px;
         height: 55px;
     }
-
+    
     .album-cover-image {
         width: 70px;
         height: 70px;
     }
-
+    
     .projects-section {
         padding: 0 1rem;
     }
-
+    
     .project-item {
         padding: 1.5rem;
     }
-
+    
     .project-title {
         font-size: 1.3rem;
     }
-
+    
     .projects-title {
         font-size: 1.8rem;
     }
@@ -667,258 +557,13 @@ body.dark-theme .progress-bar {
         padding: 0.7rem 1.2rem;
     }
     
-    .project-header {
-        padding: 0.8rem 0 !important;
-    }
-}
-
-@media (max-width: 480px) {
-    h1 {
-        font-size: 3rem !important;
-    }
-
-    .social-icon {
-        width: 50px;
-        height: 50px;
-    }
-
-    .social-icons-container {
-        gap: 1rem;
-    }
-
-    .project-item {
-        padding: 1rem;
-    }
-
-    .project-title {
-        font-size: 1.1rem;
-    }
-
-    .projects-title {
-        font-size: 1.5rem;
-    }
-
+    .glass-button,
     .project-button {
         padding: 0.9rem 1.8rem;
         font-size: 1rem;
     }
     
-    .project-bot-name {
-        font-size: 1rem;
-        padding: 0.6rem 1rem;
-    }
-    
-    .project-header {
-        padding: 0.6rem 0 !important;
-    }
-}
-
-/* Заглушка для аватара если фото нет */
-.avatar-placeholder {
-    width: 100%;
-    height: 100%;
-    border-radius: 20px;
-    background: linear-gradient(45deg, #f8fafc, #e2e8f0);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #cbd5e0;
-    font-size: 3rem;
-    font-weight: bold;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-}
-
-/* Улучшения для темной темы */
-body.dark-theme .glass-panel {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-body.dark-theme .spotify-player {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-body.dark-theme .spotify-control-btn {
-    background: rgba(255, 255, 255, 0.2);
-    color: white;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-body.dark-theme .spotify-control-btn:hover {
-    background: rgba(255, 255, 255, 0.3);
-}
-
-body.dark-theme .spotify-link-btn {
-    background: rgba(29, 185, 84, 0.2);
-    border: 1px solid rgba(29, 185, 84, 0.3);
-    color: #1ed760;
-}
-
-/* Плавные переходы для всех интерактивных элементов */
-.social-icon,
-.glass-button,
-.project-button,
-.spotify-control-btn,
-.spotify-play-btn,
-.spotify-link-btn,
-.project-item {
-    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-/* Улучшенные тени для глубины */
-.glass-panel,
-.spotify-player,
-.project-item,
-.social-icon {
-    box-shadow:
-        0 8px 32px 0 rgba(0, 0, 0, 0.1),
-        inset 0 1px 0 0 rgba(255, 255, 255, 0.3);
-}
-
-body.dark-theme .glass-panel,
-body.dark-theme .spotify-player,
-body.dark-theme .project-item,
-body.dark-theme .social-icon {
-    box-shadow:
-        0 8px 32px 0 rgba(0, 0, 0, 0.3),
-        inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
-}
-
-/* Секции на весь экран */
-#hero {
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-#projects-section {
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: transparent;
-}
-
-#spotify {
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Исправление отображения секции проектов */
-#projects-section .projects-section {
-    opacity: 1 !important;
-    transform: none !important;
-}
-
-#projects-section .project-item {
-    opacity: 1 !important;
-    transform: none !important;
-}
-
-#projects-section .projects-title {
-    opacity: 1 !important;
-    transform: none !important;
-
-}
-/* Исправления для мобильных устройств */
-@media (max-width: 768px) {
-    .avatar-container {
-        border-radius: 20px !important;
-        overflow: hidden !important;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1) !important;
-    }
-
-    .avatar-image {
-        border-radius: 20px !important;
-    }
-
-    /* Улучшение стеклянного эффекта для мобильных */
-    .glass-panel,
-    .project-item,
-    .spotify-player,
-    .social-icon {
-        backdrop-filter: blur(10px) !important;
-        -webkit-backdrop-filter: blur(10px) !important;
-        background: rgba(255, 255, 255, 0.9) !important;
-    }
-
-    body.dark-theme .glass-panel,
-    body.dark-theme .project-item,
-    body.dark-theme .spotify-player,
-    body.dark-theme .social-icon {
-        background: rgba(255, 255, 255, 0.1) !important;
-    }
-
-    /* Улучшение читаемости текста */
-    h1 {
-        font-size: 3.5rem !important;
-        line-height: 1.2 !important;
-    }
-
-    .hero-subtitle {
-        font-size: 1.1rem !important;
-        line-height: 1.5 !important;
-    }
-
-    /* Улучшение кнопок */
-    .social-icon {
-        width: 60px !important;
-        height: 60px !important;
-    }
-
-    .project-button,
-    .glass-button {
-        padding: 0.9rem 1.8rem !important;
-        font-size: 1rem !important;
-    }
-}
-
-/* Дополнительные исправления для очень маленьких экранов */
-@media (max-width: 480px) {
-    .avatar-container {
-        width: 140px !important;
-        height: 140px !important;
-        border-radius: 18px !important;
-    }
-
-    .avatar-image {
-        border-radius: 18px !important;
-    }
-
-    h1 {
-        font-size: 2.8rem !important;
-    }
-
-    .hero-subtitle {
-        font-size: 1rem !important;
-    }
-
-    .social-icon {
-        width: 55px !important;
-        height: 55px !important;
-    }
-
-    .social-icons-container {
-        gap: 1rem !important;
-    }
-}
-
-/* Гарантия закруглений для всех элементов */
-.avatar-container,
-.avatar-image,
-.glass-panel,
-.project-item,
-.spotify-player,
-.social-icon {
-    border-radius: 20px !important;
-}
-
-/* Улучшение производительности на мобильных */
-@media (max-width: 768px) {
+    /* Улучшение производительности */
     .glass-panel,
     .project-item,
     .spotify-player {
@@ -926,318 +571,38 @@ body.dark-theme .social-icon {
         will-change: transform;
     }
 }
-/* ВОССТАНОВЛЕНИЕ СТИЛЕЙ ДЛЯ КНОПОК */
-.social-icon {
-    backdrop-filter: blur(10px) !important;
-    -webkit-backdrop-filter: blur(10px) !important;
-    background: rgba(255, 255, 255, 0.7) !important;
-}
-
-/* Темная тема для кнопок */
-body.dark-theme .social-icon {
-    background: rgba(255, 255, 255, 0.1) !important;
-}
-
-/* Специфичные стили для каждой иконки */
-.telegram-icon {
-    background: #229ED9 !important;
-}
-
-.github-icon {
-    background: #000000 !important;
-}
-
-.steam-icon {
-    background: linear-gradient(135deg, #000000 0%, #1b2838 70%, #00adee 100%) !important;
-}
-
-/* Ховер эффекты */
-.telegram-icon:hover {
-    background: #1e8fc7 !important;
-}
-
-.github-icon:hover {
-    background: #333333 !important;
-}
-
-.steam-icon:hover {
-    background: linear-gradient(135deg, #111111 0%, #2a3f5a 70%, #00b8ff 100%) !important;
-}
-
-/* Для мобильных - улучшение кнопок */
-@media (max-width: 768px) {
-    .social-icon {
-        width: 60px !important;
-        height: 60px !important;
-        backdrop-filter: blur(10px) !important;
-        -webkit-backdrop-filter: blur(10px) !important;
-    }
-}
 
 @media (max-width: 480px) {
-    .social-icon {
-        width: 50px !important;
-        height: 50px !important;
-    }
-}
-/* ВОССТАНОВЛЕНИЕ ИКОНОК */
-.social-icon {
-    backdrop-filter: blur(10px) !important;
-    -webkit-backdrop-filter: blur(10px) !important;
-    background: rgba(255, 255, 255, 0.7) !important;
-    border-radius: 20px !important;
-}
-
-/* Темная тема для иконок */
-body.dark-theme .social-icon {
-    background: rgba(255, 255, 255, 0.1) !important;
-}
-
-/* ЦВЕТА ФОНА ДЛЯ КАЖДОЙ ИКОНКИ */
-.telegram-icon {
-    background: #229ED9 !important;
-}
-
-.github-icon {
-    background: #000000 !important;
-}
-
-.steam-icon {
-    background: linear-gradient(135deg, #000000 0%, #1b2838 70%, #00adee 100%) !important;
-}
-
-/* Убедись что SVG видны */
-.social-icon svg {
-    display: block !important;
-    width: 32px !important;
-    height: 32px !important;
-}
-
-/* Белый цвет для всех SVG внутри иконок */
-.social-icon svg path,
-.social-icon svg circle {
-    fill: #FFFFFF !important;
-}
-
-/* Для мобильных */
-@media (max-width: 768px) {
-    .social-icon {
-        width: 60px !important;
-        height: 60px !important;
-    }
-
-    .social-icon svg {
-        width: 28px !important;
-        height: 28px !important;
-    }
-}
-/* ФИКС ДЛЯ ТЕМНОЙ ТЕМЫ - ИКОНКИ НЕ МЕНЯЮТ ЦВЕТ */
-body.dark-theme .telegram-icon {
-    background: #229ED9 !important;
-}
-
-body.dark-theme .github-icon {
-    background: #000000 !important;
-}
-
-body.dark-theme .steam-icon {
-    background: linear-gradient(135deg, #000000 0%, #1b2838 70%, #00adee 100%) !important;
-}
-
-/* Ховер эффекты в темной теме */
-body.dark-theme .telegram-icon:hover {
-    background: #1e8fc7 !important;
-}
-
-body.dark-theme .github-icon:hover {
-    background: #333333 !important;
-}
-
-body.dark-theme .steam-icon:hover {
-    background: linear-gradient(135deg, #111111 0%, #2a3f5a 70%, #00b8ff 100%) !important;
-}
-/* ЖЕСТКИЙ ФИКС ДЛЯ ИКОНОК - ЦВЕТА НЕ МЕНЯЮТСЯ */
-.social-icon.telegram-icon,
-body.dark-theme .social-icon.telegram-icon,
-body.dark-theme .telegram-icon {
-    background: #229ED9 !important;
-    background-color: #229ED9 !important;
-}
-
-.social-icon.github-icon,
-body.dark-theme .social-icon.github-icon,
-body.dark-theme .github-icon {
-    background: #000000 !important;
-    background-color: #000000 !important;
-}
-
-.social-icon.steam-icon,
-body.dark-theme .social-icon.steam-icon,
-body.dark-theme .steam-icon {
-    background: linear-gradient(135deg, #000000 0%, #1b2838 70%, #00adee 100%) !important;
-    background-color: #000000 !important;
-}
-
-/* Ховеры */
-.social-icon.telegram-icon:hover,
-body.dark-theme .social-icon.telegram-icon:hover,
-body.dark-theme .telegram-icon:hover {
-    background: #1e8fc7 !important;
-    background-color: #1e8fc7 !important;
-}
-
-.social-icon.github-icon:hover,
-body.dark-theme .social-icon.github-icon:hover,
-body.dark-theme .github-icon:hover {
-    background: #333333 !important;
-    background-color: #333333 !important;
-}
-
-.social-icon.steam-icon:hover,
-body.dark-theme .social-icon.steam-icon:hover,
-body.dark-theme .steam-icon:hover {
-    background: linear-gradient(135deg, #111111 0%, #2a3f5a 70%, #00b8ff 100%) !important;
-    background-color: #111111 !important;
-}
-
-/* Убираем все возможные прозрачности */
-.social-icon {
-    opacity: 1 !important;
-    background: transparent !important;
-}
-/* ФИНАЛЬНЫЙ ФИКС - ИКОНКИ ВСЕГДА ОДИНАКОВЫЕ */
-.telegram-icon,
-body.dark-theme .telegram-icon {
-    background: #229ED9 !important;
-}
-
-.telegram-icon:hover,
-body.dark-theme .telegram-icon:hover {
-    background: #1e8fc7 !important;
-}
-
-.github-icon,
-body.dark-theme .github-icon {
-    background: #000000 !important;
-}
-
-.github-icon:hover,
-body.dark-theme .github-icon:hover {
-    background: #333333 !important;
-}
-
-.steam-icon,
-body.dark-theme .steam-icon {
-    background: linear-gradient(135deg, #000000 0%, #1b2838 70%, #00adee 100%) !important;
-}
-
-.steam-icon:hover,
-body.dark-theme .steam-icon:hover {
-    background: linear-gradient(135deg, #111111 0%, #2a3f5a 70%, #00b8ff 100%) !important;
-}
-/* Анимации для Spotify секции */
-.spotify-title {
-    opacity: 0;
-    transform: translateY(50px);
-}
-
-.spotify-player {
-    opacity: 0;
-    transform: translateY(50px);
-    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.spotify-player.animated {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Анимации для элементов внутри плеера */
-.spotify-header {
-    opacity: 0;
-    transform: translateY(20px);
-}
-
-.spotify-content {
-    opacity: 0;
-    transform: translateY(20px);
-}
-
-.spotify-controls {
-    opacity: 0;
-    transform: translateY(20px);
-}
-
-.spotify-link {
-    opacity: 0;
-    transform: translateY(20px);
-}
-
-/* Адаптивность для Spotify */
-@media (max-width: 768px) {
-    .spotify-title {
-        transform: translateY(30px);
+    h1 { font-size: 3rem !important; }
+    
+    .avatar-container {
+        width: 140px;
+        height: 140px;
     }
     
-    .spotify-player {
-        transform: translateY(30px);
+    .social-icon {
+        width: 50px;
+        height: 50px;
     }
-}
-
-/* СУПЕР-ФИКС ДЛЯ ОТСТУПОВ - ПЕРЕБИВАЕМ TAILWIND */
-#projects-section .project-item .project-header {
-    padding-top: 1rem !important;
-    padding-bottom: 1rem !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-}
-
-#projects-section .project-item .project-title {
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-    line-height: 1.4 !important;
-    padding: 0 !important;
-}
-
-/* Убираем все возможные влияния Tailwind */
-.project-header {
-    padding: 1rem 0 !important;
-}
-
-.project-title {
-    margin: 0 !important;
-    line-height: 1.4 !important;
-}
-/* УПРОЩЕННЫЙ ФИКС */
-.project-title {
-    font-size: 1.5rem !important;
-    font-weight: 600 !important;
-    color: #1a202c !important;
-    text-align: center !important;
-    margin: 0 !important;
-    padding: 1rem 0 !important;
-    line-height: 1.4 !important;
-    display: block !important;
-}
-
-/* Темная тема */
-body.dark-theme .project-title {
-    color: white !important;
-}
-
-/* Мобильные */
-@media (max-width: 768px) {
-    .project-title {
-        font-size: 1.3rem !important;
-        padding: 0.8rem 0 !important;
+    
+    .social-icons-container {
+        gap: 1rem;
     }
-}
-
-@media (max-width: 480px) {
+    
+    .project-item {
+        padding: 1rem;
+    }
+    
     .project-title {
-        font-size: 1.1rem !important;
-        padding: 0.6rem 0 !important;
+        font-size: 1.1rem;
+    }
+    
+    .projects-title {
+        font-size: 1.5rem;
+    }
+    
+    .project-bot-name {
+        font-size: 1rem;
+        padding: 0.6rem 1rem;
     }
 }
