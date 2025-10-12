@@ -92,6 +92,22 @@ function initPageAnimations() {
             toggleActions: "play none none reverse"
         }
     });
+
+    // Анимация третьей секции (spotify)
+    gsap.fromTo(".spotify-title", {
+        opacity: 0,
+        y: 50
+    }, {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        scrollTrigger: {
+            trigger: "#spotify",
+            start: "top 80%",
+            end: "bottom 20%",
+            toggleActions: "play none none reverse"
+        }
+    });
 }
 
 // Анимация появления Spotify секции
@@ -232,8 +248,8 @@ function toggleProject(projectId) {
             }
         });
     } else {
-        // Сначала показываем контейнер с анимацией
-        projectDetails.style.display = 'block';
+        // Сразу добавляем класс open чтобы контент был виден
+        projectDetails.classList.add('open');
         
         // Анимация открытия контейнера
         gsap.fromTo(projectDetails,
@@ -247,38 +263,10 @@ function toggleProject(projectId) {
                 opacity: 1,
                 y: 0,
                 duration: 0.4,
-                ease: "power2.out",
-                onComplete: function() {
-                    projectDetails.classList.add('open');
-                    // После открытия контейнера анимируем появление контента
-                    animateProjectElements(projectDetails);
-                }
+                ease: "power2.out"
             }
         );
     }
-}
-
-// Анимация элементов внутри открытого проекта
-function animateProjectElements(projectDetails) {
-    const content = projectDetails.querySelector('.project-details-content');
-    
-    // Сначала убедимся что контент видим
-    content.style.display = 'block';
-    
-    // Затем анимируем появление
-    gsap.fromTo(content,
-        { 
-            opacity: 0,
-            y: -10
-        },
-        { 
-            opacity: 1,
-            y: 0,
-            duration: 0.4,
-            ease: "power2.out",
-            delay: 0.1
-        }
-    );
 }
 
 // Инициализация
