@@ -1210,3 +1210,34 @@ body.dark-theme .steam-icon:hover {
     margin: 0 !important;
     line-height: 1.4 !important;
 }
+/* УПРОЩЕННЫЙ ФИКС */
+.project-title {
+    font-size: 1.5rem !important;
+    font-weight: 600 !important;
+    color: #1a202c !important;
+    text-align: center !important;
+    margin: 0 !important;
+    padding: 1rem 0 !important;
+    line-height: 1.4 !important;
+    display: block !important;
+}
+
+/* Темная тема */
+body.dark-theme .project-title {
+    color: white !important;
+}
+
+/* Мобильные */
+@media (max-width: 768px) {
+    .project-title {
+        font-size: 1.3rem !important;
+        padding: 0.8rem 0 !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .project-title {
+        font-size: 1.1rem !important;
+        padding: 0.6rem 0 !important;
+    }
+}
