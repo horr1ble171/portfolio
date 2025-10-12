@@ -271,7 +271,7 @@ function toggleProject(projectId) {
 
 // Инициализация
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('🚀 horr1ble portfolio loaded');
+    console.log('horr1ble portfolio loaded');
 
     // Инициализируем переключатель темы
     initThemeSwitcher();
@@ -298,3 +298,4 @@ window.addEventListener('resize', function() {
     // Обновляем анимации при ресайзе
     ScrollTrigger.refresh();
 });
+
