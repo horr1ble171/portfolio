@@ -1152,3 +1152,67 @@ body.dark-theme .steam-icon:hover {
         transform: translateY(30px);
     }
 }
+/* Анимации для Spotify секции */
+.spotify-title {
+    opacity: 0;
+    transform: translateY(50px);
+}
+
+.spotify-player {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.spotify-player.animated {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Анимации для элементов внутри плеера */
+.spotify-header {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.spotify-content {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.spotify-controls {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.spotify-link {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+/* Анимации для проектов */
+.project-details {
+    display: none;
+    overflow: hidden;
+}
+
+.project-details-content {
+    opacity: 0;
+    transform: translateY(-20px);
+}
+
+.project-details.animated .project-details-content {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Адаптивность для Spotify */
+@media (max-width: 768px) {
+    .spotify-title {
+        transform: translateY(30px);
+    }
+    
+    .spotify-player {
+        transform: translateY(30px);
+    }
+}
