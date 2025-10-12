@@ -1,30 +1,19 @@
 // Регистрируем плагин ScrollTrigger
 gsap.registerPlugin(ScrollTrigger);
 
-// Основная функция инициализации
-function initPortfolio() {
-    console.log('🚀 horr1ble portfolio loaded');
-    
-    initThemeSwitcher();
-    initAnimations();
-    initSpotifyAnimations();
-    updateParallax();
-    initAvatarFallback();
-}
-
-// Управление темой
+// Функционал смены темы
 function initThemeSwitcher() {
     const themeSwitch = document.getElementById('theme-switch');
     const body = document.body;
 
-    // Восстанавливаем сохраненную тему
+    // Проверяем сохраненную тему
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'dark') {
         themeSwitch.checked = true;
         body.classList.add('dark-theme');
     }
 
-    // Обработчик переключения
+    // Обработчик изменения темы
     themeSwitch.addEventListener('change', function() {
         if (this.checked) {
             body.classList.add('dark-theme');
@@ -48,28 +37,32 @@ function initThemeSwitcher() {
     });
 }
 
-// Основные анимации
-function initAnimations() {
+// Плавная анимация появления при загрузке
+function initPageAnimations() {
     const tl = gsap.timeline();
 
+    // Анимация аватара
     tl.to(".avatar-container", {
         duration: 1.2,
         opacity: 1,
         y: 0,
         ease: "back.out(1.4)"
     })
+    // Анимация заголовка
     .to(".hero-title", {
         duration: 1,
         opacity: 1,
         y: 0,
         ease: "power2.out"
     }, "-=0.8")
+    // Анимация подзаголовка
     .to(".hero-subtitle", {
         duration: 0.8,
         opacity: 1,
         y: 0,
         ease: "power2.out"
     }, "-=0.6")
+    // Анимация иконок соцсетей
     .to(".social-icons-container", {
         duration: 0.8,
         opacity: 1,
@@ -84,7 +77,7 @@ function initAnimations() {
         ease: "back.out(1.2)"
     }, "-=0.6");
 
-    // Анимация секции проектов
+    // Анимация второй секции (проекты)
     gsap.fromTo("#projects-section", {
         opacity: 0,
         y: 50
@@ -95,14 +88,12 @@ function initAnimations() {
         scrollTrigger: {
             trigger: "#projects-section",
             start: "top 80%",
+            end: "bottom 20%",
             toggleActions: "play none none reverse"
         }
     });
-}
 
-// Анимации Spotify
-function initSpotifyAnimations() {
-    // Заголовок
+    // Анимация третьей секции (spotify)
     gsap.fromTo(".spotify-title", {
         opacity: 0,
         y: 50
@@ -113,11 +104,31 @@ function initSpotifyAnimations() {
         scrollTrigger: {
             trigger: "#spotify",
             start: "top 80%",
+            end: "bottom 20%",
+            toggleActions: "play none none reverse"
+        }
+    });
+}
+
+// Анимация появления Spotify секции
+function initSpotifyAnimation() {
+    // Анимация заголовка Spotify
+    gsap.fromTo(".spotify-title", {
+        opacity: 0,
+        y: 50
+    }, {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        scrollTrigger: {
+            trigger: "#spotify",
+            start: "top 80%",
+            end: "bottom 20%",
             toggleActions: "play none none reverse"
         }
     });
 
-    // Плеер
+    // Анимация самого плеера с задержкой
     gsap.fromTo(".spotify-player", {
         opacity: 0,
         y: 50
@@ -129,6 +140,7 @@ function initSpotifyAnimations() {
         scrollTrigger: {
             trigger: "#spotify",
             start: "top 70%",
+            end: "bottom 20%",
             toggleActions: "play none none reverse"
         },
         onComplete: function() {
@@ -138,10 +150,10 @@ function initSpotifyAnimations() {
     });
 }
 
-// Анимация элементов Spotify
+// Анимация внутренних элементов Spotify плеера
 function animateSpotifyElements() {
     const tl = gsap.timeline();
-    
+
     tl.to(".spotify-header", {
         duration: 0.6,
         opacity: 1,
@@ -168,8 +180,11 @@ function animateSpotifyElements() {
     }, "-=0.3");
 }
 
-// Параллакс эффект
-let mouseX = 0, mouseY = 0, targetX = 0, targetY = 0;
+// Плавный параллакс эффект для мыши
+let mouseX = 0;
+let mouseY = 0;
+let targetX = 0;
+let targetY = 0;
 
 document.addEventListener('mousemove', (e) => {
     targetX = (e.clientX - window.innerWidth / 2) * 0.002;
@@ -197,14 +212,15 @@ function updateParallax() {
     requestAnimationFrame(updateParallax);
 }
 
-// Управление проектами
+// Функция для открытия/закрытия проекта
 function toggleProject(projectId) {
     const projectDetails = document.getElementById(projectId);
     const allProjectDetails = document.querySelectorAll('.project-details');
 
-    // Закрываем другие проекты
+    // Закрываем все другие открытые проекты
     allProjectDetails.forEach(detail => {
         if (detail.id !== projectId && detail.classList.contains('open')) {
+            // Анимация закрытия
             gsap.to(detail, {
                 duration: 0.3,
                 maxHeight: 0,
@@ -218,8 +234,9 @@ function toggleProject(projectId) {
         }
     });
 
-    // Открываем/закрываем выбранный
+    // Открываем/закрываем выбранный проект
     if (projectDetails.classList.contains('open')) {
+        // Анимация закрытия
         gsap.to(projectDetails, {
             duration: 0.3,
             maxHeight: 0,
@@ -231,15 +248,17 @@ function toggleProject(projectId) {
             }
         });
     } else {
+        // Сразу добавляем класс open чтобы контент был виден
         projectDetails.classList.add('open');
-        
+
+        // Анимация открытия контейнера
         gsap.fromTo(projectDetails,
-            { 
+            {
                 maxHeight: 0,
                 opacity: 0,
                 y: -10
             },
-            { 
+            {
                 maxHeight: 500,
                 opacity: 1,
                 y: 0,
@@ -250,8 +269,21 @@ function toggleProject(projectId) {
     }
 }
 
-// Фолбэк для аватара
-function initAvatarFallback() {
+// Инициализация
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🚀 horr1ble portfolio loaded');
+
+    // Инициализируем переключатель темы
+    initThemeSwitcher();
+
+    // Инициализируем анимации
+    initPageAnimations();
+    initSpotifyAnimation();
+
+    // Запускаем параллакс
+    updateParallax();
+
+    // Проверяем наличие аватара
     const avatarImg = document.querySelector('.avatar-image');
     if (avatarImg) {
         avatarImg.onerror = function() {
@@ -259,10 +291,10 @@ function initAvatarFallback() {
             this.parentElement.innerHTML = '<div class="avatar-placeholder">H</div>';
         };
     }
-}
+});
 
-// Инициализация при загрузке
-document.addEventListener('DOMContentLoaded', initPortfolio);
-
-// Обновление анимаций при ресайзе
-window.addEventListener('resize', () => ScrollTrigger.refresh());
+// Ресайз окна
+window.addEventListener('resize', function() {
+    // Обновляем анимации при ресайзе
+    ScrollTrigger.refresh();
+});
