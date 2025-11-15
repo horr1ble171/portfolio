@@ -12,8 +12,27 @@ window.addEventListener('resize', () => {
   window.__resizeTimer = setTimeout(() => ScrollTrigger.refresh(), 220);
 });
 
+// Оптимизация для мобильных устройств
+function optimizeForMobile() {
+  // Отключаем ненужные эффекты на мобильных
+  if (window.innerWidth <= 768) {
+    // Упрощаем анимации
+    gsap.config({
+      nullTargetWarn: false,
+      units: { left: "%", top: "%", rotation: "rad" }
+    });
+
+    // Уменьшаем количество частиц или отключаем их
+    const particles = document.querySelector('.particles-container');
+    if (particles) {
+      particles.style.display = 'none';
+    }
+  }
+}
+
 // Page animations
 function initAnimations() {
+  // Hero animations
   const tl = gsap.timeline();
   tl.from('.avatar-container', {
     duration: 1.2,
@@ -43,53 +62,75 @@ function initAnimations() {
     ease: 'power3.out'
   }, '-=0.4');
 
-  // Projects animation
-  gsap.utils.toArray('.projects-section').forEach(el => {
-    gsap.fromTo(el, { autoAlpha: 0, y: 30 }, {
-      duration: 1.1,
-      autoAlpha: 1,
-      y: 0,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: el,
-        start: 'top 80%',
-        toggleActions: 'play none none reverse'
-      }
+  // Отключаем сложные анимации скролла для мобильных
+  if (window.innerWidth > 768) {
+    // Projects animation (только для десктопа)
+    gsap.utils.toArray('.projects-section').forEach(el => {
+      gsap.fromTo(el, { autoAlpha: 0, y: 30 }, {
+        duration: 1.1,
+        autoAlpha: 1,
+        y: 0,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 80%',
+          end: 'bottom 20%',
+          toggleActions: 'play none none reverse',
+          markers: false
+        }
+      });
     });
-  });
 
-  // Project items animation
-  gsap.utils.toArray('.project-item').forEach((it, i) => {
-    gsap.fromTo(it, { autoAlpha: 0, y: 20, scale: 0.95 }, {
-      duration: 0.9,
-      autoAlpha:1,
-      y:0,
-      scale: 1,
-      ease:'power3.out',
-      scrollTrigger: {
-        trigger: it,
-        start: 'top 85%',
-        toggleActions: 'play none none reverse'
-      },
-      delay: i*0.1
+    // Project items animation (только для десктопа)
+    gsap.utils.toArray('.project-item').forEach((it, i) => {
+      gsap.fromTo(it, { autoAlpha: 0, y: 20, scale: 0.95 }, {
+        duration: 0.9,
+        autoAlpha:1,
+        y:0,
+        scale: 1,
+        ease:'power3.out',
+        scrollTrigger: {
+          trigger: it,
+          start: 'top 85%',
+          end: 'bottom 15%',
+          toggleActions: 'play none none reverse'
+        },
+        delay: i*0.1
+      });
     });
-  });
 
-  // Spotify player animation
-  gsap.utils.toArray('.spotify-player').forEach(el => {
-    gsap.fromTo(el, { autoAlpha: 0, y: 30, scale: 0.9 }, {
-      duration: 1.2,
-      autoAlpha: 1,
-      y: 0,
-      scale: 1,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: el,
-        start: 'top 80%',
-        toggleActions: 'play none none reverse'
-      }
+    // Spotify player animation (только для десктопа)
+    gsap.utils.toArray('.spotify-player').forEach(el => {
+      gsap.fromTo(el, { autoAlpha: 0, y: 30, scale: 0.9 }, {
+        duration: 1.2,
+        autoAlpha: 1,
+        y: 0,
+        scale: 1,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 80%',
+          end: 'bottom 20%',
+          toggleActions: 'play none none reverse'
+        }
+      });
     });
-  });
+  } else {
+    // Для мобильных - простые fade-in анимации без сложного скролла
+    gsap.utils.toArray('.projects-section, .project-item, .spotify-player').forEach(el => {
+      gsap.fromTo(el, { autoAlpha: 0 }, {
+        duration: 0.8,
+        autoAlpha: 1,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 90%',
+          toggleActions: 'play none none none',
+          scrub: false
+        }
+      });
+    });
+  }
 }
 
 // Toggle project details
@@ -327,6 +368,7 @@ function addParticlesEffect() {
 
 // Init on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
+  optimizeForMobile(); // Добавьте эту строку первой
   initAnimations();
   attachProjectToggles();
   imagesFallback();
