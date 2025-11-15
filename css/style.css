@@ -674,6 +674,9 @@ body {
   .section {
     padding: 100px 16px;
     min-height: auto;
+    transform: translateZ(0); /* Аппаратное ускорение */
+    backface-visibility: hidden;
+    perspective: 1000;
   }
 
   .hero-section {
@@ -685,13 +688,19 @@ body {
   .social-icon { width:75px; height:75px; border-radius:18px; }
   .social-icons-container { gap:20px; }
   .projects-title { font-size:2rem; }
-  .project-item { margin: 20px 8px; }
+  .project-item {
+    margin: 20px 8px;
+    transform: translateZ(0);
+    will-change: transform;
+  }
   .project-header { padding: 28px 20px; }
   .project-content { padding: 28px 20px; }
   .spotify-player {
     padding:32px;
     margin: 4px;
     max-width: 400px;
+    transform: translateZ(0);
+    will-change: transform;
   }
   .spotify-header {
     flex-direction: column;
@@ -738,4 +747,34 @@ body {
   .hero-title { font-size: clamp(2.5rem, 8vw, 5rem); }
   .projects-title { font-size: 1.8rem; }
   .spotify-title { font-size: 1.8rem; }
+}
+
+/* Глобальные оптимизации */
+* {
+  -webkit-overflow-scrolling: touch; /* Плавный скролл на iOS */
+}
+
+html {
+  scroll-behavior: auto; /* Отключаем smooth scroll для мобильных */
+}
+
+@media (max-width: 768px) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Оптимизация производительности для мобильных */
+@media (max-width: 768px) {
+  .section {
+    transform: translateZ(0); /* Аппаратное ускорение */
+    backface-visibility: hidden;
+    perspective: 1000;
+  }
+
+  .project-item,
+  .spotify-player {
+    transform: translateZ(0);
+    will-change: transform;
+  }
 }
