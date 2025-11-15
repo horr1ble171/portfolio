@@ -1,301 +1,335 @@
-// Регистрируем плагин ScrollTrigger
 gsap.registerPlugin(ScrollTrigger);
 
-// Функционал смены темы
-function initThemeSwitcher() {
-    const themeSwitch = document.getElementById('theme-switch');
-    const body = document.body;
-
-    // Проверяем сохраненную тему
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-        themeSwitch.checked = true;
-        body.classList.add('dark-theme');
-    }
-
-    // Обработчик изменения темы
-    themeSwitch.addEventListener('change', function() {
-        if (this.checked) {
-            body.classList.add('dark-theme');
-            localStorage.setItem('theme', 'dark');
-        } else {
-            body.classList.remove('dark-theme');
-            localStorage.setItem('theme', 'light');
-        }
-    });
-
-    // Анимация появления переключателя
-    gsap.to('.theme-switcher-container', {
-        duration: 0.8,
-        opacity: 1,
-        y: 0,
-        delay: 1.5,
-        ease: "power2.out",
-        onComplete: () => {
-            document.querySelector('.theme-switcher-container').classList.add('loaded');
-        }
-    });
+// Обновление переменной --vh
+function updateVh() {
+  const vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
 }
-
-// Плавная анимация появления при загрузке
-function initPageAnimations() {
-    const tl = gsap.timeline();
-
-    // Анимация аватара
-    tl.to(".avatar-container", {
-        duration: 1.2,
-        opacity: 1,
-        y: 0,
-        ease: "back.out(1.4)"
-    })
-    // Анимация заголовка
-    .to(".hero-title", {
-        duration: 1,
-        opacity: 1,
-        y: 0,
-        ease: "power2.out"
-    }, "-=0.8")
-    // Анимация подзаголовка
-    .to(".hero-subtitle", {
-        duration: 0.8,
-        opacity: 1,
-        y: 0,
-        ease: "power2.out"
-    }, "-=0.6")
-    // Анимация иконок соцсетей
-    .to(".social-icons-container", {
-        duration: 0.8,
-        opacity: 1,
-        y: 0,
-        ease: "power2.out"
-    }, "-=0.4")
-    .to(".social-icon", {
-        duration: 0.8,
-        opacity: 1,
-        y: 0,
-        stagger: 0.1,
-        ease: "back.out(1.2)"
-    }, "-=0.6");
-
-    // Анимация второй секции (проекты)
-    gsap.fromTo("#projects-section", {
-        opacity: 0,
-        y: 50
-    }, {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        scrollTrigger: {
-            trigger: "#projects-section",
-            start: "top 80%",
-            end: "bottom 20%",
-            toggleActions: "play none none reverse"
-        }
-    });
-
-    // Анимация третьей секции (spotify)
-    gsap.fromTo(".spotify-title", {
-        opacity: 0,
-        y: 50
-    }, {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        scrollTrigger: {
-            trigger: "#spotify",
-            start: "top 80%",
-            end: "bottom 20%",
-            toggleActions: "play none none reverse"
-        }
-    });
-}
-
-// Анимация появления Spotify секции
-function initSpotifyAnimation() {
-    // Анимация заголовка Spotify
-    gsap.fromTo(".spotify-title", {
-        opacity: 0,
-        y: 50
-    }, {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        scrollTrigger: {
-            trigger: "#spotify",
-            start: "top 80%",
-            end: "bottom 20%",
-            toggleActions: "play none none reverse"
-        }
-    });
-
-    // Анимация самого плеера с задержкой
-    gsap.fromTo(".spotify-player", {
-        opacity: 0,
-        y: 50
-    }, {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        delay: 0.3,
-        scrollTrigger: {
-            trigger: "#spotify",
-            start: "top 70%",
-            end: "bottom 20%",
-            toggleActions: "play none none reverse"
-        },
-        onComplete: function() {
-            document.querySelector('.spotify-player').classList.add('animated');
-            animateSpotifyElements();
-        }
-    });
-}
-
-// Анимация внутренних элементов Spotify плеера
-function animateSpotifyElements() {
-    const tl = gsap.timeline();
-
-    tl.to(".spotify-header", {
-        duration: 0.6,
-        opacity: 1,
-        y: 0,
-        ease: "power2.out"
-    })
-    .to(".spotify-content", {
-        duration: 0.6,
-        opacity: 1,
-        y: 0,
-        ease: "power2.out"
-    }, "-=0.3")
-    .to(".spotify-controls", {
-        duration: 0.6,
-        opacity: 1,
-        y: 0,
-        ease: "power2.out"
-    }, "-=0.3")
-    .to(".spotify-link", {
-        duration: 0.6,
-        opacity: 1,
-        y: 0,
-        ease: "power2.out"
-    }, "-=0.3");
-}
-
-// Плавный параллакс эффект для мыши
-let mouseX = 0;
-let mouseY = 0;
-let targetX = 0;
-let targetY = 0;
-
-document.addEventListener('mousemove', (e) => {
-    targetX = (e.clientX - window.innerWidth / 2) * 0.002;
-    targetY = (e.clientY - window.innerHeight / 2) * 0.002;
+updateVh();
+window.addEventListener('resize', () => {
+  updateVh();
+  clearTimeout(window.__resizeTimer);
+  window.__resizeTimer = setTimeout(() => ScrollTrigger.refresh(), 220);
 });
 
-function updateParallax() {
-    mouseX += (targetX - mouseX) * 0.05;
-    mouseY += (targetY - mouseY) * 0.05;
+// Page animations
+function initAnimations() {
+  const tl = gsap.timeline();
+  tl.from('.avatar-container', {
+    duration: 1.2,
+    autoAlpha: 0,
+    y: 30,
+    scale: 0.8,
+    rotation: -5,
+    ease: 'power3.out'
+  })
+  .from('.hero-title', {
+    duration: 1.1,
+    autoAlpha:0,
+    y: 25,
+    ease: 'power3.out'
+  }, '-=0.6')
+  .from('.hero-subtitle', {
+    duration: 0.9,
+    autoAlpha:0,
+    y: 20,
+    ease: 'power3.out'
+  }, '-=0.5')
+  .from('.social-icons-container', {
+    duration: 0.8,
+    autoAlpha:0,
+    y: 15,
+    stagger: 0.1,
+    ease: 'power3.out'
+  }, '-=0.4');
 
-    gsap.to(".hero-title", {
-        duration: 2,
-        x: mouseX * 20,
-        y: mouseY * 20,
-        ease: "power2.out"
+  // Projects animation
+  gsap.utils.toArray('.projects-section').forEach(el => {
+    gsap.fromTo(el, { autoAlpha: 0, y: 30 }, {
+      duration: 1.1,
+      autoAlpha: 1,
+      y: 0,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: el,
+        start: 'top 80%',
+        toggleActions: 'play none none reverse'
+      }
     });
+  });
 
-    gsap.to(".avatar-container", {
-        duration: 2,
-        x: mouseX * 10,
-        y: mouseY * 10,
-        ease: "power2.out"
+  // Project items animation
+  gsap.utils.toArray('.project-item').forEach((it, i) => {
+    gsap.fromTo(it, { autoAlpha: 0, y: 20, scale: 0.95 }, {
+      duration: 0.9,
+      autoAlpha:1,
+      y:0,
+      scale: 1,
+      ease:'power3.out',
+      scrollTrigger: {
+        trigger: it,
+        start: 'top 85%',
+        toggleActions: 'play none none reverse'
+      },
+      delay: i*0.1
     });
+  });
 
-    requestAnimationFrame(updateParallax);
+  // Spotify player animation
+  gsap.utils.toArray('.spotify-player').forEach(el => {
+    gsap.fromTo(el, { autoAlpha: 0, y: 30, scale: 0.9 }, {
+      duration: 1.2,
+      autoAlpha: 1,
+      y: 0,
+      scale: 1,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: el,
+        start: 'top 80%',
+        toggleActions: 'play none none reverse'
+      }
+    });
+  });
 }
 
-// Функция для открытия/закрытия проекта
-function toggleProject(projectId) {
-    const projectDetails = document.getElementById(projectId);
-    const allProjectDetails = document.querySelectorAll('.project-details');
+// Toggle project details
+function toggleProjectById(projectId) {
+  const el = document.getElementById(projectId);
+  if (!el) return;
+  const projectItem = el.closest('.project-item');
+  const open = el.classList.contains('open');
 
-    // Закрываем все другие открытые проекты
-    allProjectDetails.forEach(detail => {
-        if (detail.id !== projectId && detail.classList.contains('open')) {
-            // Анимация закрытия
-            gsap.to(detail, {
-                duration: 0.3,
-                maxHeight: 0,
-                opacity: 0,
-                y: -10,
-                ease: "power2.inOut",
-                onComplete: () => {
-                    detail.classList.remove('open');
-                }
-            });
+  // Close others
+  document.querySelectorAll('.project-details.open').forEach(d => {
+    if (d !== el) {
+      d.classList.remove('open');
+      d.closest('.project-item').setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  if (open) {
+    el.classList.remove('open');
+    projectItem.setAttribute('aria-expanded', 'false');
+  } else {
+    el.classList.add('open');
+    projectItem.setAttribute('aria-expanded', 'true');
+  }
+}
+
+// Attach click handlers
+function attachProjectToggles() {
+  document.querySelectorAll('.project-item').forEach(item => {
+    const header = item.querySelector('.project-header');
+    const details = item.querySelector('.project-details');
+
+    if (header && details) {
+      header.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        toggleProjectById(details.id);
+      });
+
+      // Keyboard support
+      header.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggleProjectById(details.id);
         }
-    });
-
-    // Открываем/закрываем выбранный проект
-    if (projectDetails.classList.contains('open')) {
-        // Анимация закрытия
-        gsap.to(projectDetails, {
-            duration: 0.3,
-            maxHeight: 0,
-            opacity: 0,
-            y: -10,
-            ease: "power2.inOut",
-            onComplete: () => {
-                projectDetails.classList.remove('open');
-            }
-        });
-    } else {
-        // Сразу добавляем класс open чтобы контент был виден
-        projectDetails.classList.add('open');
-
-        // Анимация открытия контейнера
-        gsap.fromTo(projectDetails,
-            {
-                maxHeight: 0,
-                opacity: 0,
-                y: -10
-            },
-            {
-                maxHeight: 500,
-                opacity: 1,
-                y: 0,
-                duration: 0.4,
-                ease: "power2.out"
-            }
-        );
+      });
     }
+
+    // Prevent toggle when clicking on project button
+    const projectButton = item.querySelector('.project-button');
+    if (projectButton) {
+      projectButton.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+    }
+  });
 }
 
-// Инициализация
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('horr1ble portfolio loaded');
+// Images fallback
+function imagesFallback() {
+  document.querySelectorAll('img').forEach(img => {
+    img.addEventListener('error', function() {
+      this.style.display = 'none';
+      const ph = document.createElement('div');
+      ph.style.width = this.width ? this.width + 'px' : '140px';
+      ph.style.height = this.height ? this.height + 'px' : '140px';
+      ph.style.borderRadius = '12px';
+      ph.style.background = 'linear-gradient(135deg, var(--gray-600), var(--black))';
+      ph.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.3)';
+      ph.style.border = '2px solid var(--gray-600)';
+      this.parentNode && this.parentNode.appendChild(ph);
+    });
+  });
+}
 
-    // Инициализируем переключатель темы
-    initThemeSwitcher();
+// Spotify player controls
+function initSpotifyPlayer() {
+  const playBtn = document.querySelector('.spotify-play-btn');
+  const prevBtn = document.querySelector('.prev-btn');
+  const nextBtn = document.querySelector('.next-btn');
+  const progressBar = document.querySelector('.progress-bar');
+  const progressFill = document.querySelector('.progress-bar-fill');
 
-    // Инициализируем анимации
-    initPageAnimations();
-    initSpotifyAnimation();
+  let isPlaying = false;
+  let currentProgress = 45;
+  let progressInterval;
 
-    // Запускаем параллакс
-    updateParallax();
+  // Play/Pause
+  if (playBtn) {
+    playBtn.addEventListener('click', function() {
+      const svg = this.querySelector('svg');
+      isPlaying = !isPlaying;
 
-    // Проверяем наличие аватара
-    const avatarImg = document.querySelector('.avatar-image');
-    if (avatarImg) {
-        avatarImg.onerror = function() {
-            this.style.display = 'none';
-            this.parentElement.innerHTML = '<div class="avatar-placeholder">H</div>';
-        };
+      if (isPlaying) {
+        // Pause icon
+        svg.innerHTML = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
+        startProgress();
+      } else {
+        // Play icon
+        svg.innerHTML = '<path d="M8 5v14l11-7z"/>';
+        stopProgress();
+      }
+
+      // Анимация нажатия
+      gsap.to(this, {
+        scale: 0.9,
+        duration: 0.1,
+        yoyo: true,
+        repeat: 1
+      });
+    });
+  }
+
+  // Previous track
+  if (prevBtn) {
+    prevBtn.addEventListener('click', function() {
+      // Анимация нажатия
+      gsap.to(this, {
+        scale: 0.85,
+        duration: 0.1,
+        yoyo: true,
+        repeat: 1
+      });
+
+      // Сброс прогресса при перемотке назад
+      currentProgress = 0;
+      progressFill.style.width = currentProgress + '%';
+      stopProgress();
+      if (isPlaying) startProgress();
+    });
+  }
+
+  // Next track
+  if (nextBtn) {
+    nextBtn.addEventListener('click', function() {
+      // Анимация нажатия
+      gsap.to(this, {
+        scale: 0.85,
+        duration: 0.1,
+        yoyo: true,
+        repeat: 1
+      });
+
+      // Сброс прогресса при перемотке вперед
+      currentProgress = 0;
+      progressFill.style.width = currentProgress + '%';
+      stopProgress();
+      if (isPlaying) startProgress();
+    });
+  }
+
+  // Progress bar click
+  if (progressBar) {
+    progressBar.addEventListener('click', function(e) {
+      const rect = this.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const newProgress = (clickX / rect.width) * 100;
+      currentProgress = Math.max(0, Math.min(100, newProgress));
+      progressFill.style.width = currentProgress + '%';
+    });
+  }
+
+  // Симуляция прогресса при воспроизведении
+  function startProgress() {
+    stopProgress();
+    progressInterval = setInterval(() => {
+      if (isPlaying && currentProgress < 100) {
+        currentProgress += 0.2;
+        progressFill.style.width = currentProgress + '%';
+      } else if (currentProgress >= 100) {
+        stopProgress();
+        isPlaying = false;
+        const playSvg = playBtn.querySelector('svg');
+        playSvg.innerHTML = '<path d="M8 5v14l11-7z"/>';
+      }
+    }, 1000);
+  }
+
+  function stopProgress() {
+    if (progressInterval) {
+      clearInterval(progressInterval);
+      progressInterval = null;
     }
-});
+  }
+}
 
-// Ресайз окна
-window.addEventListener('resize', function() {
-    // Обновляем анимации при ресайзе
-    ScrollTrigger.refresh();
-});
+// Add floating particles effect (серые частицы)
+function addParticlesEffect() {
+  const particlesContainer = document.createElement('div');
+  particlesContainer.className = 'particles-container';
+  particlesContainer.style.cssText = `
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  `;
+  document.body.appendChild(particlesContainer);
 
+  // Create particles
+  for (let i = 0; i < 15; i++) {
+    const particle = document.createElement('div');
+    particle.style.cssText = `
+      position: absolute;
+      width: ${Math.random() * 6 + 2}px;
+      height: ${Math.random() * 6 + 2}px;
+      background: linear-gradient(45deg, var(--gray-400), var(--gray-300));
+      border-radius: 50%;
+      opacity: ${Math.random() * 0.2 + 0.1};
+      filter: blur(1px);
+    `;
+
+    gsap.set(particle, {
+      x: Math.random() * window.innerWidth,
+      y: Math.random() * window.innerHeight
+    });
+
+    gsap.to(particle, {
+      y: '+=100',
+      rotation: 360,
+      duration: Math.random() * 10 + 10,
+      repeat: -1,
+      yoyo: true,
+      ease: 'sine.inOut'
+    });
+
+    particlesContainer.appendChild(particle);
+  }
+}
+
+// ИЛИ полностью убрать частицы - закомментируйте следующую строку:
+// function addParticlesEffect() { } // Пустая функция - частицы не создаются
+
+// Init on DOM ready
+document.addEventListener('DOMContentLoaded', () => {
+  initAnimations();
+  attachProjectToggles();
+  imagesFallback();
+  initSpotifyPlayer();
+  // addParticlesEffect(); // Закомментируйте эту строку, чтобы убрать частицы полностью
+});
