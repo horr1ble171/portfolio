@@ -24,6 +24,11 @@ function optimizeForMobile() {
     if (particles) {
       particles.style.display = 'none';
     }
+
+    // Оптимизация ScrollTrigger для мобильных
+    ScrollTrigger.config({
+      ignoreMobileResize: true
+    });
   }
 }
 
@@ -423,6 +428,24 @@ function addParticlesEffect() {
   }
 }
 
+// Фикс для скролла в Telegram
+function fixTelegramScroll() {
+  // Определяем, открыто ли в Telegram WebView
+  const isTelegram = /Telegram/.test(navigator.userAgent);
+
+  if (isTelegram) {
+    // Добавляем небольшую задержку для инициализации анимаций
+    setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 100);
+
+    // Улучшаем обработку ресайза для Telegram
+    window.addEventListener('resize', () => {
+      setTimeout(() => ScrollTrigger.refresh(), 150);
+    });
+  }
+}
+
 // Init on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
   optimizeForMobile();
@@ -430,5 +453,6 @@ document.addEventListener('DOMContentLoaded', () => {
   attachProjectToggles();
   imagesFallback();
   initSpotifyPlayer();
+  fixTelegramScroll();
   // addParticlesEffect(); // Закомментируйте эту строку, чтобы убрать частицы полностью
 });
