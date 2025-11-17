@@ -14,15 +14,12 @@ window.addEventListener('resize', () => {
 
 // Оптимизация для мобильных устройств
 function optimizeForMobile() {
-  // Отключаем ненужные эффекты на мобильных
   if (window.innerWidth <= 768) {
-    // Упрощаем анимации
     gsap.config({
       nullTargetWarn: false,
       units: { left: "%", top: "%", rotation: "rad" }
     });
 
-    // Уменьшаем количество частиц или отключаем их
     const particles = document.querySelector('.particles-container');
     if (particles) {
       particles.style.display = 'none';
@@ -62,9 +59,58 @@ function initAnimations() {
     ease: 'power3.out'
   }, '-=0.4');
 
-  // Отключаем сложные анимации скролла для мобильных
+  // Skills animations
   if (window.innerWidth > 768) {
-    // Projects animation (только для десктопа)
+    gsap.utils.toArray('.skills-section-large').forEach(el => {
+      gsap.fromTo(el, { autoAlpha: 0, y: 30 }, {
+        duration: 1.1,
+        autoAlpha: 1,
+        y: 0,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 80%',
+          end: 'bottom 20%',
+          toggleActions: 'play none none reverse',
+          markers: false
+        }
+      });
+    });
+
+    gsap.utils.toArray('.skill-category').forEach((it, i) => {
+      gsap.fromTo(it, { autoAlpha: 0, y: 20, scale: 0.95 }, {
+        duration: 0.9,
+        autoAlpha:1,
+        y:0,
+        scale: 1,
+        ease:'power3.out',
+        scrollTrigger: {
+          trigger: it,
+          start: 'top 85%',
+          end: 'bottom 15%',
+          toggleActions: 'play none none reverse'
+        },
+        delay: i*0.1
+      });
+    });
+
+    gsap.utils.toArray('.stat-item').forEach((it, i) => {
+      gsap.fromTo(it, { autoAlpha: 0, y: 15 }, {
+        duration: 0.8,
+        autoAlpha:1,
+        y:0,
+        ease:'power3.out',
+        scrollTrigger: {
+          trigger: it,
+          start: 'top 90%',
+          end: 'bottom 10%',
+          toggleActions: 'play none none reverse'
+        },
+        delay: i*0.05
+      });
+    });
+
+    // Projects animation
     gsap.utils.toArray('.projects-section').forEach(el => {
       gsap.fromTo(el, { autoAlpha: 0, y: 30 }, {
         duration: 1.1,
@@ -81,7 +127,7 @@ function initAnimations() {
       });
     });
 
-    // Project items animation (только для десктопа)
+    // Project items animation
     gsap.utils.toArray('.project-item').forEach((it, i) => {
       gsap.fromTo(it, { autoAlpha: 0, y: 20, scale: 0.95 }, {
         duration: 0.9,
@@ -99,7 +145,7 @@ function initAnimations() {
       });
     });
 
-    // Spotify player animation (только для десктопа)
+    // Spotify player animation
     gsap.utils.toArray('.spotify-player').forEach(el => {
       gsap.fromTo(el, { autoAlpha: 0, y: 30, scale: 0.9 }, {
         duration: 1.2,
@@ -115,9 +161,23 @@ function initAnimations() {
         }
       });
     });
+
+    // Footer animation
+    gsap.fromTo('.footer', { autoAlpha: 0, y: 20 }, {
+      duration: 1,
+      autoAlpha: 1,
+      y: 0,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '.footer',
+        start: 'top 90%',
+        end: 'bottom 10%',
+        toggleActions: 'play none none reverse'
+      }
+    });
   } else {
-    // Для мобильных - простые fade-in анимации без сложного скролла
-    gsap.utils.toArray('.projects-section, .project-item, .spotify-player').forEach(el => {
+    // Для мобильных - простые fade-in анимации
+    gsap.utils.toArray('.skills-section-large, .skill-category, .stat-item, .projects-section, .project-item, .spotify-player, .footer').forEach(el => {
       gsap.fromTo(el, { autoAlpha: 0 }, {
         duration: 0.8,
         autoAlpha: 1,
@@ -317,7 +377,7 @@ function initSpotifyPlayer() {
   }
 }
 
-// Add floating particles effect (серые частицы)
+// Add floating particles effect
 function addParticlesEffect() {
   const particlesContainer = document.createElement('div');
   particlesContainer.className = 'particles-container';
@@ -363,12 +423,9 @@ function addParticlesEffect() {
   }
 }
 
-// ИЛИ полностью убрать частицы - закомментируйте следующую строку:
-// function addParticlesEffect() { } // Пустая функция - частицы не создаются
-
 // Init on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
-  optimizeForMobile(); // Добавьте эту строку первой
+  optimizeForMobile();
   initAnimations();
   attachProjectToggles();
   imagesFallback();
