@@ -16,7 +16,11 @@
 
 /* ====== СБРОС ====== */
 * { margin:0; padding:0; box-sizing:border-box; }
-html { -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; scroll-behavior:smooth; }
+html {
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  scroll-behavior:smooth;
+}
 body {
   font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
   background:
@@ -959,10 +963,26 @@ body {
     0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
-/* Mobile tweaks */
+/* ====== MOBILE OPTIMIZATIONS ====== */
+/* Все оптимизации применяются ТОЛЬКО на мобильных устройствах */
 @media (max-width: 768px) {
+  /* Улучшаем производительность скролла */
+  html {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  body {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000;
+    overflow-x: hidden;
+  }
+
   .section {
     padding: 80px 16px;
+    transform: translateZ(0);
+    will-change: transform;
   }
 
   .hero-section {
@@ -976,6 +996,17 @@ body {
     padding: 100px 16px;
   }
 
+  /* Упрощаем оформление для мобильных */
+  .avatar-container,
+  .social-icon,
+  .skill-category,
+  .stat-item,
+  .project-item,
+  .spotify-player {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
   .social-icon {
     width: 70px;
     height: 70px;
@@ -987,6 +1018,13 @@ body {
 
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Отключаем сложные hover-эффекты на мобильных */
+  .skill-category:hover,
+  .project-item:hover,
+  .stat-item:hover {
+    transform: none;
   }
 
   .footer-container {
