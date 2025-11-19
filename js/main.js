@@ -1,35 +1,38 @@
 gsap.registerPlugin(ScrollTrigger);
 
-// Обновление переменной --vh
-function updateVh() {
-  const vh = window.innerHeight * 0.01;
-  document.documentElement.style.setProperty('--vh', `${vh}px`);
+// Функция определения мобильного устройства
+function isMobileDevice() {
+  return window.innerWidth <= 768;
 }
-updateVh();
-window.addEventListener('resize', () => {
-  updateVh();
-  clearTimeout(window.__resizeTimer);
-  window.__resizeTimer = setTimeout(() => ScrollTrigger.refresh(), 220);
-});
+
+// Обновление переменной --vh (только для мобильных)
+function updateVh() {
+  if (isMobileDevice()) {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  }
+}
 
 // Оптимизация для мобильных устройств
 function optimizeForMobile() {
-  if (window.innerWidth <= 768) {
+  if (isMobileDevice()) {
     gsap.config({
       nullTargetWarn: false,
       units: { left: "%", top: "%", rotation: "rad" }
     });
 
-    const particles = document.querySelector('.particles-container');
-    if (particles) {
-      particles.style.display = 'none';
-    }
+    ScrollTrigger.config({
+      limitCallbacks: true,
+      ignoreMobileResize: true
+    });
   }
 }
 
 // Page animations
 function initAnimations() {
-  // Hero animations
+  const isMobile = isMobileDevice();
+
+  // Hero animations (одинаковые для всех устройств)
   const tl = gsap.timeline();
   tl.from('.avatar-container', {
     duration: 1.2,
@@ -59,138 +62,165 @@ function initAnimations() {
     ease: 'power3.out'
   }, '-=0.4');
 
+  // Для десктопов используем полные анимации, для мобильных - упрощенные
+  if (!isMobile) {
+    initDesktopAnimations();
+  } else {
+    initMobileAnimations();
+  }
+}
+
+// Полные анимации для десктопа (оригинальные)
+function initDesktopAnimations() {
   // Skills animations
-  if (window.innerWidth > 768) {
-    gsap.utils.toArray('.skills-section-large').forEach(el => {
-      gsap.fromTo(el, { autoAlpha: 0, y: 30 }, {
-        duration: 1.1,
-        autoAlpha: 1,
-        y: 0,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: el,
-          start: 'top 80%',
-          end: 'bottom 20%',
-          toggleActions: 'play none none reverse',
-          markers: false
-        }
-      });
-    });
-
-    gsap.utils.toArray('.skill-category').forEach((it, i) => {
-      gsap.fromTo(it, { autoAlpha: 0, y: 20, scale: 0.95 }, {
-        duration: 0.9,
-        autoAlpha:1,
-        y:0,
-        scale: 1,
-        ease:'power3.out',
-        scrollTrigger: {
-          trigger: it,
-          start: 'top 85%',
-          end: 'bottom 15%',
-          toggleActions: 'play none none reverse'
-        },
-        delay: i*0.1
-      });
-    });
-
-    gsap.utils.toArray('.stat-item').forEach((it, i) => {
-      gsap.fromTo(it, { autoAlpha: 0, y: 15 }, {
-        duration: 0.8,
-        autoAlpha:1,
-        y:0,
-        ease:'power3.out',
-        scrollTrigger: {
-          trigger: it,
-          start: 'top 90%',
-          end: 'bottom 10%',
-          toggleActions: 'play none none reverse'
-        },
-        delay: i*0.05
-      });
-    });
-
-    // Projects animation
-    gsap.utils.toArray('.projects-section').forEach(el => {
-      gsap.fromTo(el, { autoAlpha: 0, y: 30 }, {
-        duration: 1.1,
-        autoAlpha: 1,
-        y: 0,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: el,
-          start: 'top 80%',
-          end: 'bottom 20%',
-          toggleActions: 'play none none reverse',
-          markers: false
-        }
-      });
-    });
-
-    // Project items animation
-    gsap.utils.toArray('.project-item').forEach((it, i) => {
-      gsap.fromTo(it, { autoAlpha: 0, y: 20, scale: 0.95 }, {
-        duration: 0.9,
-        autoAlpha:1,
-        y:0,
-        scale: 1,
-        ease:'power3.out',
-        scrollTrigger: {
-          trigger: it,
-          start: 'top 85%',
-          end: 'bottom 15%',
-          toggleActions: 'play none none reverse'
-        },
-        delay: i*0.1
-      });
-    });
-
-    // Spotify player animation
-    gsap.utils.toArray('.spotify-player').forEach(el => {
-      gsap.fromTo(el, { autoAlpha: 0, y: 30, scale: 0.9 }, {
-        duration: 1.2,
-        autoAlpha: 1,
-        y: 0,
-        scale: 1,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: el,
-          start: 'top 80%',
-          end: 'bottom 20%',
-          toggleActions: 'play none none reverse'
-        }
-      });
-    });
-
-    // Footer animation
-    gsap.fromTo('.footer', { autoAlpha: 0, y: 20 }, {
-      duration: 1,
+  gsap.utils.toArray('.skills-section-large').forEach(el => {
+    gsap.fromTo(el, { autoAlpha: 0, y: 30 }, {
+      duration: 1.1,
       autoAlpha: 1,
       y: 0,
       ease: 'power3.out',
       scrollTrigger: {
-        trigger: '.footer',
+        trigger: el,
+        start: 'top 80%',
+        end: 'bottom 20%',
+        toggleActions: 'play none none reverse',
+        markers: false
+      }
+    });
+  });
+
+  gsap.utils.toArray('.skill-category').forEach((it, i) => {
+    gsap.fromTo(it, { autoAlpha: 0, y: 20, scale: 0.95 }, {
+      duration: 0.9,
+      autoAlpha:1,
+      y:0,
+      scale: 1,
+      ease:'power3.out',
+      scrollTrigger: {
+        trigger: it,
+        start: 'top 85%',
+        end: 'bottom 15%',
+        toggleActions: 'play none none reverse'
+      },
+      delay: i*0.1
+    });
+  });
+
+  gsap.utils.toArray('.stat-item').forEach((it, i) => {
+    gsap.fromTo(it, { autoAlpha: 0, y: 15 }, {
+      duration: 0.8,
+      autoAlpha:1,
+      y:0,
+      ease:'power3.out',
+      scrollTrigger: {
+        trigger: it,
         start: 'top 90%',
         end: 'bottom 10%',
         toggleActions: 'play none none reverse'
+      },
+      delay: i*0.05
+    });
+  });
+
+  // Projects animation
+  gsap.utils.toArray('.projects-section').forEach(el => {
+    gsap.fromTo(el, { autoAlpha: 0, y: 30 }, {
+      duration: 1.1,
+      autoAlpha: 1,
+      y: 0,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: el,
+        start: 'top 80%',
+        end: 'bottom 20%',
+        toggleActions: 'play none none reverse',
+        markers: false
       }
     });
-  } else {
-    // Для мобильных - простые fade-in анимации
-    gsap.utils.toArray('.skills-section-large, .skill-category, .stat-item, .projects-section, .project-item, .spotify-player, .footer').forEach(el => {
-      gsap.fromTo(el, { autoAlpha: 0 }, {
+  });
+
+  // Project items animation
+  gsap.utils.toArray('.project-item').forEach((it, i) => {
+    gsap.fromTo(it, { autoAlpha: 0, y: 20, scale: 0.95 }, {
+      duration: 0.9,
+      autoAlpha:1,
+      y:0,
+      scale: 1,
+      ease:'power3.out',
+      scrollTrigger: {
+        trigger: it,
+        start: 'top 85%',
+        end: 'bottom 15%',
+        toggleActions: 'play none none reverse'
+      },
+      delay: i*0.1
+    });
+  });
+
+  // Spotify player animation
+  gsap.utils.toArray('.spotify-player').forEach(el => {
+    gsap.fromTo(el, { autoAlpha: 0, y: 30, scale: 0.9 }, {
+      duration: 1.2,
+      autoAlpha: 1,
+      y: 0,
+      scale: 1,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: el,
+        start: 'top 80%',
+        end: 'bottom 20%',
+        toggleActions: 'play none none reverse'
+      }
+    });
+  });
+
+  // Footer animation
+  gsap.fromTo('.footer', { autoAlpha: 0, y: 20 }, {
+    duration: 1,
+    autoAlpha: 1,
+    y: 0,
+    ease: 'power3.out',
+    scrollTrigger: {
+      trigger: '.footer',
+      start: 'top 90%',
+      end: 'bottom 10%',
+      toggleActions: 'play none none reverse'
+    }
+  });
+}
+
+// Упрощенные анимации для мобильных
+function initMobileAnimations() {
+  const elements = [
+    '.skills-section-large',
+    '.skill-category',
+    '.stat-item',
+    '.projects-section',
+    '.project-item',
+    '.spotify-player',
+    '.footer'
+  ];
+
+  elements.forEach(selector => {
+    gsap.utils.toArray(selector).forEach(el => {
+      gsap.fromTo(el, {
+        autoAlpha: 0,
+        y: 20
+      }, {
         duration: 0.8,
         autoAlpha: 1,
+        y: 0,
         ease: 'power2.out',
         scrollTrigger: {
           trigger: el,
           start: 'top 90%',
           toggleActions: 'play none none none',
-          scrub: false
+          scrub: false,
+          once: true // Анимация срабатывает только один раз
         }
       });
     });
-  }
+  });
 }
 
 // Toggle project details
@@ -377,58 +407,51 @@ function initSpotifyPlayer() {
   }
 }
 
-// Add floating particles effect
-function addParticlesEffect() {
-  const particlesContainer = document.createElement('div');
-  particlesContainer.className = 'particles-container';
-  particlesContainer.style.cssText = `
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 0;
-  `;
-  document.body.appendChild(particlesContainer);
-
-  // Create particles
-  for (let i = 0; i < 15; i++) {
-    const particle = document.createElement('div');
-    particle.style.cssText = `
-      position: absolute;
-      width: ${Math.random() * 6 + 2}px;
-      height: ${Math.random() * 6 + 2}px;
-      background: linear-gradient(45deg, var(--gray-400), var(--gray-300));
-      border-radius: 50%;
-      opacity: ${Math.random() * 0.2 + 0.1};
-      filter: blur(1px);
-    `;
-
-    gsap.set(particle, {
-      x: Math.random() * window.innerWidth,
-      y: Math.random() * window.innerHeight
+// Оптимизация производительности (только для мобильных)
+function optimizePerformance() {
+  if (isMobileDevice()) {
+    // Упрощаем анимации для мобильных
+    gsap.config({
+      force3D: false
     });
 
-    gsap.to(particle, {
-      y: '+=100',
-      rotation: 360,
-      duration: Math.random() * 10 + 10,
-      repeat: -1,
-      yoyo: true,
-      ease: 'sine.inOut'
-    });
+    // Предотвращаем блокировку скролла
+    document.body.style.overflowX = 'hidden';
+    document.documentElement.style.overflowX = 'hidden';
 
-    particlesContainer.appendChild(particle);
+    // Улучшаем обработку касаний
+    document.addEventListener('touchmove', function(e) {
+      // Разрешаем нативный скролл
+    }, { passive: true });
   }
+}
+
+// Обновление при ресайзе
+function handleResize() {
+  updateVh();
+
+  // Обновляем ScrollTrigger с задержкой
+  clearTimeout(window.__resizeTimer);
+  window.__resizeTimer = setTimeout(() => {
+    ScrollTrigger.refresh();
+  }, 250);
 }
 
 // Init on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
+  updateVh();
   optimizeForMobile();
+  optimizePerformance();
   initAnimations();
   attachProjectToggles();
   imagesFallback();
   initSpotifyPlayer();
-  // addParticlesEffect(); // Закомментируйте эту строку, чтобы убрать частицы полностью
+
+  // Обработчик ресайза
+  window.addEventListener('resize', handleResize, { passive: true });
+});
+
+// Cleanup on page unload
+window.addEventListener('beforeunload', () => {
+  ScrollTrigger.getAll().forEach(trigger => trigger.kill());
 });
