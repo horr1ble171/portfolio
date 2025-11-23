@@ -1012,6 +1012,15 @@ body {
   .footer-legal {
     justify-content: center;
   }
+
+  /* === FIX: Фикс для длинных ссылок на мобильных === */
+  .project-bot-name {
+    word-break: break-all; /* Разрываем длинные ссылки, чтобы они не вылезали */
+    max-width: 100%;       /* Запрещаем блоку быть шире родителя */
+    font-size: 0.9rem;     /* Чуть уменьшаем шрифт, чтобы влезало больше */
+    padding: 12px 16px;    /* Уменьшаем отступы внутри рамки */
+    white-space: normal;
+  }
 }
 
 /* Optimizations */
