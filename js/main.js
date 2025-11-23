@@ -2,11 +2,11 @@ gsap.registerPlugin(ScrollTrigger);
 
 // === ФИКС МОБИЛЬНОГО СКРОЛЛА ===
 // Запрещаем GSAP обновляться, когда на телефоне скрывается адресная строка (resize по вертикали)
-ScrollTrigger.config({
-  ignoreMobileResize: true
+ScrollTrigger.config({ 
+  ignoreMobileResize: true 
 });
 
-// Обновление переменной --vh
+// Обновление переменной --vh (для корректной высоты на мобильных)
 function updateVh() {
   const vh = window.innerHeight * 0.01;
   document.documentElement.style.setProperty('--vh', `${vh}px`);
@@ -15,7 +15,7 @@ updateVh();
 
 // === УМНЫЙ РЕСАЙЗ ===
 // Если ширина экрана не изменилась (а изменилась только высота из-за скрытия меню браузера),
-// мы НЕ перезагружаем анимации. Это убирает "прыжки" на телефоне.
+// мы НЕ перезагружаем анимации. Это убирает "прыжки" и телепортацию на телефоне.
 let lastWidth = window.innerWidth;
 
 window.addEventListener('resize', () => {
@@ -27,7 +27,7 @@ window.addEventListener('resize', () => {
   }
 });
 
-// Оптимизация для мобильных устройств
+// Оптимизация настроек GSAP для мобильных
 function optimizeForMobile() {
   if (window.innerWidth <= 768) {
     gsap.config({
@@ -35,6 +35,7 @@ function optimizeForMobile() {
       units: { left: "%", top: "%", rotation: "rad" }
     });
 
+    // Отключаем частицы на слабых устройствах, если они есть
     const particles = document.querySelector('.particles-container');
     if (particles) {
       particles.style.display = 'none';
@@ -42,9 +43,44 @@ function optimizeForMobile() {
   }
 }
 
-// Page animations
+// === НОВАЯ ФУНКЦИЯ: АНИМАЦИЯ ЦИФР (СЧЕТЧИКИ) ===
+function initCounters() {
+  gsap.utils.toArray('.stat-number').forEach(stat => {
+    // 1. Сохраняем исходный текст (например, "700+")
+    const originalText = stat.innerText;
+    
+    // 2. Достаем только число (700)
+    const endValue = parseFloat(originalText.replace(/[^0-9.]/g, ''));
+    
+    // 3. Достаем суффикс (например, "+", "%" или пустоту)
+    const suffix = originalText.replace(/[0-9.]/g, '');
+
+    // Если вдруг там нет цифр, пропускаем
+    if (isNaN(endValue)) return;
+
+    // Объект-прокси для анимации значения
+    const obj = { val: 0 };
+
+    gsap.to(obj, {
+      val: endValue,
+      duration: 2,        // Длительность анимации
+      ease: "power2.out", // Плавное замедление
+      scrollTrigger: {
+        trigger: stat,
+        start: "top 85%", // Запуск, когда элемент почти появился
+        toggleActions: "play none none reverse" // Перезапуск, если проскроллить вверх и обратно
+      },
+      onUpdate: () => {
+        // Обновляем текст, округляя число и добавляя хвостик
+        stat.innerText = Math.floor(obj.val) + suffix;
+      }
+    });
+  });
+}
+
+// Основные анимации страницы
 function initAnimations() {
-  // Hero animations
+  // Hero animations (Аватар, заголовок)
   const tl = gsap.timeline();
   tl.from('.avatar-container', {
     duration: 1.2,
@@ -74,8 +110,10 @@ function initAnimations() {
     ease: 'power3.out'
   }, '-=0.4');
 
-  // АНИМАЦИИ ДЛЯ ПК (Ширина > 768px)
+  // === РАЗДЕЛЕНИЕ АНИМАЦИЙ: ПК vs МОБИЛЬНЫЕ ===
   if (window.innerWidth > 768) {
+    // --- ВЕРСИЯ ДЛЯ ПК (Более сложные эффекты) ---
+    
     gsap.utils.toArray('.skills-section-large').forEach(el => {
       gsap.fromTo(el, { autoAlpha: 0, y: 30 }, {
         duration: 1.1,
@@ -125,7 +163,6 @@ function initAnimations() {
       });
     });
 
-    // Projects animation
     gsap.utils.toArray('.projects-section').forEach(el => {
       gsap.fromTo(el, { autoAlpha: 0, y: 30 }, {
         duration: 1.1,
@@ -142,7 +179,6 @@ function initAnimations() {
       });
     });
 
-    // Project items animation
     gsap.utils.toArray('.project-item').forEach((it, i) => {
       gsap.fromTo(it, { autoAlpha: 0, y: 20, scale: 0.95 }, {
         duration: 0.9,
@@ -160,7 +196,6 @@ function initAnimations() {
       });
     });
 
-    // Spotify player animation
     gsap.utils.toArray('.spotify-player').forEach(el => {
       gsap.fromTo(el, { autoAlpha: 0, y: 30, scale: 0.9 }, {
         duration: 1.2,
@@ -177,7 +212,6 @@ function initAnimations() {
       });
     });
 
-    // Footer animation
     gsap.fromTo('.footer', { autoAlpha: 0, y: 20 }, {
       duration: 1,
       autoAlpha: 1,
@@ -190,11 +224,14 @@ function initAnimations() {
         toggleActions: 'play none none reverse'
       }
     });
+
   } else {
-    // АНИМАЦИИ ДЛЯ МОБИЛЬНЫХ (Упрощенные)
-    // scrub: false - чтобы скролл не управлял анимацией напрямую (убирает рывки)
-    // toggleActions: 'play none none none' - анимация играет 1 раз и не откатывается назад
-    gsap.utils.toArray('.skills-section-large, .skill-category, .stat-item, .projects-section, .project-item, .spotify-player, .footer').forEach(el => {
+    // --- ВЕРСИЯ ДЛЯ МОБИЛЬНЫХ (Упрощенная и стабильная) ---
+    // scrub: false и toggleActions: 'play none none none' убирают рывки при скролле
+    
+    const mobileElements = '.skills-section-large, .skill-category, .stat-item, .projects-section, .project-item, .spotify-player, .footer';
+    
+    gsap.utils.toArray(mobileElements).forEach(el => {
       gsap.fromTo(el, { autoAlpha: 0, y: 20 }, {
         duration: 0.7,
         autoAlpha: 1,
@@ -202,8 +239,8 @@ function initAnimations() {
         ease: 'power2.out',
         scrollTrigger: {
           trigger: el,
-          start: 'top 90%',
-          toggleActions: 'play none none none', // Важно для плавности на телефоне
+          start: 'top 92%',
+          toggleActions: 'play none none none', // Играем 1 раз
           scrub: false
         }
       });
@@ -211,14 +248,14 @@ function initAnimations() {
   }
 }
 
-// Toggle project details
+// Логика открытия/закрытия проектов
 function toggleProjectById(projectId) {
   const el = document.getElementById(projectId);
   if (!el) return;
   const projectItem = el.closest('.project-item');
   const open = el.classList.contains('open');
 
-  // Close others
+  // Закрываем остальные
   document.querySelectorAll('.project-details.open').forEach(d => {
     if (d !== el) {
       d.classList.remove('open');
@@ -226,6 +263,7 @@ function toggleProjectById(projectId) {
     }
   });
 
+  // Тоггл текущего
   if (open) {
     el.classList.remove('open');
     projectItem.setAttribute('aria-expanded', 'false');
@@ -235,7 +273,7 @@ function toggleProjectById(projectId) {
   }
 }
 
-// Attach click handlers
+// Навешиваем обработчики кликов на проекты
 function attachProjectToggles() {
   document.querySelectorAll('.project-item').forEach(item => {
     const header = item.querySelector('.project-header');
@@ -248,7 +286,7 @@ function attachProjectToggles() {
         toggleProjectById(details.id);
       });
 
-      // Keyboard support
+      // Поддержка клавиатуры
       header.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
@@ -257,7 +295,7 @@ function attachProjectToggles() {
       });
     }
 
-    // Prevent toggle when clicking on project button
+    // Чтобы клик по кнопке внутри не закрывал проект
     const projectButton = item.querySelector('.project-button');
     if (projectButton) {
       projectButton.addEventListener('click', (e) => {
@@ -267,7 +305,7 @@ function attachProjectToggles() {
   });
 }
 
-// Images fallback
+// Заглушка для картинок, если они не загрузились
 function imagesFallback() {
   document.querySelectorAll('img').forEach(img => {
     img.addEventListener('error', function() {
@@ -284,7 +322,7 @@ function imagesFallback() {
   });
 }
 
-// Spotify player controls
+// Плеер Spotify (логика кнопок и прогресс-бара)
 function initSpotifyPlayer() {
   const playBtn = document.querySelector('.spotify-play-btn');
   const prevBtn = document.querySelector('.prev-btn');
@@ -303,37 +341,21 @@ function initSpotifyPlayer() {
       isPlaying = !isPlaying;
 
       if (isPlaying) {
-        // Pause icon
         svg.innerHTML = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
         startProgress();
       } else {
-        // Play icon
         svg.innerHTML = '<path d="M8 5v14l11-7z"/>';
         stopProgress();
       }
 
-      // Анимация нажатия
-      gsap.to(this, {
-        scale: 0.9,
-        duration: 0.1,
-        yoyo: true,
-        repeat: 1
-      });
+      gsap.to(this, { scale: 0.9, duration: 0.1, yoyo: true, repeat: 1 });
     });
   }
 
   // Previous track
   if (prevBtn) {
     prevBtn.addEventListener('click', function() {
-      // Анимация нажатия
-      gsap.to(this, {
-        scale: 0.85,
-        duration: 0.1,
-        yoyo: true,
-        repeat: 1
-      });
-
-      // Сброс прогресса при перемотке назад
+      gsap.to(this, { scale: 0.85, duration: 0.1, yoyo: true, repeat: 1 });
       currentProgress = 0;
       progressFill.style.width = currentProgress + '%';
       stopProgress();
@@ -344,15 +366,7 @@ function initSpotifyPlayer() {
   // Next track
   if (nextBtn) {
     nextBtn.addEventListener('click', function() {
-      // Анимация нажатия
-      gsap.to(this, {
-        scale: 0.85,
-        duration: 0.1,
-        yoyo: true,
-        repeat: 1
-      });
-
-      // Сброс прогресса при перемотке вперед
+      gsap.to(this, { scale: 0.85, duration: 0.1, yoyo: true, repeat: 1 });
       currentProgress = 0;
       progressFill.style.width = currentProgress + '%';
       stopProgress();
@@ -360,7 +374,7 @@ function initSpotifyPlayer() {
     });
   }
 
-  // Progress bar click
+  // Клик по прогресс-бару
   if (progressBar) {
     progressBar.addEventListener('click', function(e) {
       const rect = this.getBoundingClientRect();
@@ -371,7 +385,6 @@ function initSpotifyPlayer() {
     });
   }
 
-  // Симуляция прогресса при воспроизведении
   function startProgress() {
     stopProgress();
     progressInterval = setInterval(() => {
@@ -395,7 +408,7 @@ function initSpotifyPlayer() {
   }
 }
 
-// Add floating particles effect
+// Частицы на фоне (можно включить, раскомментировав вызов внизу)
 function addParticlesEffect() {
   const particlesContainer = document.createElement('div');
   particlesContainer.className = 'particles-container';
@@ -410,7 +423,6 @@ function addParticlesEffect() {
   `;
   document.body.appendChild(particlesContainer);
 
-  // Create particles
   for (let i = 0; i < 15; i++) {
     const particle = document.createElement('div');
     particle.style.cssText = `
@@ -441,12 +453,13 @@ function addParticlesEffect() {
   }
 }
 
-// Init on DOM ready
+// === ИНИЦИАЛИЗАЦИЯ ПРИ ЗАГРУЗКЕ ===
 document.addEventListener('DOMContentLoaded', () => {
   optimizeForMobile();
-  initAnimations();
+  initAnimations();      // Обычные анимации появления
+  initCounters();        // Новая анимация бегущих цифр
   attachProjectToggles();
   imagesFallback();
   initSpotifyPlayer();
-  // addParticlesEffect(); // Закомментируйте эту строку, чтобы убрать частицы полностью
+  // addParticlesEffect(); // Частицы (по желанию)
 });
