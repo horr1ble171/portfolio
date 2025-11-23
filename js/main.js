@@ -1,15 +1,30 @@
 gsap.registerPlugin(ScrollTrigger);
 
+// === ФИКС МОБИЛЬНОГО СКРОЛЛА ===
+// Запрещаем GSAP обновляться, когда на телефоне скрывается адресная строка (resize по вертикали)
+ScrollTrigger.config({
+  ignoreMobileResize: true
+});
+
 // Обновление переменной --vh
 function updateVh() {
   const vh = window.innerHeight * 0.01;
   document.documentElement.style.setProperty('--vh', `${vh}px`);
 }
 updateVh();
+
+// === УМНЫЙ РЕСАЙЗ ===
+// Если ширина экрана не изменилась (а изменилась только высота из-за скрытия меню браузера),
+// мы НЕ перезагружаем анимации. Это убирает "прыжки" на телефоне.
+let lastWidth = window.innerWidth;
+
 window.addEventListener('resize', () => {
-  updateVh();
-  clearTimeout(window.__resizeTimer);
-  window.__resizeTimer = setTimeout(() => ScrollTrigger.refresh(), 220);
+  if (window.innerWidth !== lastWidth) {
+    lastWidth = window.innerWidth;
+    updateVh();
+    clearTimeout(window.__resizeTimer);
+    window.__resizeTimer = setTimeout(() => ScrollTrigger.refresh(), 220);
+  }
 });
 
 // Оптимизация для мобильных устройств
@@ -59,7 +74,7 @@ function initAnimations() {
     ease: 'power3.out'
   }, '-=0.4');
 
-  // Skills animations
+  // АНИМАЦИИ ДЛЯ ПК (Ширина > 768px)
   if (window.innerWidth > 768) {
     gsap.utils.toArray('.skills-section-large').forEach(el => {
       gsap.fromTo(el, { autoAlpha: 0, y: 30 }, {
@@ -176,16 +191,19 @@ function initAnimations() {
       }
     });
   } else {
-    // Для мобильных - простые fade-in анимации
+    // АНИМАЦИИ ДЛЯ МОБИЛЬНЫХ (Упрощенные)
+    // scrub: false - чтобы скролл не управлял анимацией напрямую (убирает рывки)
+    // toggleActions: 'play none none none' - анимация играет 1 раз и не откатывается назад
     gsap.utils.toArray('.skills-section-large, .skill-category, .stat-item, .projects-section, .project-item, .spotify-player, .footer').forEach(el => {
-      gsap.fromTo(el, { autoAlpha: 0 }, {
-        duration: 0.8,
+      gsap.fromTo(el, { autoAlpha: 0, y: 20 }, {
+        duration: 0.7,
         autoAlpha: 1,
+        y: 0,
         ease: 'power2.out',
         scrollTrigger: {
           trigger: el,
           start: 'top 90%',
-          toggleActions: 'play none none none',
+          toggleActions: 'play none none none', // Важно для плавности на телефоне
           scrub: false
         }
       });
