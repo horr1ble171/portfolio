@@ -212,18 +212,18 @@ function initAnimations() {
       });
     });
 
-    // АНИМАЦИЯ ФУТЕРА (ИСПРАВЛЕНА ДЛЯ УСТРАНЕНИЯ ДЕРГАНИЯ)
-    gsap.fromTo('.footer', { autoAlpha: 0, y: 20 }, {
-      duration: 1,
+    // АНИМАЦИЯ ФУТЕРА (УПРОЩЕННАЯ ДЛЯ ПЛАВНОСТИ)
+    // НЕ ИСПОЛЬЗУЕМ ScrollTrigger с toggleActions: 'play none none reverse', 
+    // чтобы избежать конфликта на самом краю скролла.
+    gsap.fromTo('.footer', { autoAlpha: 0, y: 30 }, {
+      duration: 1.2,
       autoAlpha: 1,
       y: 0,
       ease: 'power3.out',
       scrollTrigger: {
         trigger: '.footer',
-        start: 'top 90%',
-        end: 'bottom 10%',
-        // Заменили reverse на none, чтобы футер не исчезал при оверскролле внизу
-        toggleActions: 'play none none none'
+        start: 'top bottom', // Начинаем, когда футер появляется снизу
+        toggleActions: 'play none none none' // Играем 1 раз
       }
     });
 
@@ -459,7 +459,7 @@ function addParticlesEffect() {
 document.addEventListener('DOMContentLoaded', () => {
   optimizeForMobile();
   initAnimations();      // Обычные анимации появления
-  initCounters();        // Новая анимация бегущих цифр
+  initCounters();        // Анимация бегущих цифр
   attachProjectToggles();
   imagesFallback();
   initSpotifyPlayer();
