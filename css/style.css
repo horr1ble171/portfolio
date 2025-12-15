@@ -20,13 +20,13 @@
 html {
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
-  /* ВАЖНО: Убрали scroll-behavior: smooth, так как он конфликтует с GSAP ScrollTrigger */
+  /* Убрали scroll-behavior: smooth, так как он конфликтует с GSAP ScrollTrigger */
   height: 100%;
 }
 
 body {
   font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-  /* Фикс для фона и оверскролла */
+  /* Фон возвращен к фиксированному, как было изначально */
   background:
     linear-gradient(135deg,
       rgba(0, 0, 0, 0.7) 0%,
@@ -38,15 +38,14 @@ body {
   height: 100%;
   overflow-x: hidden;
   
-  /* Убираем "резинку" при скролле (скачки внизу страницы) */
-  overscroll-behavior-y: none;
+  /* УБРАНО: overscroll-behavior-y: none; */
   -webkit-tap-highlight-color: transparent;
 }
 
 /* Главный контент для изоляции скролла */
 #main-content {
   position: relative;
-  z-index: 10; /* Убеждаемся, что контент выше фона */
+  z-index: 10;
 }
 
 
@@ -556,9 +555,9 @@ body {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding: 60px 16px 40px;
   position: relative;
-  z-index: 10; /* Убеждаемся, что футер выше фона */
+  z-index: 10;
   overflow: hidden;
-  /* Ускорение рендеринга футера, чтобы избежать дерганий */
+  /* Оставляем GPU-ускорение для рендеринга */
   transform: translate3d(0, 0, 0); 
 }
 
@@ -986,10 +985,7 @@ body {
 
 /* Mobile tweaks */
 @media (max-width: 768px) {
-  body {
-     /* На мобильных фиксированный фон часто вызывает дерганье при скролле. Меняем на scroll */
-     background-attachment: scroll;
-  }
+  /* УБРАНО: body { background-attachment: scroll; } */
 
   .section {
     padding: 80px 16px;
@@ -1035,10 +1031,10 @@ body {
 
   /* === FIX: Фикс для длинных ссылок на мобильных === */
   .project-bot-name {
-    word-break: break-all; /* Разрываем длинные ссылки, чтобы они не вылезали */
-    max-width: 100%;       /* Запрещаем блоку быть шире родителя */
-    font-size: 0.9rem;     /* Чуть уменьшаем шрифт, чтобы влезало больше */
-    padding: 12px 16px;    /* Уменьшаем отступы внутри рамки */
+    word-break: break-all; 
+    max-width: 100%;       
+    font-size: 0.9rem;     
+    padding: 12px 16px;    
     white-space: normal;
   }
 }
