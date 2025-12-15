@@ -2,8 +2,8 @@ gsap.registerPlugin(ScrollTrigger);
 
 // === ФИКС МОБИЛЬНОГО СКРОЛЛА ===
 // Запрещаем GSAP обновляться, когда на телефоне скрывается адресная строка (resize по вертикали)
-ScrollTrigger.config({ 
-  ignoreMobileResize: true 
+ScrollTrigger.config({
+  ignoreMobileResize: true
 });
 
 // Обновление переменной --vh (для корректной высоты на мобильных)
@@ -48,10 +48,10 @@ function initCounters() {
   gsap.utils.toArray('.stat-number').forEach(stat => {
     // 1. Сохраняем исходный текст (например, "700+")
     const originalText = stat.innerText;
-    
+
     // 2. Достаем только число (700)
     const endValue = parseFloat(originalText.replace(/[^0-9.]/g, ''));
-    
+
     // 3. Достаем суффикс (например, "+", "%" или пустоту)
     const suffix = originalText.replace(/[0-9.]/g, '');
 
@@ -113,7 +113,7 @@ function initAnimations() {
   // === РАЗДЕЛЕНИЕ АНИМАЦИЙ: ПК vs МОБИЛЬНЫЕ ===
   if (window.innerWidth > 768) {
     // --- ВЕРСИЯ ДЛЯ ПК (Более сложные эффекты) ---
-    
+
     gsap.utils.toArray('.skills-section-large').forEach(el => {
       gsap.fromTo(el, { autoAlpha: 0, y: 30 }, {
         duration: 1.1,
@@ -212,6 +212,7 @@ function initAnimations() {
       });
     });
 
+    // АНИМАЦИЯ ФУТЕРА (ИСПРАВЛЕНА ДЛЯ УСТРАНЕНИЯ ДЕРГАНИЯ)
     gsap.fromTo('.footer', { autoAlpha: 0, y: 20 }, {
       duration: 1,
       autoAlpha: 1,
@@ -221,16 +222,17 @@ function initAnimations() {
         trigger: '.footer',
         start: 'top 90%',
         end: 'bottom 10%',
-        toggleActions: 'play none none reverse'
+        // Заменили reverse на none, чтобы футер не исчезал при оверскролле внизу
+        toggleActions: 'play none none none'
       }
     });
 
   } else {
     // --- ВЕРСИЯ ДЛЯ МОБИЛЬНЫХ (Упрощенная и стабильная) ---
     // scrub: false и toggleActions: 'play none none none' убирают рывки при скролле
-    
+
     const mobileElements = '.skills-section-large, .skill-category, .stat-item, .projects-section, .project-item, .spotify-player, .footer';
-    
+
     gsap.utils.toArray(mobileElements).forEach(el => {
       gsap.fromTo(el, { autoAlpha: 0, y: 20 }, {
         duration: 0.7,
