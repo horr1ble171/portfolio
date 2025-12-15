@@ -212,26 +212,13 @@ function initAnimations() {
       });
     });
 
-    // АНИМАЦИЯ ФУТЕРА (УПРОЩЕННАЯ ДЛЯ ПЛАВНОСТИ)
-    // НЕ ИСПОЛЬЗУЕМ ScrollTrigger с toggleActions: 'play none none reverse', 
-    // чтобы избежать конфликта на самом краю скролла.
-    gsap.fromTo('.footer', { autoAlpha: 0, y: 30 }, {
-      duration: 1.2,
-      autoAlpha: 1,
-      y: 0,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: '.footer',
-        start: 'top bottom', // Начинаем, когда футер появляется снизу
-        toggleActions: 'play none none none' // Играем 1 раз
-      }
-    });
+    // АНИМАЦИЯ ФУТЕРА УДАЛЕНА ИЗ-ЗА КОНФЛИКТА СО СКРОЛЛОМ В БРАУЗЕРЕ
+    // gsap.fromTo('.footer', { autoAlpha: 0, y: 30 }, { ... })
 
   } else {
     // --- ВЕРСИЯ ДЛЯ МОБИЛЬНЫХ (Упрощенная и стабильная) ---
-    // scrub: false и toggleActions: 'play none none none' убирают рывки при скролле
-
-    const mobileElements = '.skills-section-large, .skill-category, .stat-item, .projects-section, .project-item, .spotify-player, .footer';
+    // Элементы, которые мы анимируем:
+    const mobileElements = '.skills-section-large, .skill-category, .stat-item, .projects-section, .project-item, .spotify-player'; 
 
     gsap.utils.toArray(mobileElements).forEach(el => {
       gsap.fromTo(el, { autoAlpha: 0, y: 20 }, {
@@ -247,6 +234,7 @@ function initAnimations() {
         }
       });
     });
+    // АНИМАЦИЯ ФУТЕРА УДАЛЕНА ИЗ-ЗА КОНФЛИКТА СО СКРОЛЛОМ В БРАУЗЕРЕ
   }
 }
 
