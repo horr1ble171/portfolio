@@ -212,13 +212,24 @@ function initAnimations() {
       });
     });
 
-    // АНИМАЦИЯ ФУТЕРА УДАЛЕНА ИЗ-ЗА КОНФЛИКТА СО СКРОЛЛОМ В БРАУЗЕРЕ
-    // gsap.fromTo('.footer', { autoAlpha: 0, y: 30 }, { ... })
+    gsap.fromTo('.footer', { autoAlpha: 0, y: 20 }, {
+      duration: 1,
+      autoAlpha: 1,
+      y: 0,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '.footer',
+        start: 'top 90%',
+        end: 'bottom 10%',
+        toggleActions: 'play none none reverse'
+      }
+    });
 
   } else {
     // --- ВЕРСИЯ ДЛЯ МОБИЛЬНЫХ (Упрощенная и стабильная) ---
-    // Элементы, которые мы анимируем:
-    const mobileElements = '.skills-section-large, .skill-category, .stat-item, .projects-section, .project-item, .spotify-player'; 
+    // scrub: false и toggleActions: 'play none none none' убирают рывки при скролле
+
+    const mobileElements = '.skills-section-large, .skill-category, .stat-item, .projects-section, .project-item, .spotify-player, .footer';
 
     gsap.utils.toArray(mobileElements).forEach(el => {
       gsap.fromTo(el, { autoAlpha: 0, y: 20 }, {
@@ -234,7 +245,6 @@ function initAnimations() {
         }
       });
     });
-    // АНИМАЦИЯ ФУТЕРА УДАЛЕНА ИЗ-ЗА КОНФЛИКТА СО СКРОЛЛОМ В БРАУЗЕРЕ
   }
 }
 
@@ -447,7 +457,7 @@ function addParticlesEffect() {
 document.addEventListener('DOMContentLoaded', () => {
   optimizeForMobile();
   initAnimations();      // Обычные анимации появления
-  initCounters();        // Анимация бегущих цифр
+  initCounters();        // Новая анимация бегущих цифр
   attachProjectToggles();
   imagesFallback();
   initSpotifyPlayer();
