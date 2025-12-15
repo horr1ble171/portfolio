@@ -33,15 +33,22 @@ body {
       rgba(0, 0, 0, 0.8) 100%),
     url('../images/background.jpg') center/cover no-repeat fixed;
   color: var(--white);
-
+  
   width: 100%;
   height: 100%;
   overflow-x: hidden;
-
+  
   /* Убираем "резинку" при скролле (скачки внизу страницы) */
   overscroll-behavior-y: none;
   -webkit-tap-highlight-color: transparent;
 }
+
+/* Главный контент для изоляции скролла */
+#main-content {
+  position: relative;
+  z-index: 10; /* Убеждаемся, что контент выше фона */
+}
+
 
 /* ====== Общее для секций ====== */
 .section {
@@ -549,7 +556,10 @@ body {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding: 60px 16px 40px;
   position: relative;
+  z-index: 10; /* Убеждаемся, что футер выше фона */
   overflow: hidden;
+  /* Ускорение рендеринга футера, чтобы избежать дерганий */
+  transform: translate3d(0, 0, 0); 
 }
 
 .footer::before {
