@@ -20,7 +20,6 @@
 html {
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
-  /* Возвращаем стандартную плавность, как было в оригинале */
   scroll-behavior: smooth;
 }
 
@@ -33,11 +32,236 @@ body {
     url('../images/background.jpg') center/cover no-repeat fixed;
   color: var(--white);
   min-height:100vh;
-
-  /* Скрываем горизонтальный скролл ТОЛЬКО на body, чтобы не ломать прокрутку html */
-  overflow-x:hidden;
-
   -webkit-tap-highlight-color: transparent;
+  overflow-x: hidden;
+}
+
+/* ====== Navigation (Base) ====== */
+.fixed-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  padding: 20px 0;
+  transition: padding 0.3s ease;
+}
+
+.fixed-header.scrolled {
+  padding: 10px 0;
+}
+
+.header-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.navbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Базовые стили списка (без оформления) */
+.nav-list {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-link {
+  color: var(--gray-300);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.nav-icon {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+/* Гамбургер (Базово скрыт) */
+.hamburger {
+  display: none;
+}
+
+/* =========================================
+   DESKTOP STYLES (Min-width: 769px)
+   ========================================= */
+@media (min-width: 769px) {
+  .nav-list {
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 8px;
+    border-radius: 50px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .nav-link {
+    padding: 10px 24px;
+    border-radius: 24px;
+    border: 1px solid transparent;
+  }
+
+  .nav-link:hover {
+    color: var(--white);
+    transform: translateY(-2px) scale(1.05);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1), 0 5px 10px rgba(0, 0, 0, 0.2);
+  }
+}
+
+/* =========================================
+   MOBILE STYLES (Max-width: 768px)
+   ========================================= */
+@media (max-width: 768px) {
+  .header-content {
+    justify-content: flex-end;
+    padding: 10px 20px;
+    position: relative;
+  }
+
+  /* Гамбургер */
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    z-index: 1001;
+    padding: 0;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: visible;
+  }
+
+  .hamburger:hover, .hamburger:active {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  .hamburger span {
+    width: 24px;
+    height: 2px;
+    background-color: var(--white);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: block;
+  }
+
+  .hamburger span:nth-child(1) { top: 15px; }
+  .hamburger span:nth-child(2) { top: 23px; }
+  .hamburger span:nth-child(3) { top: 31px; }
+
+  .hamburger.active span:nth-child(1) {
+    top: 23px;
+    transform: translateX(-50%) rotate(45deg);
+  }
+  .hamburger.active span:nth-child(2) {
+    opacity: 0;
+    transform: translateX(-50%) scale(0);
+  }
+  .hamburger.active span:nth-child(3) {
+    top: 23px;
+    transform: translateX(-50%) rotate(-45deg);
+  }
+
+  /* Выпадающее меню */
+  .navbar {
+    position: absolute;
+    top: 100%;
+    right: 20px;
+    width: max-content;
+    min-width: 200px;
+
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    padding: 16px;
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 1000;
+  }
+
+  .navbar.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .nav-list {
+    flex-direction: column;
+    gap: 8px;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+  }
+
+  .nav-link {
+    width: 100%;
+    justify-content: flex-start;
+    font-size: 1rem;
+    padding: 12px 16px;
+    border-radius: 12px;
+    background: transparent;
+    border: 1px solid transparent;
+  }
+
+  .nav-link:active, .nav-link:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+    transform: scale(1.02);
+  }
+
+  .nav-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 12px;
+  }
+
+  .project-button:hover,
+  .spotify-link-btn:hover,
+  .social-icon:hover {
+    transform: translateY(-1px) scale(1.02);
+  }
 }
 
 /* ====== Общее для секций ====== */
@@ -51,7 +275,6 @@ body {
   min-height: 100vh;
 }
 
-/* Специальные классы для больших секций */
 .hero-section {
   padding-top: 180px;
   padding-bottom: 120px;
@@ -71,21 +294,15 @@ body {
   padding: 8px 12px;
 }
 
-/* Аватар */
 .avatar-container {
   width:240px;
   height:240px;
   border-radius:24px;
   overflow:hidden;
   margin: 0 auto 32px;
-  background: linear-gradient(135deg,
-    rgba(255, 255, 255, 0.1) 0%,
-    rgba(255, 255, 255, 0.05) 100%);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
   backdrop-filter: blur(10px);
-  box-shadow:
-    0 25px 50px rgba(255, 255, 255, 0.05),
-    0 10px 30px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  box-shadow: 0 25px 50px rgba(255, 255, 255, 0.05), 0 10px 30px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
   transform: translateZ(0);
   border: 2px solid rgba(255, 255, 255, 0.1);
   position: relative;
@@ -93,13 +310,8 @@ body {
 .avatar-container::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg,
-    rgba(255, 255, 255, 0.05) 0%,
-    rgba(0, 0, 0, 0.6) 100%);
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(0, 0, 0, 0.6) 100%);
   z-index: 1;
 }
 .avatar-image {
@@ -111,13 +323,11 @@ body {
   z-index: 2;
 }
 
-/* Заголовок */
 .hero-title {
   font-size: clamp(3rem, 8vw, 6.5rem);
   font-weight: 900;
   letter-spacing: -0.02em;
   margin-bottom: 0.5rem;
-  opacity:1;
   background: linear-gradient(135deg, var(--white) 0%, var(--gray-300) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -125,7 +335,6 @@ body {
   text-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
 }
 
-/* Подзаголовок */
 .hero-subtitle {
   font-size: clamp(1.2rem, 2vw, 1.4rem);
   color: var(--gray-300);
@@ -156,35 +365,19 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.1);
   position: relative;
   overflow: hidden;
-  background: rgba(0, 0, 0, 0.3);
-}
-
-.social-icon::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
   background: rgba(255, 255, 255, 0.05);
-  z-index: 1;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
 .social-icon:hover {
-  transform: translateY(-8px) scale(1.05);
+  transform: translateY(-2px) scale(1.05);
   border-color: rgba(255, 255, 255, 0.3);
   background: rgba(255, 255, 255, 0.1);
-  box-shadow:
-    0 20px 40px rgba(255, 255, 255, 0.1),
-    0 10px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1), 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 
-.social-icon svg,
-.social-icon svg path,
-.social-icon svg circle,
-.social-icon svg rect {
+.social-icon svg {
   fill: var(--gray-300) !important;
-  stroke: none !important;
   width: 40px;
   height: 40px;
   display:block;
@@ -220,24 +413,19 @@ body {
 
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  grid-template-columns: repeat(2, 1fr); /* 2 колонки на ПК */
   gap: 32px;
   margin-bottom: 80px;
 }
 
 .skill-category {
-  background: linear-gradient(135deg,
-    rgba(255, 255, 255, 0.08) 0%,
-    rgba(0, 0, 0, 0.6) 100%);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(0, 0, 0, 0.6) 100%);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-radius: 24px;
   padding: 0;
-  margin: 0 16px;
-  box-shadow:
-    0 25px 50px rgba(255, 255, 255, 0.05),
-    0 10px 30px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  margin: 0;
+  box-shadow: 0 25px 50px rgba(255, 255, 255, 0.05), 0 10px 30px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
   transition: all 0.4s ease;
   border: 1px solid rgba(255, 255, 255, 0.1);
   overflow: hidden;
@@ -247,31 +435,18 @@ body {
 .skill-category::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg,
-    rgba(255, 255, 255, 0.02) 0%,
-    transparent 100%);
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, transparent 100%);
   z-index: 1;
 }
 
-.skill-category > * {
-  position: relative;
-  z-index: 2;
-}
+.skill-category > * { position: relative; z-index: 2; }
 
 .skill-category:hover {
   transform: translateY(-8px);
   border-color: rgba(255, 255, 255, 0.2);
-  background: linear-gradient(135deg,
-    rgba(255, 255, 255, 0.12) 0%,
-    rgba(0, 0, 0, 0.5) 100%);
-  box-shadow:
-    0 35px 70px rgba(255, 255, 255, 0.08),
-    0 15px 40px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(0, 0, 0, 0.5) 100%);
+  box-shadow: 0 35px 70px rgba(255, 255, 255, 0.08), 0 15px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
 .skill-header {
@@ -288,9 +463,7 @@ body {
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
 
-.skill-content {
-  padding: 32px;
-}
+.skill-content { padding: 32px; }
 
 .skill-category-description {
   color: var(--gray-300);
@@ -302,15 +475,13 @@ body {
 
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(4, 1fr); /* 4 колонки на ПК */
   gap: 24px;
   margin-top: 40px;
 }
 
 .stat-item {
-  background: linear-gradient(135deg,
-    rgba(255, 255, 255, 0.08) 0%,
-    rgba(0, 0, 0, 0.6) 100%);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(0, 0, 0, 0.6) 100%);
   backdrop-filter: blur(20px);
   border-radius: 20px;
   padding: 30px;
@@ -324,30 +495,18 @@ body {
 .stat-item::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg,
-    rgba(255, 255, 255, 0.02) 0%,
-    transparent 100%);
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, transparent 100%);
   z-index: 1;
 }
 
-.stat-item > * {
-  position: relative;
-  z-index: 2;
-}
+.stat-item > * { position: relative; z-index: 2; }
 
 .stat-item:hover {
   transform: translateY(-5px);
   border-color: rgba(255, 255, 255, 0.2);
-  background: linear-gradient(135deg,
-    rgba(255, 255, 255, 0.12) 0%,
-    rgba(0, 0, 0, 0.5) 100%);
-  box-shadow:
-    0 20px 40px rgba(255, 255, 255, 0.08),
-    0 10px 30px rgba(0, 0, 0, 0.4);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(0, 0, 0, 0.5) 100%);
+  box-shadow: 0 20px 40px rgba(255, 255, 255, 0.08), 0 10px 30px rgba(0, 0, 0, 0.4);
 }
 
 .stat-number {
@@ -367,13 +526,6 @@ body {
 }
 
 /* ====== Projects ====== */
-.projects-section {
-  width:100%;
-  max-width:1000px;
-  margin:0 auto;
-  padding: 8px;
-}
-
 .projects-title {
   font-size:2.5rem;
   font-weight:800;
@@ -387,18 +539,13 @@ body {
 }
 
 .project-item {
-  background: linear-gradient(135deg,
-    rgba(255, 255, 255, 0.08) 0%,
-    rgba(0, 0, 0, 0.6) 100%);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(0, 0, 0, 0.6) 100%);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-radius: 24px;
   padding: 0;
   margin: 24px 16px;
-  box-shadow:
-    0 25px 50px rgba(255, 255, 255, 0.05),
-    0 10px 30px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  box-shadow: 0 25px 50px rgba(255, 255, 255, 0.05), 0 10px 30px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
   transition: all 0.4s ease;
   cursor: pointer;
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -408,29 +555,16 @@ body {
 .project-item::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg,
-    rgba(255, 255, 255, 0.02) 0%,
-    transparent 100%);
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, transparent 100%);
   z-index: 1;
 }
-.project-item > * {
-  position: relative;
-  z-index: 2;
-}
+.project-item > * { position: relative; z-index: 2; }
 .project-item:hover {
   transform: translateY(-8px);
   border-color: rgba(255, 255, 255, 0.2);
-  background: linear-gradient(135deg,
-    rgba(255, 255, 255, 0.12) 0%,
-    rgba(0, 0, 0, 0.5) 100%);
-  box-shadow:
-    0 35px 70px rgba(255, 255, 255, 0.08),
-    0 15px 40px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(0, 0, 0, 0.5) 100%);
+  box-shadow: 0 35px 70px rgba(255, 255, 255, 0.08), 0 15px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
 .project-header {
@@ -474,6 +608,8 @@ body {
   opacity: 0;
   transform: translateY(-10px);
   transition: max-height 0.6s ease, opacity 0.6s ease, transform 0.6s ease;
+  will-change: max-height, opacity;
+  transform: translateZ(0);
 }
 .project-details.open {
   max-height: 500px;
@@ -483,16 +619,17 @@ body {
 
 .project-bot-name {
   display:inline-block;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
   color: var(--gray-300);
   padding: 16px 28px;
   border-radius: 16px;
   font-family: 'Monaco', 'Consolas', monospace;
   font-size:1.2rem;
   margin-bottom: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  word-break: break-all; /* Перенос длинных слов/ссылок */
 }
 .project-description {
   color:var(--gray-300);
@@ -506,9 +643,7 @@ body {
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  background: linear-gradient(135deg,
-    rgba(255, 255, 255, 0.1),
-    rgba(255, 255, 255, 0.05));
+  background: rgba(255, 255, 255, 0.05);
   color: var(--white);
   padding: 16px 32px;
   border-radius:16px;
@@ -519,27 +654,20 @@ body {
   outline: none;
   font-size: 1.1rem;
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow:
-    0 8px 25px rgba(0, 0, 0, 0.3),
-    0 4px 15px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 .project-button:hover {
-  transform: translateY(-4px) scale(1.05);
-  background: linear-gradient(135deg,
-    rgba(255, 255, 255, 0.15),
-    rgba(255, 255, 255, 0.1));
-  box-shadow:
-    0 15px 35px rgba(0, 0, 0, 0.4),
-    0 8px 20px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px) scale(1.05);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1), 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 
 /* ====== Footer ====== */
 .footer {
-  background: linear-gradient(135deg,
-    rgba(0, 0, 0, 0.9) 0%,
-    rgba(0, 0, 0, 0.95) 100%);
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.95) 100%);
   backdrop-filter: blur(20px);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding: 60px 16px 40px;
@@ -550,20 +678,12 @@ body {
 .footer::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg,
-    rgba(255, 255, 255, 0.03) 0%,
-    transparent 100%);
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, transparent 100%);
   z-index: 1;
 }
 
-.footer > * {
-  position: relative;
-  z-index: 2;
-}
+.footer > * { position: relative; z-index: 2; }
 
 .footer-container {
   max-width: 1200px;
@@ -594,13 +714,8 @@ body {
   color: var(--white);
 }
 
-.footer-links ul {
-  list-style: none;
-}
-
-.footer-links li {
-  margin-bottom: 12px;
-}
+.footer-links ul { list-style: none; }
+.footer-links li { margin-bottom: 12px; }
 
 .footer-links a {
   color: var(--gray-300);
@@ -609,9 +724,7 @@ body {
   font-size: 1.1rem;
 }
 
-.footer-links a:hover {
-  color: var(--white);
-}
+.footer-links a:hover { color: var(--white); }
 
 .footer-bottom {
   max-width: 1200px;
@@ -625,15 +738,9 @@ body {
   gap: 20px;
 }
 
-.footer-copyright {
-  color: var(--gray-300);
-  font-size: 1rem;
-}
+.footer-copyright { color: var(--gray-300); font-size: 1rem; }
 
-.footer-legal {
-  display: flex;
-  gap: 24px;
-}
+.footer-legal { display: flex; gap: 24px; }
 
 .footer-legal a {
   color: var(--gray-300);
@@ -642,19 +749,9 @@ body {
   font-size: 1rem;
 }
 
-.footer-legal a:hover {
-  color: var(--white);
-}
+.footer-legal a:hover { color: var(--white); }
 
 /* ====== Spotify Section ====== */
-.spotify-container {
-  width: 100%;
-  max-width: 1200px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .spotify-title {
   font-size: 2.5rem;
   font-weight: 800;
@@ -676,17 +773,12 @@ body {
 .spotify-player {
   width: 100%;
   max-width: 500px;
-  background: linear-gradient(135deg,
-    rgba(0, 0, 0, 0.4) 0%,
-    rgba(0, 0, 0, 0.6) 100%);
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.6) 100%);
   backdrop-filter: blur(25px);
   -webkit-backdrop-filter: blur(25px);
   padding: 40px;
   border-radius: 28px;
-  box-shadow:
-    0 35px 70px rgba(255, 255, 255, 0.05),
-    0 15px 40px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  box-shadow: 0 35px 70px rgba(255, 255, 255, 0.05), 0 15px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
   margin: 8px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: var(--white);
@@ -697,22 +789,13 @@ body {
 .spotify-player::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg,
-    rgba(255, 255, 255, 0.05) 0%,
-    rgba(0, 0, 0, 0.8) 100%);
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(0, 0, 0, 0.8) 100%);
   z-index: 1;
 }
 
-.spotify-player > * {
-  position: relative;
-  z-index: 2;
-}
+.spotify-player > * { position: relative; z-index: 2; }
 
-/* Заголовок плеера */
 .spotify-header {
   display: flex;
   align-items: center;
@@ -748,10 +831,7 @@ body {
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
 }
 
-/* Контент плеера */
-.spotify-content {
-  margin-bottom: 36px;
-}
+.spotify-content { margin-bottom: 36px; }
 
 .spotify-track-info {
   display: flex;
@@ -760,32 +840,24 @@ body {
   margin-bottom: 28px;
 }
 
-.album-cover-container {
-  flex-shrink: 0;
-}
+.album-cover-container { flex-shrink: 0; }
 
 .album-cover-image {
   width: 120px;
   height: 120px;
   border-radius: 18px;
   object-fit: cover;
-  box-shadow:
-    0 12px 40px rgba(0, 0, 0, 0.6),
-    0 6px 20px rgba(255, 255, 255, 0.1);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6), 0 6px 20px rgba(255, 255, 255, 0.1);
   border: 2px solid rgba(255, 255, 255, 0.2);
   transition: all 0.4s ease;
 }
 
 .album-cover-image:hover {
-  transform: scale(1.08) rotate(2deg);
-  box-shadow:
-    0 20px 50px rgba(0, 0, 0, 0.8),
-    0 10px 30px rgba(255, 255, 255, 0.2);
+  transform: scale(1.08);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 10px 30px rgba(255, 255, 255, 0.2);
 }
 
-.track-details {
-  flex: 1;
-}
+.track-details { flex: 1; }
 
 .track-name {
   font-weight: 800;
@@ -802,9 +874,7 @@ body {
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
 }
 
-.progress-container {
-  margin-top: 24px;
-}
+.progress-container { margin-top: 24px; }
 
 .progress-time {
   display: flex;
@@ -840,10 +910,8 @@ body {
 .progress-bar-fill::after {
   content: '';
   position: absolute;
-  top: 0;
-  right: 0;
-  width: 16px;
-  height: 16px;
+  top: 0; right: 0;
+  width: 16px; height: 16px;
   background: var(--white);
   border-radius: 50%;
   transform: translate(50%, -4px);
@@ -855,7 +923,6 @@ body {
   100% { background-position: 200px 0; }
 }
 
-/* Управление плеером */
 .spotify-controls {
   display: flex;
   gap: 28px;
@@ -878,23 +945,21 @@ body {
 .spotify-control-btn {
   width: 56px;
   height: 56px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
   color: var(--white);
   backdrop-filter: blur(15px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
 .spotify-control-btn:hover {
   transform: scale(1.15);
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.1);
   border-color: rgba(255, 255, 255, 0.3);
   box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
 }
 
-.spotify-control-btn:active {
-  transform: scale(0.95);
-}
+.spotify-control-btn:active { transform: scale(0.95); }
 
 .spotify-control-btn svg {
   width: 26px;
@@ -905,29 +970,20 @@ body {
 .spotify-play-btn {
   width: 80px;
   height: 80px;
-  background: linear-gradient(135deg,
-    rgba(255, 255, 255, 0.15),
-    rgba(255, 255, 255, 0.1));
+  background: rgba(255, 255, 255, 0.05);
   color: var(--white);
-  box-shadow:
-    0 12px 35px rgba(0, 0, 0, 0.4),
-    0 6px 20px rgba(0, 0, 0, 0.3);
-  border: 2px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .spotify-play-btn:hover {
   transform: scale(1.15);
-  background: linear-gradient(135deg,
-    rgba(255, 255, 255, 0.2),
-    rgba(255, 255, 255, 0.15));
-  box-shadow:
-    0 18px 45px rgba(0, 0, 0, 0.6),
-    0 10px 30px rgba(0, 0, 0, 0.4);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.6), 0 10px 30px rgba(0, 0, 0, 0.4);
 }
 
-.spotify-play-btn:active {
-  transform: scale(0.95);
-}
+.spotify-play-btn:active { transform: scale(0.95); }
 
 .spotify-play-btn svg {
   width: 32px;
@@ -935,92 +991,33 @@ body {
   filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4));
 }
 
-/* Ссылка на Spotify */
-.spotify-link-container {
-  text-align: center;
-}
+.spotify-link-container { text-align: center; }
 
 .spotify-link-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
   color: var(--white);
   padding: 16px 36px;
   border-radius: 25px;
   text-decoration: none;
   font-weight: 700;
   transition: all 0.4s ease;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(15px);
   width: auto;
   min-width: 200px;
   font-size: 1.1rem;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
 .spotify-link-btn:hover {
-  transform: translateY(-4px) scale(1.05);
-  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px) scale(1.05);
+  background: rgba(255, 255, 255, 0.1);
   border-color: rgba(255, 255, 255, 0.3);
-  box-shadow:
-    0 15px 35px rgba(0, 0, 0, 0.4),
-    0 8px 20px rgba(0, 0, 0, 0.3);
-}
-
-/* Mobile tweaks */
-@media (max-width: 768px) {
-  .section {
-    padding: 80px 16px;
-  }
-
-  .hero-section {
-    padding-top: 120px;
-    padding-bottom: 80px;
-  }
-
-  .skills-section-large,
-  .projects-section-large,
-  .spotify-section-large {
-    padding: 100px 16px;
-  }
-
-  .social-icon {
-    width: 70px;
-    height: 70px;
-  }
-
-  .skills-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .stats-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .footer-container {
-    grid-template-columns: 1fr;
-    text-align: center;
-  }
-
-  .footer-bottom {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .footer-legal {
-    justify-content: center;
-  }
-
-  /* === FIX: Фикс для длинных ссылок на мобильных === */
-  .project-bot-name {
-    word-break: break-all; /* Разрываем длинные ссылки, чтобы они не вылезали */
-    max-width: 100%;       /* Запрещаем блоку быть шире родителя */
-    font-size: 0.9rem;     /* Чуть уменьшаем шрифт, чтобы влезало больше */
-    padding: 12px 16px;    /* Уменьшаем отступы внутри рамки */
-    white-space: normal;
-  }
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
 /* Optimizations */
@@ -1029,5 +1026,57 @@ body {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 768px) {
+  .skills-grid, .stats-grid {
+    grid-template-columns: 1fr; /* 1 колонка на мобильных */
+    gap: 24px;
+  }
+
+  .skill-header, .skill-content {
+    padding: 24px;
+  }
+
+  .skill-category-title {
+    font-size: 1.3rem;
+  }
+
+  .stat-item {
+    padding: 24px;
+  }
+
+  .stat-number {
+    font-size: 2.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding: 60px 16px;
+  }
+
+  .hero-section {
+    padding-top: 120px;
+  }
+
+  .project-item {
+    margin: 16px 0;
+  }
+
+  .spotify-player {
+    padding: 20px;
+  }
+
+  .spotify-track-info {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .album-cover-image {
+    width: 140px;
+    height: 140px;
   }
 }
