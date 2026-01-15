@@ -1,21 +1,16 @@
 gsap.registerPlugin(ScrollTrigger);
 
 // === ФИКС МОБИЛЬНОГО СКРОЛЛА ===
-// Запрещаем GSAP обновляться, когда на телефоне скрывается адресная строка (resize по вертикали)
 ScrollTrigger.config({
   ignoreMobileResize: true
 });
 
-// Обновление переменной --vh (для корректной высоты на мобильных)
 function updateVh() {
   const vh = window.innerHeight * 0.01;
   document.documentElement.style.setProperty('--vh', `${vh}px`);
 }
 updateVh();
 
-// === УМНЫЙ РЕСАЙЗ ===
-// Если ширина экрана не изменилась (а изменилась только высота из-за скрытия меню браузера),
-// мы НЕ перезагружаем анимации. Это убирает "прыжки" и телепортацию на телефоне.
 let lastWidth = window.innerWidth;
 
 window.addEventListener('resize', () => {
@@ -27,15 +22,12 @@ window.addEventListener('resize', () => {
   }
 });
 
-// Оптимизация настроек GSAP для мобильных
 function optimizeForMobile() {
   if (window.innerWidth <= 768) {
     gsap.config({
       nullTargetWarn: false,
       units: { left: "%", top: "%", rotation: "rad" }
     });
-
-    // Отключаем частицы на слабых устройствах, если они есть
     const particles = document.querySelector('.particles-container');
     if (particles) {
       particles.style.display = 'none';
@@ -43,35 +35,27 @@ function optimizeForMobile() {
   }
 }
 
-// === НОВАЯ ФУНКЦИЯ: АНИМАЦИЯ ЦИФР (СЧЕТЧИКИ) ===
+// === АНИМАЦИЯ ЦИФР ===
 function initCounters() {
   gsap.utils.toArray('.stat-number').forEach(stat => {
-    // 1. Сохраняем исходный текст (например, "700+")
     const originalText = stat.innerText;
-
-    // 2. Достаем только число (700)
     const endValue = parseFloat(originalText.replace(/[^0-9.]/g, ''));
-
-    // 3. Достаем суффикс (например, "+", "%" или пустоту)
     const suffix = originalText.replace(/[0-9.]/g, '');
 
-    // Если вдруг там нет цифр, пропускаем
     if (isNaN(endValue)) return;
 
-    // Объект-прокси для анимации значения
     const obj = { val: 0 };
 
     gsap.to(obj, {
       val: endValue,
-      duration: 2,        // Длительность анимации
-      ease: "power2.out", // Плавное замедление
+      duration: 1.5,
+      ease: "power2.out",
       scrollTrigger: {
         trigger: stat,
-        start: "top 85%", // Запуск, когда элемент почти появился
-        toggleActions: "play none none reverse" // Перезапуск, если проскроллить вверх и обратно
+        start: "top 85%",
+        toggleActions: "play none none reverse"
       },
       onUpdate: () => {
-        // Обновляем текст, округляя число и добавляя хвостик
         stat.innerText = Math.floor(obj.val) + suffix;
       }
     });
@@ -80,43 +64,51 @@ function initCounters() {
 
 // Основные анимации страницы
 function initAnimations() {
-  // Hero animations (Аватар, заголовок)
   const tl = gsap.timeline();
+
+  // === 1. HERO (ГЛАВНАЯ) - Аватар первый ===
   tl.from('.avatar-container', {
-    duration: 1.2,
+    duration: 0.8,
     autoAlpha: 0,
     y: 30,
-    scale: 0.8,
-    rotation: -5,
+    scale: 0.95,
     ease: 'power3.out'
   })
+  // === 2. НАВИГАЦИЯ (После аватара) ===
+  .from('.fixed-header', {
+    duration: 0.8,
+    y: -100,
+    ease: 'power3.out'
+  }, '-=0.4')
+
+  // === 3. ТЕКСТ И СОЦСЕТИ ===
   .from('.hero-title', {
-    duration: 1.1,
-    autoAlpha:0,
-    y: 25,
+    duration: 0.8,
+    autoAlpha: 0,
+    y: 30,
     ease: 'power3.out'
   }, '-=0.6')
   .from('.hero-subtitle', {
-    duration: 0.9,
-    autoAlpha:0,
-    y: 20,
+    duration: 0.8,
+    autoAlpha: 0,
+    y: 30,
     ease: 'power3.out'
-  }, '-=0.5')
+  }, '-=0.6')
   .from('.social-icons-container', {
     duration: 0.8,
-    autoAlpha:0,
-    y: 15,
-    stagger: 0.1,
+    autoAlpha: 0,
+    y: 30,
     ease: 'power3.out'
-  }, '-=0.4');
+  }, '-=0.6');
 
   // === РАЗДЕЛЕНИЕ АНИМАЦИЙ: ПК vs МОБИЛЬНЫЕ ===
   if (window.innerWidth > 768) {
-    // --- ВЕРСИЯ ДЛЯ ПК (Более сложные эффекты) ---
+    // --- ВЕРСИЯ ДЛЯ ПК ---
 
-    gsap.utils.toArray('.skills-section-large').forEach(el => {
+    // 2. ЗАГОЛОВКИ СЕКЦИЙ
+    gsap.utils.toArray('.skills-section-large, .projects-section, .spotify-section-large').forEach(el => {
       gsap.fromTo(el, { autoAlpha: 0, y: 30 }, {
-        duration: 1.1,
+        duration: 0.8,
         autoAlpha: 1,
         y: 0,
         ease: 'power3.out',
@@ -130,117 +122,68 @@ function initAnimations() {
       });
     });
 
-    gsap.utils.toArray('.skill-category').forEach((it, i) => {
-      gsap.fromTo(it, { autoAlpha: 0, y: 20, scale: 0.95 }, {
-        duration: 0.9,
-        autoAlpha:1,
-        y:0,
+    // 3. КАРТОЧКИ
+    const cardsSelector = '.skill-category, .project-item, .spotify-player';
+
+    gsap.utils.toArray(cardsSelector).forEach((it, i) => {
+      gsap.fromTo(it, { autoAlpha: 0, y: 30, scale: 0.95 }, {
+        duration: 0.8,
+        autoAlpha: 1,
+        y: 0,
         scale: 1,
-        ease:'power3.out',
+        ease: 'power3.out',
         scrollTrigger: {
           trigger: it,
           start: 'top 85%',
           end: 'bottom 15%',
           toggleActions: 'play none none reverse'
-        },
-        delay: i*0.1
+        }
       });
     });
 
+    // 4. Статистика
     gsap.utils.toArray('.stat-item').forEach((it, i) => {
-      gsap.fromTo(it, { autoAlpha: 0, y: 15 }, {
-        duration: 0.8,
-        autoAlpha:1,
-        y:0,
-        ease:'power3.out',
+      gsap.fromTo(it, { autoAlpha: 0, y: 20 }, {
+        duration: 0.6,
+        autoAlpha: 1,
+        y: 0,
+        ease: 'power3.out',
         scrollTrigger: {
           trigger: it,
           start: 'top 90%',
-          end: 'bottom 10%',
           toggleActions: 'play none none reverse'
         },
-        delay: i*0.05
+        delay: i * 0.1
       });
     });
 
-    gsap.utils.toArray('.projects-section').forEach(el => {
-      gsap.fromTo(el, { autoAlpha: 0, y: 30 }, {
-        duration: 1.1,
-        autoAlpha: 1,
-        y: 0,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: el,
-          start: 'top 80%',
-          end: 'bottom 20%',
-          toggleActions: 'play none none reverse',
-          markers: false
-        }
-      });
-    });
-
-    gsap.utils.toArray('.project-item').forEach((it, i) => {
-      gsap.fromTo(it, { autoAlpha: 0, y: 20, scale: 0.95 }, {
-        duration: 0.9,
-        autoAlpha:1,
-        y:0,
-        scale: 1,
-        ease:'power3.out',
-        scrollTrigger: {
-          trigger: it,
-          start: 'top 85%',
-          end: 'bottom 15%',
-          toggleActions: 'play none none reverse'
-        },
-        delay: i*0.1
-      });
-    });
-
-    gsap.utils.toArray('.spotify-player').forEach(el => {
-      gsap.fromTo(el, { autoAlpha: 0, y: 30, scale: 0.9 }, {
-        duration: 1.2,
-        autoAlpha: 1,
-        y: 0,
-        scale: 1,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: el,
-          start: 'top 80%',
-          end: 'bottom 20%',
-          toggleActions: 'play none none reverse'
-        }
-      });
-    });
-
-    gsap.fromTo('.footer', { autoAlpha: 0, y: 20 }, {
-      duration: 1,
+    // 5. Футер
+    gsap.fromTo('.footer', { autoAlpha: 0, y: 30 }, {
+      duration: 0.8,
       autoAlpha: 1,
       y: 0,
       ease: 'power3.out',
       scrollTrigger: {
         trigger: '.footer',
-        start: 'top 90%',
-        end: 'bottom 10%',
+        start: 'top 95%',
         toggleActions: 'play none none reverse'
       }
     });
 
   } else {
-    // --- ВЕРСИЯ ДЛЯ МОБИЛЬНЫХ (Упрощенная и стабильная) ---
-    // scrub: false и toggleActions: 'play none none none' убирают рывки при скролле
-
-    const mobileElements = '.skills-section-large, .skill-category, .stat-item, .projects-section, .project-item, .spotify-player, .footer';
+    // --- ВЕРСИЯ ДЛЯ МОБИЛЬНЫХ ---
+    const mobileElements = '.skills-section-large, .skill-category, .stat-item, .projects-section, .project-item, .spotify-section-large, .spotify-player, .footer';
 
     gsap.utils.toArray(mobileElements).forEach(el => {
-      gsap.fromTo(el, { autoAlpha: 0, y: 20 }, {
-        duration: 0.7,
+      gsap.fromTo(el, { autoAlpha: 0, y: 30 }, {
+        duration: 0.6,
         autoAlpha: 1,
         y: 0,
         ease: 'power2.out',
         scrollTrigger: {
           trigger: el,
-          start: 'top 92%',
-          toggleActions: 'play none none none', // Играем 1 раз
+          start: 'top 95%',
+          toggleActions: 'play none none none',
           scrub: false
         }
       });
@@ -255,7 +198,6 @@ function toggleProjectById(projectId) {
   const projectItem = el.closest('.project-item');
   const open = el.classList.contains('open');
 
-  // Закрываем остальные
   document.querySelectorAll('.project-details.open').forEach(d => {
     if (d !== el) {
       d.classList.remove('open');
@@ -263,7 +205,6 @@ function toggleProjectById(projectId) {
     }
   });
 
-  // Тоггл текущего
   if (open) {
     el.classList.remove('open');
     projectItem.setAttribute('aria-expanded', 'false');
@@ -273,7 +214,6 @@ function toggleProjectById(projectId) {
   }
 }
 
-// Навешиваем обработчики кликов на проекты
 function attachProjectToggles() {
   document.querySelectorAll('.project-item').forEach(item => {
     const header = item.querySelector('.project-header');
@@ -286,7 +226,6 @@ function attachProjectToggles() {
         toggleProjectById(details.id);
       });
 
-      // Поддержка клавиатуры
       header.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
@@ -295,7 +234,6 @@ function attachProjectToggles() {
       });
     }
 
-    // Чтобы клик по кнопке внутри не закрывал проект
     const projectButton = item.querySelector('.project-button');
     if (projectButton) {
       projectButton.addEventListener('click', (e) => {
@@ -305,7 +243,6 @@ function attachProjectToggles() {
   });
 }
 
-// Заглушка для картинок, если они не загрузились
 function imagesFallback() {
   document.querySelectorAll('img').forEach(img => {
     img.addEventListener('error', function() {
@@ -322,7 +259,6 @@ function imagesFallback() {
   });
 }
 
-// Плеер Spotify (логика кнопок и прогресс-бара)
 function initSpotifyPlayer() {
   const playBtn = document.querySelector('.spotify-play-btn');
   const prevBtn = document.querySelector('.prev-btn');
@@ -334,7 +270,6 @@ function initSpotifyPlayer() {
   let currentProgress = 45;
   let progressInterval;
 
-  // Play/Pause
   if (playBtn) {
     playBtn.addEventListener('click', function() {
       const svg = this.querySelector('svg');
@@ -352,7 +287,6 @@ function initSpotifyPlayer() {
     });
   }
 
-  // Previous track
   if (prevBtn) {
     prevBtn.addEventListener('click', function() {
       gsap.to(this, { scale: 0.85, duration: 0.1, yoyo: true, repeat: 1 });
@@ -363,7 +297,6 @@ function initSpotifyPlayer() {
     });
   }
 
-  // Next track
   if (nextBtn) {
     nextBtn.addEventListener('click', function() {
       gsap.to(this, { scale: 0.85, duration: 0.1, yoyo: true, repeat: 1 });
@@ -374,7 +307,6 @@ function initSpotifyPlayer() {
     });
   }
 
-  // Клик по прогресс-бару
   if (progressBar) {
     progressBar.addEventListener('click', function(e) {
       const rect = this.getBoundingClientRect();
@@ -408,7 +340,6 @@ function initSpotifyPlayer() {
   }
 }
 
-// Частицы на фоне (можно включить, раскомментировав вызов внизу)
 function addParticlesEffect() {
   const particlesContainer = document.createElement('div');
   particlesContainer.className = 'particles-container';
@@ -453,13 +384,58 @@ function addParticlesEffect() {
   }
 }
 
-// === ИНИЦИАЛИЗАЦИЯ ПРИ ЗАГРУЗКЕ ===
+function initNavigation() {
+  const header = document.querySelector('.fixed-header');
+  const hamburger = document.querySelector('.hamburger');
+  const navbar = document.querySelector('.navbar');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+  });
+
+  // Мобильное меню
+  if (hamburger && navbar) {
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      navbar.classList.toggle('active');
+    });
+  }
+
+  navLinks.forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const targetId = this.getAttribute('href');
+      if (targetId.startsWith('#')) {
+          e.preventDefault();
+          const targetElement = document.querySelector(targetId);
+
+          // Закрываем мобильное меню при клике
+          if (hamburger && navbar.classList.contains('active')) {
+            hamburger.classList.remove('active');
+            navbar.classList.remove('active');
+          }
+
+          if (targetElement) {
+            window.scrollTo({
+              top: targetElement.offsetTop - 80,
+              behavior: 'smooth'
+            });
+          }
+      }
+    });
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   optimizeForMobile();
-  initAnimations();      // Обычные анимации появления
-  initCounters();        // Новая анимация бегущих цифр
+  initAnimations();
+  initCounters();
   attachProjectToggles();
   imagesFallback();
   initSpotifyPlayer();
-  // addParticlesEffect(); // Частицы (по желанию)
+  initNavigation();
 });
