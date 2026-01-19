@@ -430,59 +430,67 @@ function initNavigation() {
   });
 }
 
-// === ВИБРАЦИЯ (HAPTIC FEEDBACK) - МАКСИМАЛЬНАЯ СОВМЕСТИМОСТЬ ===
+// === ВИБРАЦИЯ (HAPTIC FEEDBACK) - ПЕРЕПИСАНА С НУЛЯ ===
 function initVibration() {
-  // Проверка поддержки
-  if (!("vibrate" in navigator)) return;
+  // 1. Проверка поддержки API
+  if (!window.navigator || !window.navigator.vibrate) {
+    return;
+  }
 
-  let lastVibrateTime = 0;
-
-  // Функция вызова вибрации с защитой от частых срабатываний (debounce)
-  const triggerVibrate = (ms) => {
-    const now = Date.now();
-    // Если с прошлой вибрации прошло меньше 100мс, не вибрируем снова
-    // Это предотвращает двойную вибрацию от touchstart + click
-    if (now - lastVibrateTime < 100) return;
-
-    lastVibrateTime = now;
+  // 2. Функция вызова вибрации (используем массив для лучшей совместимости)
+  const pulse = (ms) => {
     try {
-      navigator.vibrate(ms);
+      // Сбрасываем предыдущую вибрацию перед новой (для четкости)
+      window.navigator.vibrate(0);
+      window.navigator.vibrate([ms]);
     } catch (e) {
-      // Ошибки игнорируем
+      // Игнорируем ошибки безопасности или отсутствия прав
     }
   };
 
-  // Единый обработчик для всех событий
-  const handleInteraction = (e) => {
-    const target = e.target;
+  // 3. Обработчик событий
+  const handleTap = (e) => {
+    // Ищем интерактивный элемент вверх по дереву
+    const target = e.target.closest(`
+      a,
+      button,
+      [role="button"],
+      input,
+      label,
+      select,
+      textarea,
+      .project-header,
+      .hamburger,
+      .spotify-control-btn,
+      .spotify-play-btn,
+      .progress-bar,
+      .nav-link,
+      .social-icon
+    `);
 
-    // Ищем ближайший интерактивный элемент. Список максимально широкий.
-    const el = target.closest('a, button, .btn, [role="button"], input, select, textarea, [tabindex], .project-header, .hamburger, .spotify-control-btn, .spotify-play-btn, .progress-bar');
+    if (!target) return;
 
-    if (el) {
-      // Настройка силы вибрации
-      // Увеличил значения, так как 10мс часто не чувствуется на бюджетных моторах
+    // Определяем силу вибрации в зависимости от важности элемента
 
-      // 1. Play/Pause - Сильная (50мс)
-      if (el.closest('.spotify-play-btn')) {
-        triggerVibrate(50);
-      }
-      // 2. Меню и Проекты - Средняя (30мс)
-      else if (el.closest('.hamburger') || el.closest('.project-header')) {
-        triggerVibrate(30);
-      }
-      // 3. Все остальное - Легкая (20мс)
-      else {
-        triggerVibrate(20);
-      }
+    // Уровень 1: Самая сильная (Play/Pause)
+    if (target.closest('.spotify-play-btn')) {
+      pulse(60);
+      return;
     }
+
+    // Уровень 2: Средняя (Меню, Раскрытие проектов, Навигация)
+    if (target.closest('.hamburger') || target.closest('.project-header') || target.closest('.nav-link')) {
+      pulse(40);
+      return;
+    }
+
+    // Уровень 3: Легкая (все остальные кнопки и ссылки)
+    pulse(25);
   };
 
-  // Слушаем touchstart для мгновенной реакции на мобильных
-  document.addEventListener('touchstart', handleInteraction, { passive: true });
-
-  // Слушаем click как запасной вариант (для некоторых браузеров и ПК с тачпадом)
-  document.addEventListener('click', handleInteraction, { passive: true });
+  // 4. Слушаем события
+  // pointerdown - современный стандарт, срабатывает мгновенно при касании или клике
+  document.addEventListener('pointerdown', handleTap, { passive: true });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
