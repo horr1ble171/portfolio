@@ -413,7 +413,7 @@ function initNavigation() {
           e.preventDefault();
           const targetElement = document.querySelector(targetId);
 
-          // Закрываем мобильное меню при клике
+          // Закрываем мобильное меню при кликеф
           if (hamburger && navbar.classList.contains('active')) {
             hamburger.classList.remove('active');
             navbar.classList.remove('active');
@@ -432,16 +432,52 @@ function initNavigation() {
 
 // === ВИБРАЦИЯ (HAPTIC FEEDBACK) ===
 function initVibration() {
-  // Используем делегирование событий с capture: true, чтобы перехватить клик до stopPropagation
+  // Функция для запуска вибрации
+  const vibrate = (pattern) => {
+    if (navigator.vibrate) {
+      navigator.vibrate(pattern);
+    }
+  };
+
+  // Слушаем клики на всем документе
   document.body.addEventListener('click', (e) => {
-    // Проверяем, был ли клик по интерактивному элементу или его потомку
-    // Добавил .progress-bar, чтобы перемотка трека тоже вибрировала
-    if (e.target.closest('button, a, [role="button"], .project-header, .progress-bar')) {
-      // Проверяем поддержку API вибрации
-      if (navigator.vibrate) {
-        // 15мс - короткий импульс для приятного тактильного отклика
-        navigator.vibrate(15);
-      }
+    const target = e.target;
+
+    // 1. Кнопка Play/Pause (самая сильная вибрация)
+    if (target.closest('.spotify-play-btn')) {
+      vibrate(30);
+      return;
+    }
+
+    // 2. Кнопки управления плеером (вперед/назад)
+    if (target.closest('.spotify-control-btn')) {
+      vibrate(15);
+      return;
+    }
+
+    // 3. Меню гамбургер (средняя вибрация)
+    if (target.closest('.hamburger')) {
+      vibrate(20);
+      return;
+    }
+
+    // 4. Раскрытие проектов (средняя вибрация)
+    if (target.closest('.project-header')) {
+      vibrate(20);
+      return;
+    }
+
+    // 5. Обычные ссылки и кнопки (легкая вибрация)
+    // Включает навигацию, соцсети, кнопки "Попробовать бота"
+    if (target.closest('a, button, [role="button"]')) {
+      vibrate(10);
+      return;
+    }
+
+    // 6. Прогресс бар (легкая вибрация)
+    if (target.closest('.progress-bar')) {
+      vibrate(10);
+      return;
     }
   }, { capture: true });
 }
