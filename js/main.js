@@ -413,7 +413,7 @@ function initNavigation() {
           e.preventDefault();
           const targetElement = document.querySelector(targetId);
 
-          // Закрываем мобильное меню при кликеф
+          // Закрываем мобильное меню при клике
           if (hamburger && navbar.classList.contains('active')) {
             hamburger.classList.remove('active');
             navbar.classList.remove('active');
@@ -430,56 +430,59 @@ function initNavigation() {
   });
 }
 
-// === ВИБРАЦИЯ (HAPTIC FEEDBACK) ===
+// === ВИБРАЦИЯ (HAPTIC FEEDBACK) - МАКСИМАЛЬНАЯ СОВМЕСТИМОСТЬ ===
 function initVibration() {
-  // Функция для запуска вибрации
-  const vibrate = (pattern) => {
-    if (navigator.vibrate) {
-      navigator.vibrate(pattern);
+  // Проверка поддержки
+  if (!("vibrate" in navigator)) return;
+
+  let lastVibrateTime = 0;
+
+  // Функция вызова вибрации с защитой от частых срабатываний (debounce)
+  const triggerVibrate = (ms) => {
+    const now = Date.now();
+    // Если с прошлой вибрации прошло меньше 100мс, не вибрируем снова
+    // Это предотвращает двойную вибрацию от touchstart + click
+    if (now - lastVibrateTime < 100) return;
+
+    lastVibrateTime = now;
+    try {
+      navigator.vibrate(ms);
+    } catch (e) {
+      // Ошибки игнорируем
     }
   };
 
-  // Слушаем клики на всем документе
-  document.body.addEventListener('click', (e) => {
+  // Единый обработчик для всех событий
+  const handleInteraction = (e) => {
     const target = e.target;
 
-    // 1. Кнопка Play/Pause (самая сильная вибрация)
-    if (target.closest('.spotify-play-btn')) {
-      vibrate(30);
-      return;
-    }
+    // Ищем ближайший интерактивный элемент. Список максимально широкий.
+    const el = target.closest('a, button, .btn, [role="button"], input, select, textarea, [tabindex], .project-header, .hamburger, .spotify-control-btn, .spotify-play-btn, .progress-bar');
 
-    // 2. Кнопки управления плеером (вперед/назад)
-    if (target.closest('.spotify-control-btn')) {
-      vibrate(15);
-      return;
-    }
+    if (el) {
+      // Настройка силы вибрации
+      // Увеличил значения, так как 10мс часто не чувствуется на бюджетных моторах
 
-    // 3. Меню гамбургер (средняя вибрация)
-    if (target.closest('.hamburger')) {
-      vibrate(20);
-      return;
+      // 1. Play/Pause - Сильная (50мс)
+      if (el.closest('.spotify-play-btn')) {
+        triggerVibrate(50);
+      }
+      // 2. Меню и Проекты - Средняя (30мс)
+      else if (el.closest('.hamburger') || el.closest('.project-header')) {
+        triggerVibrate(30);
+      }
+      // 3. Все остальное - Легкая (20мс)
+      else {
+        triggerVibrate(20);
+      }
     }
+  };
 
-    // 4. Раскрытие проектов (средняя вибрация)
-    if (target.closest('.project-header')) {
-      vibrate(20);
-      return;
-    }
+  // Слушаем touchstart для мгновенной реакции на мобильных
+  document.addEventListener('touchstart', handleInteraction, { passive: true });
 
-    // 5. Обычные ссылки и кнопки (легкая вибрация)
-    // Включает навигацию, соцсети, кнопки "Попробовать бота"
-    if (target.closest('a, button, [role="button"]')) {
-      vibrate(10);
-      return;
-    }
-
-    // 6. Прогресс бар (легкая вибрация)
-    if (target.closest('.progress-bar')) {
-      vibrate(10);
-      return;
-    }
-  }, { capture: true });
+  // Слушаем click как запасной вариант (для некоторых браузеров и ПК с тачпадом)
+  document.addEventListener('click', handleInteraction, { passive: true });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
