@@ -430,81 +430,6 @@ function initNavigation() {
   });
 }
 
-// === ВИБРАЦИЯ (HAPTIC FEEDBACK) - TELEGRAM + ANDROID ===
-function initVibration() {
-  // Инициализация Telegram Web App
-  const tg = window.Telegram?.WebApp;
-  if (tg) {
-    tg.ready();
-    tg.expand(); // Разворачиваем на весь экран
-  }
-
-  // Функция вызова вибрации
-  const triggerHaptic = (style) => {
-    // 1. Если открыто в Telegram (работает на iOS и Android)
-    if (tg && tg.HapticFeedback) {
-      tg.HapticFeedback.impactOccurred(style); // 'light', 'medium', 'heavy', 'rigid', 'soft'
-    }
-    // 2. Обычный браузер Android
-    else if (navigator.vibrate) {
-      // Конвертируем стили Telegram в миллисекунды
-      let ms = 15;
-      if (style === 'medium') ms = 30;
-      if (style === 'heavy') ms = 50;
-
-      try {
-        navigator.vibrate(0); // Сброс
-        navigator.vibrate([ms]);
-      } catch (e) {}
-    }
-  };
-
-  // Обработчик кликов
-  const handleClick = (e) => {
-    // Ищем интерактивный элемент
-    const target = e.target.closest(`
-      a,
-      button,
-      [role="button"],
-      input,
-      label,
-      select,
-      textarea,
-      .project-header,
-      .hamburger,
-      .spotify-control-btn,
-      .spotify-play-btn,
-      .progress-bar,
-      .nav-link,
-      .social-icon
-    `);
-
-    if (!target) return;
-
-    // Определяем силу вибрации
-
-    // Уровень 1: Самая сильная (Play/Pause)
-    if (target.closest('.spotify-play-btn')) {
-      triggerHaptic('heavy');
-      return;
-    }
-
-    // Уровень 2: Средняя (Меню, Раскрытие проектов, Навигация)
-    if (target.closest('.hamburger') || target.closest('.project-header') || target.closest('.nav-link')) {
-      triggerHaptic('medium');
-      return;
-    }
-
-    // Уровень 3: Легкая (все остальные)
-    triggerHaptic('light');
-  };
-
-  // Используем событие 'click' вместо 'touchstart'/'pointerdown'
-  // Это решает проблему вибрации при скролле.
-  // Вибрация сработает только после полноценного нажатия и отпускания пальца.
-  document.addEventListener('click', handleClick, { passive: true });
-}
-
 document.addEventListener('DOMContentLoaded', () => {
   optimizeForMobile();
   initAnimations();
@@ -513,5 +438,4 @@ document.addEventListener('DOMContentLoaded', () => {
   imagesFallback();
   initSpotifyPlayer();
   initNavigation();
-  initVibration();
 });
