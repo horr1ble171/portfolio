@@ -430,27 +430,38 @@ function initNavigation() {
   });
 }
 
-// === ВИБРАЦИЯ (HAPTIC FEEDBACK) - ПЕРЕПИСАНА С НУЛЯ ===
+// === ВИБРАЦИЯ (HAPTIC FEEDBACK) - TELEGRAM + ANDROID ===
 function initVibration() {
-  // 1. Проверка поддержки API
-  if (!window.navigator || !window.navigator.vibrate) {
-    return;
+  // Инициализация Telegram Web App
+  const tg = window.Telegram?.WebApp;
+  if (tg) {
+    tg.ready();
+    tg.expand(); // Разворачиваем на весь экран
   }
 
-  // 2. Функция вызова вибрации (используем массив для лучшей совместимости)
-  const pulse = (ms) => {
-    try {
-      // Сбрасываем предыдущую вибрацию перед новой (для четкости)
-      window.navigator.vibrate(0);
-      window.navigator.vibrate([ms]);
-    } catch (e) {
-      // Игнорируем ошибки безопасности или отсутствия прав
+  // Функция вызова вибрации
+  const triggerHaptic = (style) => {
+    // 1. Если открыто в Telegram (работает на iOS и Android)
+    if (tg && tg.HapticFeedback) {
+      tg.HapticFeedback.impactOccurred(style); // 'light', 'medium', 'heavy', 'rigid', 'soft'
+    }
+    // 2. Обычный браузер Android
+    else if (navigator.vibrate) {
+      // Конвертируем стили Telegram в миллисекунды
+      let ms = 15;
+      if (style === 'medium') ms = 30;
+      if (style === 'heavy') ms = 50;
+
+      try {
+        navigator.vibrate(0); // Сброс
+        navigator.vibrate([ms]);
+      } catch (e) {}
     }
   };
 
-  // 3. Обработчик событий
-  const handleTap = (e) => {
-    // Ищем интерактивный элемент вверх по дереву
+  // Обработчик кликов
+  const handleClick = (e) => {
+    // Ищем интерактивный элемент
     const target = e.target.closest(`
       a,
       button,
@@ -470,27 +481,28 @@ function initVibration() {
 
     if (!target) return;
 
-    // Определяем силу вибрации в зависимости от важности элемента
+    // Определяем силу вибрации
 
     // Уровень 1: Самая сильная (Play/Pause)
     if (target.closest('.spotify-play-btn')) {
-      pulse(60);
+      triggerHaptic('heavy');
       return;
     }
 
     // Уровень 2: Средняя (Меню, Раскрытие проектов, Навигация)
     if (target.closest('.hamburger') || target.closest('.project-header') || target.closest('.nav-link')) {
-      pulse(40);
+      triggerHaptic('medium');
       return;
     }
 
-    // Уровень 3: Легкая (все остальные кнопки и ссылки)
-    pulse(25);
+    // Уровень 3: Легкая (все остальные)
+    triggerHaptic('light');
   };
 
-  // 4. Слушаем события
-  // pointerdown - современный стандарт, срабатывает мгновенно при касании или клике
-  document.addEventListener('pointerdown', handleTap, { passive: true });
+  // Используем событие 'click' вместо 'touchstart'/'pointerdown'
+  // Это решает проблему вибрации при скролле.
+  // Вибрация сработает только после полноценного нажатия и отпускания пальца.
+  document.addEventListener('click', handleClick, { passive: true });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
