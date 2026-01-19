@@ -430,6 +430,22 @@ function initNavigation() {
   });
 }
 
+// === ВИБРАЦИЯ (HAPTIC FEEDBACK) ===
+function initVibration() {
+  // Используем делегирование событий с capture: true, чтобы перехватить клик до stopPropagation
+  document.body.addEventListener('click', (e) => {
+    // Проверяем, был ли клик по интерактивному элементу или его потомку
+    // Добавил .progress-bar, чтобы перемотка трека тоже вибрировала
+    if (e.target.closest('button, a, [role="button"], .project-header, .progress-bar')) {
+      // Проверяем поддержку API вибрации
+      if (navigator.vibrate) {
+        // 15мс - короткий импульс для приятного тактильного отклика
+        navigator.vibrate(15);
+      }
+    }
+  }, { capture: true });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   optimizeForMobile();
   initAnimations();
@@ -438,4 +454,5 @@ document.addEventListener('DOMContentLoaded', () => {
   imagesFallback();
   initSpotifyPlayer();
   initNavigation();
+  initVibration();
 });
