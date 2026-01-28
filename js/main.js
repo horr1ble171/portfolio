@@ -28,10 +28,6 @@ function optimizeForMobile() {
       nullTargetWarn: false,
       units: { left: "%", top: "%", rotation: "rad" }
     });
-    const particles = document.querySelector('.particles-container');
-    if (particles) {
-      particles.style.display = 'none';
-    }
   }
 }
 
@@ -67,7 +63,8 @@ function initAnimations() {
   const tl = gsap.timeline();
 
   // === 1. HERO (ГЛАВНАЯ) - Аватар первый ===
-  tl.from('.avatar-container', {
+  // Анимируем ОБЕРТКУ, чтобы не конфликтовать с hover-эффектом контейнера
+  tl.from('.avatar-wrapper', {
     duration: 0.8,
     autoAlpha: 0,
     y: 30,
@@ -157,22 +154,12 @@ function initAnimations() {
       });
     });
 
-    // 5. Футер
-    gsap.fromTo('.footer', { autoAlpha: 0, y: 30 }, {
-      duration: 0.8,
-      autoAlpha: 1,
-      y: 0,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: '.footer',
-        start: 'top 95%',
-        toggleActions: 'play none none reverse'
-      }
-    });
+    // Анимация футера УДАЛЕНА
 
   } else {
     // --- ВЕРСИЯ ДЛЯ МОБИЛЬНЫХ ---
-    const mobileElements = '.skills-section-large, .skill-category, .stat-item, .projects-section, .project-item, .spotify-section-large, .spotify-player, .footer';
+    // Убрал .footer из списка анимируемых элементов
+    const mobileElements = '.skills-section-large, .skill-category, .stat-item, .projects-section, .project-item, .spotify-section-large, .spotify-player';
 
     gsap.utils.toArray(mobileElements).forEach(el => {
       gsap.fromTo(el, { autoAlpha: 0, y: 30 }, {
@@ -245,7 +232,13 @@ function attachProjectToggles() {
 
 function imagesFallback() {
   document.querySelectorAll('img').forEach(img => {
+    // Пропускаем изображение в лайтбоксе
+    if (img.id === 'lightbox-img') return;
+
     img.addEventListener('error', function() {
+      // Если у картинки нет src (например, очистили), не считаем это ошибкой
+      if (!this.getAttribute('src')) return;
+
       this.style.display = 'none';
       const ph = document.createElement('div');
       ph.style.width = this.width ? this.width + 'px' : '140px';
@@ -340,50 +333,6 @@ function initSpotifyPlayer() {
   }
 }
 
-function addParticlesEffect() {
-  const particlesContainer = document.createElement('div');
-  particlesContainer.className = 'particles-container';
-  particlesContainer.style.cssText = `
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 0;
-  `;
-  document.body.appendChild(particlesContainer);
-
-  for (let i = 0; i < 15; i++) {
-    const particle = document.createElement('div');
-    particle.style.cssText = `
-      position: absolute;
-      width: ${Math.random() * 6 + 2}px;
-      height: ${Math.random() * 6 + 2}px;
-      background: linear-gradient(45deg, var(--gray-400), var(--gray-300));
-      border-radius: 50%;
-      opacity: ${Math.random() * 0.2 + 0.1};
-      filter: blur(1px);
-    `;
-
-    gsap.set(particle, {
-      x: Math.random() * window.innerWidth,
-      y: Math.random() * window.innerHeight
-    });
-
-    gsap.to(particle, {
-      y: '+=100',
-      rotation: 360,
-      duration: Math.random() * 10 + 10,
-      repeat: -1,
-      yoyo: true,
-      ease: 'sine.inOut'
-    });
-
-    particlesContainer.appendChild(particle);
-  }
-}
-
 function initNavigation() {
   const header = document.querySelector('.fixed-header');
   const hamburger = document.querySelector('.hamburger');
@@ -430,6 +379,53 @@ function initNavigation() {
   });
 }
 
+function initLightbox() {
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const closeBtn = document.querySelector('.lightbox-close');
+  const triggers = document.querySelectorAll('.avatar-image, .album-cover-image');
+
+  if (!lightbox || !lightboxImg) return;
+
+  function openLightbox(src) {
+    lightboxImg.src = src;
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden'; // Блокируем скролл
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('active');
+    document.body.style.overflow = ''; // Разблокируем скролл
+
+    // Не очищаем src сразу, чтобы не было моргания или ошибки загрузки пустой строки
+    // Можно очистить после анимации, если нужно, но лучше оставить как есть
+    // или заменить на прозрачный пиксель, если критично
+  }
+
+  triggers.forEach(img => {
+    img.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openLightbox(img.src);
+    });
+  });
+
+  closeBtn.addEventListener('click', closeLightbox);
+
+  // Закрытие по клику на фон
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) {
+      closeLightbox();
+    }
+  });
+
+  // Закрытие по Esc
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+      closeLightbox();
+    }
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   optimizeForMobile();
   initAnimations();
@@ -438,4 +434,5 @@ document.addEventListener('DOMContentLoaded', () => {
   imagesFallback();
   initSpotifyPlayer();
   initNavigation();
+  initLightbox();
 });
