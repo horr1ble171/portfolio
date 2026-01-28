@@ -42,9 +42,11 @@
           </li>
           <li>
             <a href="#skills" class="nav-link">
-              <!-- Исправленная иконка < > -->
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="nav-icon">
-                <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/>
+              <!-- Новая иконка </> (жирная) -->
+              <svg width="20" height="20" viewBox="0 0 32 32" fill="currentColor" stroke="currentColor" stroke-width="1.5" class="nav-icon">
+                <polygon points="31 16 24 23 22.59 21.59 28.17 16 22.59 10.41 24 9 31 16"/>
+                <polygon points="1 16 8 9 9.41 10.41 3.83 16 9.41 21.59 8 23 1 16"/>
+                <rect x="5.91" y="15" width="20.17" height="2" transform="translate(-3.6 27.31) rotate(-75)"/>
               </svg>
               Навыки
             </a>
@@ -75,8 +77,11 @@
     <section id="hero" class="section hero-section">
       <div class="hero-inner">
         <div class="mb-12 flex justify-center">
-          <div class="avatar-container" aria-hidden="true">
-            <img src="images/avatar.jpg" alt="horr1ble" class="avatar-image" loading="lazy" />
+          <!-- Обертка для анимации GSAP -->
+          <div class="avatar-wrapper">
+            <div class="avatar-container" aria-hidden="true">
+              <img src="images/avatar.jpg" alt="horr1ble" class="avatar-image" loading="lazy" />
+            </div>
           </div>
         </div>
 
@@ -206,54 +211,6 @@
               <p class="project-bot-name">@music_horr1ble_bot</p>
               <p class="project-description">Бот для создания музыки в telegram профиль</p>
               <a class="project-button" href="https://t.me/music_horr1ble_bot" target="_blank" rel="noopener noreferrer">
-                Попробовать бота
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="margin-left: 8px;">
-                  <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
-                </svg>
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <div class="project-item" tabindex="0" role="button" aria-expanded="false">
-          <div class="project-header">
-            <h3 class="project-title">Telegram бот для поиска текста любой песни<br>(в разработке, не всегда работает)</h3>
-            <div class="project-arrow">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M7.41 8.84L12 13.42l4.59-4.58L18 10.25l-6 6-6-6z"/>
-              </svg>
-            </div>
-          </div>
-
-          <div id="project2-details" class="project-details" aria-hidden="true">
-            <div class="project-content">
-              <p class="project-bot-name">@lyric_horr1ble_bot</p>
-              <p class="project-description">Бот для получения текста песни</p>
-              <a class="project-button" href="https://t.me/lyric_horr1ble_bot" target="_blank" rel="noopener noreferrer">
-                Попробовать бота
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="margin-left: 8px;">
-                  <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
-                </svg>
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <div class="project-item" tabindex="0" role="button" aria-expanded="false">
-          <div class="project-header">
-            <h3 class="project-title">Telegram бот для получения обложки любой песни<br>(в разработке, не всегда работает)</h3>
-            <div class="project-arrow">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M7.41 8.84L12 13.42l4.59-4.58L18 10.25l-6 6-6-6z"/>
-              </svg>
-            </div>
-          </div>
-
-          <div id="project3-details" class="project-details" aria-hidden="true">
-            <div class="project-content">
-              <p class="project-bot-name">@cover_music_horr1ble_bot</p>
-              <p class="project-description">Бот для скачивания и получения обложки музыки в высоком качестве</p>
-              <a class="project-button" href="https://t.me/cover_music_horr1ble_bot" target="_blank" rel="noopener noreferrer">
                 Попробовать бота
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="margin-left: 8px;">
                   <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
@@ -439,6 +396,16 @@
       </div>
     </div>
   </footer>
+
+  <!-- Lightbox Modal -->
+  <div class="lightbox-modal" id="lightbox">
+    <button class="lightbox-close" aria-label="Закрыть">
+      <svg viewBox="0 0 24 24">
+        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+      </svg>
+    </button>
+    <img src="" alt="Full screen view" class="lightbox-image" id="lightbox-img">
+  </div>
 
   <script src="js/main.js"></script>
 </body>
