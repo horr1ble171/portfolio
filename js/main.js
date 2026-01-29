@@ -48,7 +48,7 @@ function initCounters() {
       ease: "power2.out",
       scrollTrigger: {
         trigger: stat,
-        start: "top 95%", // Срабатывает раньше
+        start: "top 95%",
         toggleActions: "play none none reverse"
       },
       onUpdate: () => {
@@ -111,7 +111,7 @@ function initAnimations() {
         ease: 'power3.out',
         scrollTrigger: {
           trigger: el,
-          start: 'top 95%', // Появляются раньше
+          start: 'top 95%',
           end: 'bottom 5%',
           toggleActions: 'play none none reverse',
           markers: false
@@ -131,7 +131,7 @@ function initAnimations() {
         ease: 'power3.out',
         scrollTrigger: {
           trigger: it,
-          start: 'top 95%', // Появляются раньше
+          start: 'top 95%',
           end: 'bottom 5%',
           toggleActions: 'play none none reverse'
         }
@@ -147,18 +147,15 @@ function initAnimations() {
         ease: 'power3.out',
         scrollTrigger: {
           trigger: it,
-          start: 'top 95%', // Появляются раньше
+          start: 'top 95%',
           toggleActions: 'play none none reverse'
         },
         delay: i * 0.1
       });
     });
 
-    // Анимация футера УДАЛЕНА
-
   } else {
     // --- ВЕРСИЯ ДЛЯ МОБИЛЬНЫХ ---
-    // Убрал .footer из списка анимируемых элементов
     const mobileElements = '.skills-section-large, .skill-category, .stat-item, .projects-section, .project-item, .spotify-section-large, .spotify-player';
 
     gsap.utils.toArray(mobileElements).forEach(el => {
@@ -169,7 +166,7 @@ function initAnimations() {
         ease: 'power2.out',
         scrollTrigger: {
           trigger: el,
-          start: 'top 98%', // Появляются практически сразу при появлении на экране
+          start: 'top 98%',
           toggleActions: 'play none none none',
           scrub: false
         }
@@ -178,25 +175,31 @@ function initAnimations() {
   }
 }
 
-// Логика открытия/закрытия проектов
+// Логика открытия/закрытия проектов с динамической высотой
 function toggleProjectById(projectId) {
   const el = document.getElementById(projectId);
   if (!el) return;
   const projectItem = el.closest('.project-item');
-  const open = el.classList.contains('open');
+  const isOpen = el.classList.contains('open');
 
+  // Закрываем другие открытые проекты
   document.querySelectorAll('.project-details.open').forEach(d => {
     if (d !== el) {
+      d.style.maxHeight = null; // Сбрасываем высоту
       d.classList.remove('open');
       d.closest('.project-item').setAttribute('aria-expanded', 'false');
     }
   });
 
-  if (open) {
+  if (isOpen) {
+    // Закрываем текущий
+    el.style.maxHeight = null;
     el.classList.remove('open');
     projectItem.setAttribute('aria-expanded', 'false');
   } else {
+    // Открываем текущий
     el.classList.add('open');
+    el.style.maxHeight = el.scrollHeight + "px"; // Устанавливаем точную высоту контента
     projectItem.setAttribute('aria-expanded', 'true');
   }
 }
@@ -232,11 +235,9 @@ function attachProjectToggles() {
 
 function imagesFallback() {
   document.querySelectorAll('img').forEach(img => {
-    // Пропускаем изображение в лайтбоксе
     if (img.id === 'lightbox-img') return;
 
     img.addEventListener('error', function() {
-      // Если у картинки нет src (например, очистили), не считаем это ошибкой
       if (!this.getAttribute('src')) return;
 
       this.style.display = 'none';
