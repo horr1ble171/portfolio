@@ -48,7 +48,7 @@ function initCounters() {
       ease: "power2.out",
       scrollTrigger: {
         trigger: stat,
-        start: "top 85%",
+        start: "top 95%", // Срабатывает раньше
         toggleActions: "play none none reverse"
       },
       onUpdate: () => {
@@ -111,8 +111,8 @@ function initAnimations() {
         ease: 'power3.out',
         scrollTrigger: {
           trigger: el,
-          start: 'top 80%',
-          end: 'bottom 20%',
+          start: 'top 95%', // Появляются раньше
+          end: 'bottom 5%',
           toggleActions: 'play none none reverse',
           markers: false
         }
@@ -131,8 +131,8 @@ function initAnimations() {
         ease: 'power3.out',
         scrollTrigger: {
           trigger: it,
-          start: 'top 85%',
-          end: 'bottom 15%',
+          start: 'top 95%', // Появляются раньше
+          end: 'bottom 5%',
           toggleActions: 'play none none reverse'
         }
       });
@@ -147,7 +147,7 @@ function initAnimations() {
         ease: 'power3.out',
         scrollTrigger: {
           trigger: it,
-          start: 'top 90%',
+          start: 'top 95%', // Появляются раньше
           toggleActions: 'play none none reverse'
         },
         delay: i * 0.1
@@ -169,7 +169,7 @@ function initAnimations() {
         ease: 'power2.out',
         scrollTrigger: {
           trigger: el,
-          start: 'top 95%',
+          start: 'top 98%', // Появляются практически сразу при появлении на экране
           toggleActions: 'play none none none',
           scrub: false
         }
