@@ -619,19 +619,19 @@ body {
   background: rgba(0, 0, 0, 0.2);
 }
 
+/* Анимация аккордеона (как в меню) */
 .project-details {
-  overflow:hidden;
   max-height: 0;
   opacity: 0;
-  transform: translateY(-10px);
-  transition: max-height 0.6s ease, opacity 0.6s ease, transform 0.6s ease;
-  will-change: max-height, opacity; /* Оптимизация анимации */
-  transform: translateZ(0);
+  overflow: hidden;
+  /* Плавный переход высоты и прозрачности */
+  transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out; /* Ускорили до 0.3s */
+  will-change: max-height, opacity;
 }
+
 .project-details.open {
-  max-height: 500px;
+  max-height: 500px; /* Достаточно большое значение для контента */
   opacity: 1;
-  transform: translateY(0);
 }
 
 .project-bot-name {
@@ -1147,6 +1147,12 @@ body {
     right: 20px;
     width: 40px;
     height: 40px;
+  }
+
+  /* Оптимизация производительности для мобильных */
+  .project-item, .skill-category, .spotify-player {
+    backdrop-filter: blur(10px); /* Уменьшенное размытие для производительности */
+    -webkit-backdrop-filter: blur(10px);
   }
 }
 
