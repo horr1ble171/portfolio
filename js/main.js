@@ -253,6 +253,28 @@ function imagesFallback() {
   });
 }
 
+// Функция для анимации клика (вынесена глобально для использования в разных местах)
+function animateClick(element, scaleTo) {
+  // 1. Отключаем CSS transition, чтобы не мешал GSAP
+  element.style.transition = 'none';
+
+  gsap.fromTo(element,
+    { scale: 1 },
+    {
+      scale: scaleTo,
+      duration: 0.1,
+      yoyo: true,
+      repeat: 1,
+      overwrite: true,
+      onComplete: () => {
+        // 2. После анимации очищаем инлайновые стили GSAP
+        // и восстанавливаем CSS transition (убирая 'none')
+        gsap.set(element, { clearProps: "all" });
+      }
+    }
+  );
+}
+
 function initSpotifyPlayer() {
   const playBtn = document.querySelector('.spotify-play-btn');
   const prevBtn = document.querySelector('.prev-btn');
@@ -260,78 +282,25 @@ function initSpotifyPlayer() {
   const progressBar = document.querySelector('.progress-bar');
   const progressFill = document.querySelector('.progress-bar-fill');
 
-  let isPlaying = false;
-  let currentProgress = 45;
-  let progressInterval;
-
   if (playBtn) {
     playBtn.addEventListener('click', function() {
-      const svg = this.querySelector('svg');
-      isPlaying = !isPlaying;
-
-      if (isPlaying) {
-        svg.innerHTML = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
-        startProgress();
-      } else {
-        svg.innerHTML = '<path d="M8 5v14l11-7z"/>';
-        stopProgress();
-      }
-
-      gsap.to(this, { scale: 0.9, duration: 0.1, yoyo: true, repeat: 1 });
+      animateClick(this, 0.9);
     });
   }
 
   if (prevBtn) {
     prevBtn.addEventListener('click', function() {
-      gsap.to(this, { scale: 0.85, duration: 0.1, yoyo: true, repeat: 1 });
-      currentProgress = 0;
-      progressFill.style.width = currentProgress + '%';
-      stopProgress();
-      if (isPlaying) startProgress();
+      animateClick(this, 0.85);
     });
   }
 
   if (nextBtn) {
     nextBtn.addEventListener('click', function() {
-      gsap.to(this, { scale: 0.85, duration: 0.1, yoyo: true, repeat: 1 });
-      currentProgress = 0;
-      progressFill.style.width = currentProgress + '%';
-      stopProgress();
-      if (isPlaying) startProgress();
+      animateClick(this, 0.85);
     });
   }
 
-  if (progressBar) {
-    progressBar.addEventListener('click', function(e) {
-      const rect = this.getBoundingClientRect();
-      const clickX = e.clientX - rect.left;
-      const newProgress = (clickX / rect.width) * 100;
-      currentProgress = Math.max(0, Math.min(100, newProgress));
-      progressFill.style.width = currentProgress + '%';
-    });
-  }
-
-  function startProgress() {
-    stopProgress();
-    progressInterval = setInterval(() => {
-      if (isPlaying && currentProgress < 100) {
-        currentProgress += 0.2;
-        progressFill.style.width = currentProgress + '%';
-      } else if (currentProgress >= 100) {
-        stopProgress();
-        isPlaying = false;
-        const playSvg = playBtn.querySelector('svg');
-        playSvg.innerHTML = '<path d="M8 5v14l11-7z"/>';
-      }
-    }, 1000);
-  }
-
-  function stopProgress() {
-    if (progressInterval) {
-      clearInterval(progressInterval);
-      progressInterval = null;
-    }
-  }
+  // Прогресс бар больше не кликабельный, анимация shimmer остается в CSS
 }
 
 function initNavigation() {
@@ -343,8 +312,10 @@ function initNavigation() {
   window.addEventListener('scroll', () => {
     if (window.scrollY > 50) {
       header.classList.add('scrolled');
+      document.body.classList.add('scrolled-mode'); // Добавляем класс для body
     } else {
       header.classList.remove('scrolled');
+      document.body.classList.remove('scrolled-mode'); // Удаляем класс
     }
   });
 
@@ -358,6 +329,9 @@ function initNavigation() {
 
   navLinks.forEach(anchor => {
     anchor.addEventListener('click', function (e) {
+      // Анимация нажатия для навигации
+      animateClick(this, 0.95);
+
       const targetId = this.getAttribute('href');
       if (targetId.startsWith('#')) {
           e.preventDefault();
