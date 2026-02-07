@@ -35,9 +35,9 @@ body {
       rgba(0, 0, 0, 0.7) 0%,
       rgba(0, 0, 0, 0.8) 100%),
     url('../images/background.jpg') center/cover no-repeat fixed;
+  background-color: var(--black);
   color: var(--white);
   min-height:100vh;
-  /* Убираем подсветку тапа на мобильных */
   -webkit-tap-highlight-color: transparent;
   overflow-x: hidden;
 }
@@ -73,7 +73,6 @@ body {
   align-items: center;
 }
 
-/* Базовые стили списка (без оформления) */
 .nav-list {
   display: flex;
   list-style: none;
@@ -86,15 +85,12 @@ body {
   text-decoration: none;
   font-weight: 500;
   font-size: 1rem;
-  /* Плавная анимация как у соцсетей */
   transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
   position: relative;
   display: inline-flex;
   align-items: center;
   gap: 8px;
   white-space: nowrap;
-
-  /* Оптимизация анимации */
   backface-visibility: hidden;
   transform: translateZ(0);
   will-change: transform;
@@ -107,7 +103,6 @@ body {
   fill: currentColor;
 }
 
-/* Гамбургер (Базово скрыт) */
 .hamburger {
   display: none;
 }
@@ -134,19 +129,16 @@ body {
     border: 1px solid transparent;
   }
 
-  /* Состояние нажатия (Active) - добавляем цвет текста и рамку */
   .nav-link:active {
-    color: var(--white); /* Делаем текст белым при нажатии */
+    color: var(--white);
     background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.3); /* Включаем обводку */
+    border-color: rgba(255, 255, 255, 0.3);
     box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1), 0 5px 10px rgba(0, 0, 0, 0.2);
   }
 
-  /* Hover только для устройств с мышью */
   @media (hover: hover) {
     .nav-link:hover {
       color: var(--white);
-      /* Вернули масштаб 1.05 */
       transform: scale(1.05) translateZ(0);
       background: rgba(255, 255, 255, 0.1);
       border-color: rgba(255, 255, 255, 0.3);
@@ -165,7 +157,6 @@ body {
     position: relative;
   }
 
-  /* Гамбургер */
   .hamburger {
     display: flex;
     flex-direction: column;
@@ -188,7 +179,6 @@ body {
     outline: none !important;
   }
 
-  /* Hover только для устройств с мышью */
   @media (hover: hover) {
     .hamburger:hover {
       background: rgba(255, 255, 255, 0.1);
@@ -230,14 +220,12 @@ body {
     transform: translateX(-50%) rotate(-45deg);
   }
 
-  /* Выпадающее меню */
   .navbar {
     position: absolute;
     top: 100%;
     right: 20px;
     width: max-content;
     min-width: 200px;
-
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
@@ -245,7 +233,6 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
     padding: 16px;
-
     opacity: 0;
     visibility: hidden;
     transform: translateY(-10px);
@@ -336,6 +323,12 @@ body {
   padding: 8px 12px;
 }
 
+.hero-avatar-outer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 3rem;
+}
+
 .avatar-container {
   width:240px;
   height:240px;
@@ -350,8 +343,6 @@ body {
   position: relative;
   transition: all 0.4s ease;
   cursor: pointer;
-
-  /* Оптимизация анимации */
   backface-visibility: hidden;
   will-change: transform;
 }
@@ -363,14 +354,12 @@ body {
   z-index: 1;
 }
 
-/* Эффект увеличения всего контейнера при наведении (ДЛЯ ВСЕХ УСТРОЙСТВ) */
 .avatar-container:hover {
   transform: scale(1.08) translateZ(0);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 10px 30px rgba(255, 255, 255, 0.2);
   border-color: rgba(255, 255, 255, 0.3);
 }
 
-/* Убедимся, что картинка не мешает масштабированию контейнера */
 .avatar-container:hover .avatar-image {
   transform: scale(1) translateZ(0);
 }
@@ -424,7 +413,6 @@ body {
   align-items:center;
   justify-content:center;
   text-decoration:none;
-  /* Плавная анимация */
   transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
   backdrop-filter: blur(15px);
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -432,8 +420,6 @@ body {
   overflow: hidden;
   background: rgba(255, 255, 255, 0.05);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-
-  /* === FIX ДЛЯ ПЛАВНОСТИ === */
   backface-visibility: hidden;
   transform: translateZ(0);
   will-change: transform;
@@ -442,7 +428,6 @@ body {
 
 @media (hover: hover) {
   .social-icon:hover {
-    /* Увеличили масштаб до 1.15 */
     transform: scale(1.15) translateZ(0);
     border-color: rgba(255, 255, 255, 0.3);
     background: rgba(255, 255, 255, 0.1);
@@ -462,7 +447,7 @@ body {
   position: relative;
   z-index: 2;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
-  transition: fill 0.3s ease; /* Только цвет */
+  transition: fill 0.3s ease;
   backface-visibility: hidden;
 }
 
@@ -487,7 +472,7 @@ body {
 
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 2 колонки на ПК */
+  grid-template-columns: repeat(2, 1fr);
   gap: 32px;
   margin-bottom: 80px;
 }
@@ -504,8 +489,6 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.1);
   overflow: hidden;
   position: relative;
-
-  /* Оптимизация анимации */
   backface-visibility: hidden;
   transform: translateZ(0);
   will-change: transform;
@@ -556,7 +539,7 @@ body {
 
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 4 колонки на ПК */
+  grid-template-columns: repeat(4, 1fr);
   gap: 24px;
   margin-top: 40px;
 }
@@ -571,8 +554,6 @@ body {
   transition: all 0.4s ease;
   position: relative;
   overflow: hidden;
-
-  /* Оптимизация анимации */
   backface-visibility: hidden;
   transform: translateZ(0);
   will-change: transform;
@@ -634,14 +615,11 @@ body {
   padding: 0;
   margin: 24px 16px;
   box-shadow: 0 25px 50px rgba(255, 255, 255, 0.05), 0 10px 30px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  /* Оптимизация анимации: убрали transition: all */
   transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease, background 0.4s ease;
   cursor: pointer;
   border: 1px solid rgba(255, 255, 255, 0.1);
   overflow: hidden;
   position: relative;
-
-  /* Оптимизация анимации */
   backface-visibility: hidden;
   transform: translateZ(0);
   will-change: transform;
@@ -699,18 +677,16 @@ body {
   background: rgba(0, 0, 0, 0.2);
 }
 
-/* Анимация аккордеона (как в меню) */
 .project-details {
   max-height: 0;
   opacity: 0;
   overflow: hidden;
-  /* Плавный переход высоты и прозрачности */
-  transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out; /* Ускорили до 0.3s */
+  transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
   will-change: max-height, opacity;
 }
 
 .project-details.open {
-  max-height: 500px; /* Достаточно большое значение для контента */
+  max-height: 500px;
   opacity: 1;
 }
 
@@ -726,7 +702,7 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  word-break: break-all; /* Перенос длинных слов/ссылок */
+  word-break: break-all;
 }
 .project-description {
   color:var(--gray-300);
@@ -746,7 +722,6 @@ body {
   border-radius:16px;
   text-decoration:none;
   font-weight:700;
-  /* Плавная анимация как у соцсетей */
   transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
   border: none;
   outline: none;
@@ -755,8 +730,6 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-
-  /* === FIX ДЛЯ ПЛАВНОСТИ И ЧЕТКОСТИ === */
   backface-visibility: hidden;
   transform: translateZ(0);
   will-change: transform;
@@ -765,7 +738,6 @@ body {
 
 @media (hover: hover) {
   .project-button:hover {
-    /* Увеличили масштаб до 1.1 */
     transform: scale(1.1) translateZ(0);
     background: rgba(255, 255, 255, 0.1);
     border-color: rgba(255, 255, 255, 0.3);
@@ -781,7 +753,7 @@ body {
   padding: 60px 16px 40px;
   position: relative;
   overflow: hidden;
-  will-change: transform, opacity; /* Оптимизация для анимации */
+  will-change: transform, opacity;
 }
 
 .footer::before {
@@ -974,15 +946,12 @@ body {
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6), 0 6px 20px rgba(255, 255, 255, 0.1);
   border: 2px solid rgba(255, 255, 255, 0.2);
   transition: all 0.4s ease;
-  cursor: pointer; /* Указываем, что можно кликнуть */
-
-  /* Оптимизация анимации */
+  cursor: pointer;
   backface-visibility: hidden;
   transform: translateZ(0);
   will-change: transform;
 }
 
-/* Вернули эффект наведения для всех устройств */
 .album-cover-image:hover {
   transform: scale(1.08) translateZ(0);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 10px 30px rgba(255, 255, 255, 0.2);
@@ -1022,7 +991,7 @@ body {
   border-radius: 8px;
   height: 8px;
   overflow: hidden;
-  cursor: default; /* Changed from pointer to default */
+  cursor: default;
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
   position: relative;
 }
@@ -1068,12 +1037,9 @@ body {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  /* UPDATED TRANSITION */
   transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
   border-radius: 50%;
   padding: 16px;
-
-  /* OPTIMIZATIONS */
   backface-visibility: hidden;
   transform: translateZ(0);
   will-change: transform;
@@ -1145,7 +1111,6 @@ body {
   border-radius: 25px;
   text-decoration: none;
   font-weight: 700;
-  /* Плавная анимация как у соцсетей */
   transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
   border: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(15px);
@@ -1154,8 +1119,6 @@ body {
   font-size: 1.1rem;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-
-  /* === FIX ДЛЯ ПЛАВНОСТИ И ЧЕТКОСТИ === */
   backface-visibility: hidden;
   transform: translateZ(0);
   will-change: transform;
@@ -1164,7 +1127,6 @@ body {
 
 @media (hover: hover) {
   .spotify-link-btn:hover {
-    /* Увеличили масштаб до 1.1 */
     transform: scale(1.1) translateZ(0);
     background: rgba(255, 255, 255, 0.1);
     border-color: rgba(255, 255, 255, 0.3);
@@ -1219,7 +1181,7 @@ body {
   height: 50px;
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px; /* Квадратная форма с закруглением */
+  border-radius: 12px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1229,12 +1191,11 @@ body {
   backdrop-filter: blur(10px);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   z-index: 10000;
-  transition: top 0.3s ease; /* Плавное изменение позиции */
+  transition: top 0.3s ease;
 }
 
-/* Когда body имеет класс scrolled-mode (хедер сжат) */
 body.scrolled-mode .lightbox-close {
-  top: 20px; /* Поднимаем выше, чтобы совпадать с гамбургером */
+  top: 20px;
 }
 
 @media (hover: hover) {
@@ -1251,7 +1212,6 @@ body.scrolled-mode .lightbox-close {
   fill: currentColor;
 }
 
-/* Optimizations */
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.01ms !important;
@@ -1260,10 +1220,9 @@ body.scrolled-mode .lightbox-close {
   }
 }
 
-/* Extra small devices */
 @media (max-width: 768px) {
   .skills-grid, .stats-grid {
-    grid-template-columns: 1fr; /* 1 колонка на мобильных */
+    grid-template-columns: 1fr;
     gap: 24px;
   }
 
@@ -1284,15 +1243,14 @@ body.scrolled-mode .lightbox-close {
   }
 
   .lightbox-close {
-    top: 30px; /* Совпадает с padding header-content (10px) */
-    right: 20px; /* Совпадает с padding header-content (20px) */
-    width: 48px; /* Как у гамбургера */
-    height: 48px; /* Как у гамбургера */
+    top: 30px;
+    right: 20px;
+    width: 48px;
+    height: 48px;
   }
 
-  /* Оптимизация производительности для мобильных */
   .project-item, .skill-category, .spotify-player {
-    backdrop-filter: blur(10px); /* Уменьшенное размытие для производительности */
+    backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
   }
 }
@@ -1315,9 +1273,9 @@ body.scrolled-mode .lightbox-close {
   }
 
   .spotify-track-info {
-    flex-direction: row; /* Вернули в строку */
-    text-align: left;    /* Выровняли текст по левому краю */
-    align-items: center; /* Выровняли по вертикали */
-    gap: 16px;           /* Немного уменьшили отступ */
+    flex-direction: row;
+    text-align: left;
+    align-items: center;
+    gap: 16px;
   }
 }
