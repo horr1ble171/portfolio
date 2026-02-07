@@ -212,7 +212,7 @@ function attachProjectToggles() {
     if (header && details) {
       header.addEventListener('click', (e) => {
         e.preventDefault();
-        e.stopPropagation();
+        // e.stopPropagation(); // Removed to allow menu closing
         toggleProjectById(details.id);
       });
 
@@ -227,7 +227,7 @@ function attachProjectToggles() {
     const projectButton = item.querySelector('.project-button');
     if (projectButton) {
       projectButton.addEventListener('click', (e) => {
-        e.stopPropagation();
+        // e.stopPropagation(); // Removed to allow menu closing
       });
     }
   });
@@ -321,9 +321,18 @@ function initNavigation() {
 
   // Мобильное меню
   if (hamburger && navbar) {
-    hamburger.addEventListener('click', () => {
+    hamburger.addEventListener('click', (e) => {
+      e.stopPropagation();
       hamburger.classList.toggle('active');
       navbar.classList.toggle('active');
+    });
+
+    // Закрытие меню при клике вне его
+    document.addEventListener('click', (e) => {
+      if (navbar.classList.contains('active') && !navbar.contains(e.target) && !hamburger.contains(e.target)) {
+        hamburger.classList.remove('active');
+        navbar.classList.remove('active');
+      }
     });
   }
 
@@ -379,7 +388,7 @@ function initLightbox() {
 
   triggers.forEach(img => {
     img.addEventListener('click', (e) => {
-      e.stopPropagation();
+      // e.stopPropagation(); // Removed to allow menu closing
       openLightbox(img.src);
     });
   });
