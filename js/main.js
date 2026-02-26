@@ -103,7 +103,7 @@ function initAnimations() {
     // --- ВЕРСИЯ ДЛЯ ПК ---
 
     // 2. ЗАГОЛОВКИ СЕКЦИЙ
-    gsap.utils.toArray('.skills-section-large, .projects-section, .spotify-section-large').forEach(el => {
+    gsap.utils.toArray('.skills-section-large, .projects-section-large, .spotify-section-large').forEach(el => {
       gsap.fromTo(el, { autoAlpha: 0, y: 30 }, {
         duration: 0.8,
         autoAlpha: 1,
@@ -120,7 +120,7 @@ function initAnimations() {
     });
 
     // 3. КАРТОЧКИ
-    const cardsSelector = '.skill-category, .project-item, .spotify-player';
+    const cardsSelector = '.skill-category, .project-card, .spotify-player';
 
     gsap.utils.toArray(cardsSelector).forEach((it, i) => {
       gsap.fromTo(it, { autoAlpha: 0, y: 30, scale: 0.95 }, {
@@ -156,7 +156,7 @@ function initAnimations() {
 
   } else {
     // --- ВЕРСИЯ ДЛЯ МОБИЛЬНЫХ ---
-    const mobileElements = '.skills-section-large, .skill-category, .stat-item, .projects-section, .project-item, .spotify-section-large, .spotify-player';
+    const mobileElements = '.skills-section-large, .skill-category, .stat-item, .projects-section-large, .project-card, .spotify-section-large, .spotify-player';
 
     gsap.utils.toArray(mobileElements).forEach(el => {
       gsap.fromTo(el, { autoAlpha: 0, y: 30 }, {
@@ -175,59 +175,83 @@ function initAnimations() {
   }
 }
 
-// Логика открытия/закрытия проектов с динамической высотой
-function toggleProjectById(projectId) {
-  const el = document.getElementById(projectId);
-  if (!el) return;
-  const projectItem = el.closest('.project-item');
-  const isOpen = el.classList.contains('open');
+function initProjectModals() {
+  const openButtons = document.querySelectorAll('.project-card-button');
+  const modals = document.querySelectorAll('.project-modal-overlay');
 
-  // Закрываем другие открытые проекты
-  document.querySelectorAll('.project-details.open').forEach(d => {
-    if (d !== el) {
-      d.style.maxHeight = null; // Сбрасываем высоту
-      d.classList.remove('open');
-      d.closest('.project-item').setAttribute('aria-expanded', 'false');
+  function openModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      setupDescription(modal);
     }
+  }
+
+  function closeModal(modal) {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  function setupDescription(modal) {
+    if (window.innerWidth <= 768) {
+      const description = modal.querySelector('.project-modal-description');
+      if (description) {
+        // Сохраняем полный текст, если еще не сохранили
+        if (!description.dataset.fullText) {
+          description.dataset.fullText = description.innerHTML;
+        }
+
+        // ВСЕГДА сбрасываем к сокращенному виду при открытии
+        const fullText = description.dataset.fullText;
+        // Если текст достаточно длинный, сокращаем его
+        if (fullText.length > 100) {
+            const shortText = fullText.substring(0, 100);
+            description.innerHTML = `${shortText}<span class="read-more">... еще</span>`;
+
+            const readMore = description.querySelector('.read-more');
+            readMore.style.cursor = 'pointer';
+            readMore.style.color = 'var(--gray-400)';
+            readMore.addEventListener('click', (e) => {
+              e.stopPropagation();
+              description.innerHTML = fullText;
+            });
+        } else {
+            // Если текст короткий, просто показываем его
+            description.innerHTML = fullText;
+        }
+      }
+    }
+  }
+
+  openButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const projectId = button.dataset.projectId;
+      openModal(`project-modal-${projectId}`);
+    });
   });
 
-  if (isOpen) {
-    // Закрываем текущий
-    el.style.maxHeight = null;
-    el.classList.remove('open');
-    projectItem.setAttribute('aria-expanded', 'false');
-  } else {
-    // Открываем текущий
-    el.classList.add('open');
-    el.style.maxHeight = el.scrollHeight + "px"; // Устанавливаем точную высоту контента
-    projectItem.setAttribute('aria-expanded', 'true');
-  }
-}
-
-function attachProjectToggles() {
-  document.querySelectorAll('.project-item').forEach(item => {
-    const header = item.querySelector('.project-header');
-    const details = item.querySelector('.project-details');
-
-    if (header && details) {
-      header.addEventListener('click', (e) => {
-        e.preventDefault();
-        // e.stopPropagation(); // Removed to allow menu closing
-        toggleProjectById(details.id);
-      });
-
-      header.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          toggleProjectById(details.id);
-        }
+  modals.forEach(modal => {
+    const closeButton = modal.querySelector('.project-modal-close');
+    if (closeButton) {
+      closeButton.addEventListener('click', () => {
+        closeModal(modal);
       });
     }
 
-    const projectButton = item.querySelector('.project-button');
-    if (projectButton) {
-      projectButton.addEventListener('click', (e) => {
-        // e.stopPropagation(); // Removed to allow menu closing
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        closeModal(modal);
+      }
+    });
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      modals.forEach(modal => {
+        if (modal.classList.contains('active')) {
+          closeModal(modal);
+        }
       });
     }
   });
@@ -367,28 +391,25 @@ function initLightbox() {
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = document.getElementById('lightbox-img');
   const closeBtn = document.querySelector('.lightbox-close');
-  const triggers = document.querySelectorAll('.avatar-image, .album-cover-image');
+  // Добавил .project-modal-image в селектор
+  const triggers = document.querySelectorAll('.avatar-image, .album-cover-image, .project-modal-image');
 
   if (!lightbox || !lightboxImg) return;
 
   function openLightbox(src) {
     lightboxImg.src = src;
     lightbox.classList.add('active');
-    document.body.style.overflow = 'hidden'; // Блокируем скролл
+    // document.body.style.overflow = 'hidden'; // Убрал блокировку скролла body, так как она может конфликтовать с модалкой
   }
 
   function closeLightbox() {
     lightbox.classList.remove('active');
-    document.body.style.overflow = ''; // Разблокируем скролл
-
-    // Не очищаем src сразу, чтобы не было моргания или ошибки загрузки пустой строки
-    // Можно очистить после анимации, если нужно, но лучше оставить как есть
-    // или заменить на прозрачный пиксель, если критично
+    // document.body.style.overflow = '';
   }
 
   triggers.forEach(img => {
     img.addEventListener('click', (e) => {
-      // e.stopPropagation(); // Removed to allow menu closing
+      e.stopPropagation(); // Останавливаем всплытие, чтобы не закрыть модалку (если клик внутри)
       openLightbox(img.src);
     });
   });
@@ -414,7 +435,7 @@ document.addEventListener('DOMContentLoaded', () => {
   optimizeForMobile();
   initAnimations();
   initCounters();
-  attachProjectToggles();
+  initProjectModals();
   imagesFallback();
   initSpotifyPlayer();
   initNavigation();
