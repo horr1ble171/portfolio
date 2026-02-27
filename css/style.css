@@ -529,6 +529,32 @@ body {
 
 .skill-content { padding: 32px; }
 
+/* Стили для элементов навыков */
+.skill-content li {
+  transition: all 0.3s ease;
+  cursor: default;
+}
+
+/* Анимация для элементов навыков в ПК версии */
+@media (min-width: 769px) {
+  .skill-content li {
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                background 0.3s ease, 
+                box-shadow 0.3s ease;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    will-change: transform;
+  }
+
+  @media (hover: hover) {
+    .skill-content li:hover {
+      transform: scale(1.03) translateZ(0);
+      background: rgba(255, 255, 255, 0.05);
+      box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1), 0 5px 10px rgba(0, 0, 0, 0.2);
+    }
+  }
+}
+
 .skill-category-description {
   color: var(--gray-300);
   line-height: 1.6;
@@ -899,6 +925,26 @@ body {
 .tech-item svg {
   width: 24px;
   height: 24px;
+}
+
+/* Анимация увеличения для технологий в ПК версии */
+@media (min-width: 769px) {
+  .tech-item {
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    will-change: transform;
+    -webkit-font-smoothing: subpixel-antialiased;
+  }
+
+  @media (hover: hover) {
+    .tech-item:hover {
+      transform: scale(1.08) translateZ(0);
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1), 0 5px 10px rgba(0, 0, 0, 0.2);
+    }
+  }
 }
 
 .project-modal-button {
@@ -1493,4 +1539,11 @@ body.scrolled-mode .lightbox-close {
     align-items: center;
     gap: 16px;
   }
+}
+
+@media (hover: hover) {
+    .btn-press:active {
+        transform: scale(0.95);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
 }
