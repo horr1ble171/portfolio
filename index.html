@@ -20,11 +20,9 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="bg-black text-white">
-  <!-- Navigation -->
   <header class="fixed-header">
     <div class="header-content">
-      <!-- Кнопка меню для мобильных -->
-      <button class="hamburger btn-press" aria-label="Меню">
+      <button type="button" class="hamburger btn-press" aria-label="Меню">
         <span></span>
         <span></span>
         <span></span>
@@ -42,7 +40,6 @@
           </li>
           <li>
             <a href="#skills" class="nav-link btn-press">
-              <!-- Новая иконка </> (жирная) -->
               <svg width="20" height="20" viewBox="0 0 32 32" fill="currentColor" stroke="currentColor" stroke-width="1.5" class="nav-icon">
                 <polygon points="31 16 24 23 22.59 21.59 28.17 16 22.59 10.41 24 9 31 16"/>
                 <polygon points="1 16 8 9 9.41 10.41 3.83 16 9.41 21.59 8 23 1 16"/>
@@ -53,7 +50,6 @@
           </li>
           <li>
             <a href="#projects-section" class="nav-link btn-press">
-              <!-- Исправленная иконка папки (залитая) -->
               <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="nav-icon">
                 <path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/>
               </svg>
@@ -77,7 +73,6 @@
     <section id="hero" class="section hero-section">
       <div class="hero-inner">
         <div class="mb-12 flex justify-center">
-          <!-- Обертка для анимации GSAP -->
           <div class="avatar-wrapper">
             <div class="avatar-container" aria-hidden="true">
               <img src="images/avatar.jpg" alt="horr1ble" class="avatar-image" loading="lazy" />
@@ -264,47 +259,43 @@
         <h2 class="projects-title">Мои проекты</h2>
 
         <div class="projects-grid">
-          <!-- Пример карточки проекта -->
           <div class="project-card" data-project-id="music-bot">
             <div class="project-card-image-wrapper">
               <img src="images/project-1.jpg" alt="Обложка проекта Music Bot" class="project-card-image" loading="lazy" />
             </div>
             <div class="project-card-content">
               <h3 class="project-card-title">Музыка для профиля</h3>
-              <button class="project-card-button btn-press" data-project-id="music-bot">Подробнее</button>
+              <button type="button" class="project-card-button btn-press" data-project-id="music-bot">Подробнее</button>
             </div>
           </div>
 
-          <!-- Пример карточки проекта 3 -->
           <div class="project-card" data-project-id="portfolio-site">
             <div class="project-card-image-wrapper">
               <img src="images/avatar.jpg" alt="Обложка проекта Portfolio Site" class="project-card-image" loading="lazy" />
             </div>
             <div class="project-card-content">
               <h3 class="project-card-title">Портфолио</h3>
-              <button class="project-card-button btn-press" data-project-id="portfolio-site">Подробнее</button>
+              <button type="button" class="project-card-button btn-press" data-project-id="portfolio-site">Подробнее</button>
             </div>
           </div>
 
-          <!-- Пример карточки проекта 4 -->
           <div class="project-card" data-project-id="shop-bot">
             <div class="project-card-image-wrapper">
               <img src="images/project-4.jpg" alt="Обложка проекта Shop Bot" class="project-card-image" loading="lazy" />
             </div>
             <div class="project-card-content">
               <h3 class="project-card-title">GEO stars</h3>
-              <button class="project-card-button btn-press" data-project-id="shop-bot">Подробнее</button>
+              <button type="button" class="project-card-button btn-press" data-project-id="shop-bot">Подробнее</button>
             </div>
           </div>
 
-          <!-- Пример карточки проекта 5 -->
           <div class="project-card" data-project-id="ascii-art-bot">
             <div class="project-card-image-wrapper">
               <img src="images/project-5.jpg" alt="Обложка проекта Ascii Art Bot" class="project-card-image" loading="lazy" />
             </div>
             <div class="project-card-content">
               <h3 class="project-card-title">Ascii art generator</h3>
-              <button class="project-card-button btn-press" data-project-id="ascii-art-bot">Подробнее</button>
+              <button type="button" class="project-card-button btn-press" data-project-id="ascii-art-bot">Подробнее</button>
             </div>
           </div>
         </div>
@@ -354,17 +345,17 @@
             </div>
 
             <div class="spotify-controls">
-              <button class="spotify-control-btn prev-btn btn-press" aria-label="Предыдущий трек">
+              <button type="button" class="spotify-control-btn prev-btn btn-press" aria-label="Предыдущий трек">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/>
                 </svg>
               </button>
-              <button class="spotify-play-btn btn-press" aria-label="Пауза">
+              <button type="button" class="spotify-play-btn btn-press" aria-label="Пауза">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
                 </svg>
               </button>
-              <button class="spotify-control-btn next-btn btn-press" aria-label="Следующий трек">
+              <button type="button" class="spotify-control-btn next-btn btn-press" aria-label="Следующий трек">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/>
                 </svg>
@@ -415,9 +406,8 @@
     </div>
   </footer>
 
-  <!-- Lightbox Modal -->
   <div class="lightbox-modal" id="lightbox">
-    <button class="lightbox-close btn-press" aria-label="Закрыть">
+    <button type="button" class="lightbox-close btn-press" aria-label="Закрыть">
       <svg viewBox="0 0 24 24">
         <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
       </svg>
@@ -425,10 +415,9 @@
     <img src="" alt="Full screen view" class="lightbox-image" id="lightbox-img">
   </div>
 
-  <!-- Project Modals -->
   <div class="project-modal-overlay" id="project-modal-music-bot">
     <div class="project-modal-content">
-      <button class="project-modal-close btn-press" aria-label="Закрыть">
+      <button type="button" class="project-modal-close btn-press" aria-label="Закрыть">
         <svg viewBox="0 0 24 24">
           <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
         </svg>
@@ -437,14 +426,22 @@
         <div class="project-modal-image-wrapper">
           <img src="images/project-1.jpg" alt="Обложка проекта Music Bot" class="project-modal-image" loading="lazy" />
         </div>
-        <h3 class="project-modal-title">Музыка для профиля</h3>
+        <div class="project-header-text">
+          <h3 class="project-modal-title">Музыка для профиля</h3>
+          <div class="project-modal-info-grid">
+            <div class="info-box">
+              <span class="info-label">Дата начала</span>
+              <span class="info-value">19.09.2025</span>
+            </div>
+            <div class="info-box">
+              <span class="info-label">Статус</span>
+              <span class="info-value">Активен</span>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="project-modal-body">
         <p class="project-modal-description">Этот бот позволяет пользователям добавлять или изменять обложку, название, исполнителя и название альбома для аудиофайлов прямо в Telegram. Он поддерживает различные форматы аудио и обеспечивает удобный интерфейс для редактирования метаданных.</p>
-        <div class="project-modal-info">
-          <p><strong>Дата начала:</strong> 19.09.2025</p>
-          <p><strong>Статус:</strong> Активен</p>
-        </div>
         <div class="project-modal-technologies">
           <h4>Технологии:</h4>
           <div class="tech-icons">
@@ -480,10 +477,9 @@
     </div>
   </div>
 
-  <!-- Project Modal 3 -->
   <div class="project-modal-overlay" id="project-modal-portfolio-site">
     <div class="project-modal-content">
-      <button class="project-modal-close btn-press" aria-label="Закрыть">
+      <button type="button" class="project-modal-close btn-press" aria-label="Закрыть">
         <svg viewBox="0 0 24 24">
           <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
         </svg>
@@ -492,19 +488,27 @@
         <div class="project-modal-image-wrapper">
           <img src="images/avatar.jpg" alt="Обложка проекта Portfolio Site" class="project-modal-image" loading="lazy" />
         </div>
-        <h3 class="project-modal-title">Портфолио</h3>
+        <div class="project-header-text">
+          <h3 class="project-modal-title">Портфолио</h3>
+          <div class="project-modal-info-grid">
+            <div class="info-box">
+              <span class="info-label">Дата начала</span>
+              <span class="info-value">09.10.2025</span>
+            </div>
+            <div class="info-box">
+              <span class="info-label">Статус</span>
+              <span class="info-value">Активен</span>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="project-modal-body">
         <p class="project-modal-description">Это мой личный сайт-портфолио, созданный для демонстрации моих навыков, проектов и интересов. Он разработан с акцентом на современный дизайн, адаптивность и интерактивность, чтобы обеспечить наилучший пользовательский опыт.</p>
-        <div class="project-modal-info">
-          <p><strong>Дата начала:</strong> 09.10.2025</p>
-          <p><strong>Статус:</strong> Активен</p>
-        </div>
         <div class="project-modal-technologies">
           <h4>Технологии:</h4>
           <div class="tech-icons">
             <div class="tech-item">
-              <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 32 32"><path d="M27,4H5C3.3,4,2,5.3,2,7v18c0,1.7,1.3,3,3,3h22c1.7,0,3-1.3,3-3V7C30,5.3,28.7,4,27,4z M9.1,7.6c0.1-0.1,0.1-0.2,0.2-0.3
+              <svg class="w-5 h-5 text-white flex-shrink-0" fill="currentColor" viewBox="0 0 32 32"><path d="M27,4H5C3.3,4,2,5.3,2,7v18c0,1.7,1.3,3,3,3h22c1.7,0,3-1.3,3-3V7C30,5.3,28.7,4,27,4z M9.1,7.6c0.1-0.1,0.1-0.2,0.2-0.3
 	c0.1-0.1,0.2-0.2,0.3-0.2C10,6.9,10.4,7,10.7,7.3c0.1,0.1,0.2,0.2,0.2,0.3C11,7.7,11,7.9,11,8c0,0.3-0.1,0.5-0.3,0.7
 	C10.5,8.9,10.3,9,10,9C9.7,9,9.5,8.9,9.3,8.7C9.1,8.5,9,8.3,9,8C9,7.9,9,7.7,9.1,7.6z M6,8c0-0.3,0.1-0.5,0.3-0.7
 	c0,0,0.1-0.1,0.1-0.1c0.1,0,0.1-0.1,0.2-0.1c0,0,0.1,0.1,0.1,0.1c0.1,0.1,0.2,0.2,0.2,0.3C8,7.7,8,7.9,8,8c0,0.1,0,0.3-0.1,0.4C7.9,8.5,7.8,8.6,7.7,8.7C7.5,8.9,7.3,9,7,9
@@ -533,10 +537,9 @@
     </div>
   </div>
 
-  <!-- Project Modal 4 -->
   <div class="project-modal-overlay" id="project-modal-shop-bot">
     <div class="project-modal-content">
-      <button class="project-modal-close btn-press" aria-label="Закрыть">
+      <button type="button" class="project-modal-close btn-press" aria-label="Закрыть">
         <svg viewBox="0 0 24 24">
           <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
         </svg>
@@ -545,14 +548,22 @@
         <div class="project-modal-image-wrapper">
           <img src="images/project-4.jpg" alt="Обложка проекта Shop Bot" class="project-modal-image" loading="lazy" />
         </div>
-        <h3 class="project-modal-title">GEO stars</h3>
+        <div class="project-header-text">
+          <h3 class="project-modal-title">GEO stars</h3>
+          <div class="project-modal-info-grid">
+            <div class="info-box">
+              <span class="info-label">Дата начала</span>
+              <span class="info-value">20.11.2025</span>
+            </div>
+            <div class="info-box">
+              <span class="info-label">Статус</span>
+              <span class="info-value">Завершён</span>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="project-modal-body">
         <p class="project-modal-description">Бот, разработанный на заказ, для продажи звезд и премиум-статусов Telegram. Включает интеграцию с платежными системами, систему учета заказов и управление пользователями. (Бот находится во владении другого человека)</p>
-        <div class="project-modal-info">
-          <p><strong>Дата начала:</strong> 20.11.2025</p>
-          <p><strong>Статус:</strong> Завершён</p>
-        </div>
         <div class="project-modal-technologies">
           <h4>Технологии:</h4>
           <div class="tech-icons">
@@ -588,10 +599,9 @@
     </div>
   </div>
 
-  <!-- Project Modal 5 -->
   <div class="project-modal-overlay" id="project-modal-ascii-art-bot">
     <div class="project-modal-content">
-      <button class="project-modal-close btn-press" aria-label="Закрыть">
+      <button type="button" class="project-modal-close btn-press" aria-label="Закрыть">
         <svg viewBox="0 0 24 24">
           <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
         </svg>
@@ -600,14 +610,22 @@
         <div class="project-modal-image-wrapper">
           <img src="images/project-5.jpg" alt="Обложка проекта Ascii Art Bot" class="project-modal-image" loading="lazy" />
         </div>
-        <h3 class="project-modal-title">Ascii art generator</h3>
+        <div class="project-header-text">
+          <h3 class="project-modal-title">Ascii art generator</h3>
+          <div class="project-modal-info-grid">
+            <div class="info-box">
+              <span class="info-label">Дата начала</span>
+              <span class="info-value">16.02.2026</span>
+            </div>
+            <div class="info-box">
+              <span class="info-label">Статус</span>
+              <span class="info-value">Активен</span>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="project-modal-body">
         <p class="project-modal-description">Бот для преобразования изображений в ASCII-арт. Пользователи могут загружать фотографии, а бот генерирует текстовые изображения, используя различные символы и настройки плотности.</p>
-        <div class="project-modal-info">
-          <p><strong>Дата начала:</strong> 16.02.2026</p>
-          <p><strong>Статус:</strong> Активен</p>
-        </div>
         <div class="project-modal-technologies">
           <h4>Технологии:</h4>
           <div class="tech-icons">
