@@ -538,20 +538,12 @@ body {
 /* Анимация для элементов навыков в ПК версии */
 @media (min-width: 769px) {
   .skill-content li {
-    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
-                background 0.3s ease, 
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                background 0.3s ease,
                 box-shadow 0.3s ease;
     backface-visibility: hidden;
     transform: translateZ(0);
     will-change: transform;
-  }
-
-  @media (hover: hover) {
-    .skill-content li:hover {
-      transform: scale(1.03) translateZ(0);
-      background: rgba(255, 255, 255, 0.05);
-      box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1), 0 5px 10px rgba(0, 0, 0, 0.2);
-    }
   }
 }
 
