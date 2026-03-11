@@ -342,43 +342,47 @@ function initProjectModals() {
     const nextContent = nextModal.querySelector('.project-modal-content');
 
     const currentArrows = currentModal.querySelectorAll('.project-nav-arrow');
-    currentArrows.forEach(arrow => arrow.style.opacity = '0');
-
-    nextModal.classList.add('active');
+    currentArrows.forEach(arrow => gsap.to(arrow, { autoAlpha: 0, duration: 0.2 }));
 
     setupDescription(nextModal);
     setupTechnologies(nextModal);
     setupNavigation(nextModal, nextId);
 
-    const windowWidth = window.innerWidth;
-    const xOut = direction === 1 ? -windowWidth : windowWidth;
-    const xIn = direction === 1 ? windowWidth : -windowWidth;
+    const slideAmount = direction * 100;
+    const scaleAmount = 0.8;
+    const opacityAmount = 0;
 
-    gsap.set(nextContent, { x: xIn, opacity: 1 });
+    nextModal.classList.add('active');
+    gsap.set(nextContent, { xPercent: slideAmount, scale: scaleAmount, autoAlpha: opacityAmount, zIndex: 2 });
+    gsap.set(currentContent, { zIndex: 1 });
 
     const tl = gsap.timeline({
         onComplete: () => {
             currentModal.classList.remove('active');
-            gsap.set(currentContent, { clearProps: "all" });
-            gsap.set(nextContent, { clearProps: "all" });
+            gsap.set(currentContent, { clearProps: "transform,opacity,zIndex" });
+            gsap.set(nextContent, { clearProps: "transform,opacity,zIndex" });
             currentModalIndex = newIndex;
             isAnimating = false;
+            const newArrows = nextModal.querySelectorAll('.project-nav-arrow');
+            newArrows.forEach(arrow => gsap.to(arrow, { autoAlpha: 1, duration: 0.2 }));
         }
     });
 
-    tl.add('swipe');
-
     tl.to(currentContent, {
-        x: xOut,
-        duration: 0.25,
-        ease: "power2.out"
-    }, 'swipe');
+        xPercent: -slideAmount,
+        scale: scaleAmount,
+        autoAlpha: opacityAmount,
+        duration: 0.5,
+        ease: "power2.inOut"
+    }, 0);
 
     tl.to(nextContent, {
-        x: 0,
-        duration: 0.25,
-        ease: "power2.out"
-    }, 'swipe');
+        xPercent: 0,
+        scale: 1,
+        autoAlpha: 1,
+        duration: 0.5,
+        ease: "power2.inOut"
+    }, 0);
   }
 
   openButtons.forEach(button => {
@@ -490,15 +494,15 @@ function initNavigation() {
   const navbar = document.querySelector('.navbar');
   const navLinks = document.querySelectorAll('.nav-link');
 
+  let isScrolled = false;
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-      header.classList.add('scrolled');
-      document.body.classList.add('scrolled-mode');
-    } else {
-      header.classList.remove('scrolled');
-      document.body.classList.remove('scrolled-mode');
+    const shouldBeScrolled = window.scrollY > 50;
+    if (shouldBeScrolled !== isScrolled) {
+      isScrolled = shouldBeScrolled;
+      header.classList.toggle('scrolled', isScrolled);
+      document.body.classList.toggle('scrolled-mode', isScrolled);
     }
-  });
+  }, { passive: true });
 
   if (hamburger && navbar) {
     hamburger.addEventListener('click', (e) => {
