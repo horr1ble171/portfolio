@@ -359,8 +359,8 @@ function initProjectModals() {
     const tl = gsap.timeline({
         onComplete: () => {
             currentModal.classList.remove('active');
-            gsap.set(currentContent, { clearProps: "transform,opacity,zIndex" });
-            gsap.set(nextContent, { clearProps: "transform,opacity,zIndex" });
+            gsap.set(currentContent, { clearProps: "transform,opacity,visibility,zIndex" });
+            gsap.set(nextContent, { clearProps: "transform,opacity,visibility,zIndex" });
             currentModalIndex = newIndex;
             isAnimating = false;
             const newArrows = nextModal.querySelectorAll('.project-nav-arrow');
