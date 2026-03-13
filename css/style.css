@@ -40,6 +40,25 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+/* --- General Interactive Element Fixes --- */
+/* Removed .project-card-button from here to prevent stacking context conflicts */
+.social-icon, .nav-link, .info-box, .tech-item, .project-modal-button, .spotify-link-btn, .spotify-control-btn, .spotify-play-btn, .project-nav-arrow {
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  will-change: transform, box-shadow, background-color, border-color;
+}
+
+/* Apply hardware acceleration and font smoothing to text and icons within interactive elements */
+.social-icon svg, .nav-icon, .info-label, .info-value, .tech-item span, .tech-item svg,
+.nav-link { /* Added .nav-link here for text smoothing */
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  will-change: transform;
+  -webkit-font-smoothing: subpixel-antialiased; /* Force subpixel antialiasing for smoother text */
+  text-shadow: 0 0 1px rgba(0,0,0,0.001); /* Subtle text-shadow to force GPU rendering for text */
+}
+
+
 .fixed-header {
   position: fixed;
   top: 0;
@@ -48,6 +67,7 @@ body {
   z-index: 1000;
   padding: 20px 0;
   transition: padding 0.3s ease;
+  isolation: isolate; /* Create a new stacking context to fix backdrop-filter bug */
 }
 
 .fixed-header.scrolled {
@@ -82,21 +102,22 @@ body {
   text-decoration: none;
   font-weight: 500;
   font-size: 1rem;
-  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+  /* Optimized transition to only animate relevant properties */
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
   position: relative;
-  display: inline-flex;
+  display: flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   white-space: nowrap;
-  backface-visibility: hidden;
-  transform: translateZ(0);
-  will-change: transform;
+  transform-origin: center center; /* Explicitly set transform origin */
 }
 
 .nav-icon {
   width: 18px;
   height: 18px;
   fill: currentColor;
+  flex-shrink: 0;
 }
 
 .hamburger {
@@ -407,9 +428,6 @@ body {
   overflow: hidden;
   background: rgba(255, 255, 255, 0.05);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  backface-visibility: hidden;
-  transform: translateZ(0);
-  will-change: transform;
 }
 
 @media (hover: hover) {
@@ -434,7 +452,6 @@ body {
   z-index: 2;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
   transition: fill 0.3s ease;
-  backface-visibility: hidden;
 }
 
 .skills-container {
@@ -470,7 +487,7 @@ body {
   padding: 0;
   margin: 0;
   box-shadow: 0 25px 50px rgba(255, 255, 255, 0.05), 0 10px 30px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  transition: all 0.4s ease;
+  transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease, background-color 0.4s ease;
   border: 1px solid rgba(255, 255, 255, 0.1);
   overflow: hidden;
   position: relative;
@@ -515,19 +532,8 @@ body {
 .skill-content { padding: 32px; }
 
 .skill-content li {
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease;
   cursor: default;
-}
-
-@media (min-width: 769px) {
-  .skill-content li {
-    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                background 0.3s ease,
-                box-shadow 0.3s ease;
-    backface-visibility: hidden;
-    transform: translateZ(0);
-    will-change: transform;
-  }
 }
 
 .skill-category-description {
@@ -552,7 +558,7 @@ body {
   padding: 30px;
   text-align: center;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: all 0.4s ease;
+  transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease, background-color 0.4s ease;
   position: relative;
   overflow: hidden;
   backface-visibility: hidden;
@@ -631,9 +637,7 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.1);
   overflow: hidden;
   position: relative;
-  backface-visibility: hidden;
-  transform: translateZ(0);
-  will-change: transform;
+  z-index: 1;
   display: flex;
   flex-direction: row;
   min-height: 250px;
@@ -651,7 +655,8 @@ body {
 
 @media (hover: hover) {
   .project-card:hover {
-    transform: scale(1.02) translateZ(0);
+    transform: scale(1.02);
+    z-index: 2;
     border-color: rgba(255, 255, 255, 0.2);
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(0, 0, 0, 0.5) 100%);
     box-shadow: 0 35px 70px rgba(255, 255, 255, 0.08), 0 15px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15);
@@ -716,20 +721,17 @@ body {
   border: none;
   outline: none;
   font-size: 1.1rem;
-  backdrop-filter: blur(10px);
+  /* Removed backdrop-filter to fix rendering artifacts */
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-  backface-visibility: hidden;
-  transform: translateZ(0);
-  will-change: transform;
   cursor: pointer;
   margin-top: auto;
 }
 
 @media (hover: hover) {
   .project-card-button:hover {
-    transform: scale(1.1) translateZ(0);
+    transform: scale(1.1); /* Removed translateZ(0) to fix stacking issues */
     background: rgba(255, 255, 255, 0.1);
     border-color: rgba(255, 255, 255, 0.3);
     box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1), 0 5px 10px rgba(0, 0, 0, 0.2);
@@ -802,6 +804,7 @@ body {
   backdrop-filter: blur(10px);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   z-index: 10000;
+  transition: top 0.3s ease;
 }
 
 @media (hover: hover) {
@@ -882,24 +885,15 @@ body {
   flex-direction: column;
   gap: 2px;
   min-width: 120px;
-  transition: all 0.3s ease;
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-@media (min-width: 769px) {
-  .info-box {
-    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-    backface-visibility: hidden;
-    transform: translateZ(0);
-    will-change: transform;
-  }
-
-  @media (hover: hover) {
-    .info-box:hover {
-      transform: scale(1.08) translateZ(0);
-      background: rgba(255, 255, 255, 0.1);
-      border-color: rgba(255, 255, 255, 0.3);
-      box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1), 0 5px 10px rgba(0, 0, 0, 0.2);
-    }
+@media (hover: hover) {
+  .info-box:hover {
+    transform: scale(1.08) translateZ(0);
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1), 0 5px 10px rgba(0, 0, 0, 0.2);
   }
 }
 
@@ -939,6 +933,7 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.1);
   font-size: 1rem;
   font-weight: 500;
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .tech-item svg {
@@ -980,7 +975,7 @@ body {
   align-items: center;
   cursor: pointer;
   color: var(--white);
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
   backdrop-filter: blur(10px);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   z-index: 10002;
@@ -1009,23 +1004,15 @@ body {
   width: 24px;
   height: 24px;
   fill: currentColor;
+  flex-shrink: 0;
 }
 
-@media (min-width: 769px) {
-  .tech-item {
-    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-    backface-visibility: hidden;
-    transform: translateZ(0);
-    will-change: transform;
-  }
-
-  @media (hover: hover) {
-    .tech-item:hover {
-      transform: scale(1.08) translateZ(0);
-      background: rgba(255, 255, 255, 0.1);
-      border-color: rgba(255, 255, 255, 0.3);
-      box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1), 0 5px 10px rgba(0, 0, 0, 0.2);
-    }
+@media (hover: hover) {
+  .tech-item:hover {
+    transform: scale(1.08) translateZ(0);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1), 0 5px 10px rgba(0, 0, 0, 0.2);
   }
 }
 
@@ -1047,9 +1034,6 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-  backface-visibility: hidden;
-  transform: translateZ(0);
-  will-change: transform;
   cursor: pointer;
 }
 
@@ -1358,9 +1342,6 @@ body {
   transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
   border-radius: 50%;
   padding: 16px;
-  backface-visibility: hidden;
-  transform: translateZ(0);
-  will-change: transform;
 }
 
 .spotify-control-btn {
@@ -1436,9 +1417,6 @@ body {
   font-size: 1.1rem;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  backface-visibility: hidden;
-  transform: translateZ(0);
-  will-change: transform;
 }
 
 @media (hover: hover) {
