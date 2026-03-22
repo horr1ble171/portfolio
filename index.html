@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>horr1ble - портфолио</title>
+
+  <link rel="icon" type="image/png" href="favicons/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="favicons/favicon.svg" />
+  <link rel="shortcut icon" href="favicons/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="favicons/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="horr1ble" />
+  <link rel="manifest" href="favicons/site.webmanifest" />
+
+  <meta name="theme-color" content="#000000" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-black text-white">
+  <header class="fixed-header">
+    <div class="header-content">
+      <button type="button" class="hamburger btn-press" aria-label="Меню">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="navbar">
+        <ul class="nav-list">
+          <li>
+            <a href="#hero" class="nav-link btn-press">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="nav-icon">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+              </svg>
+              <span class="nav-text">Главная</span>
+            </a>
+          </li>
+          <li>
+            <a href="#skills" class="nav-link btn-press">
+              <svg width="20" height="20" viewBox="0 0 32 32" fill="currentColor" stroke="currentColor" stroke-width="1.5" class="nav-icon">
+                <polygon points="31 16 24 23 22.59 21.59 28.17 16 22.59 10.41 24 9 31 16"/>
+                <polygon points="1 16 8 9 9.41 10.41 3.83 16 9.41 21.59 8 23 1 16"/>
+                <rect x="5.91" y="15" width="20.17" height="2" transform="translate(-3.6 27.31) rotate(-75)"/>
+              </svg>
+              <span class="nav-text">Навыки</span>
+            </a>
+          </li>
+          <li>
+            <a href="#projects-section" class="nav-link btn-press">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="nav-icon">
+                <path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/>
+              </svg>
+              <span class="nav-text">Проекты</span>
+            </a>
+          </li>
+          <li>
+            <a href="#spotify" class="nav-link btn-press">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="nav-icon">
+                <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-2-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
+              </svg>
+              <span class="nav-text">Spotify</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section id="hero" class="section hero-section">
+      <div class="hero-inner">
+        <div class="mb-12 flex justify-center">
+          <div class="avatar-wrapper">
+            <div class="avatar-container" aria-hidden="true">
+              <img src="images/avatar.jpg" alt="horr1ble" class="avatar-image" loading="lazy" />
+            </div>
+          </div>
+        </div>
+
+        <h1 class="hero-title">horr1ble</h1>
+        <p class="hero-subtitle">разработчик telegram ботов<br> и сайтов</p>
+
+        <div class="social-icons-container" role="navigation" aria-label="Социальные сети">
+          <a href="https://t.me/zxchorrible" target="_blank" rel="noopener noreferrer" class="social-icon telegram-icon btn-press" aria-label="Telegram">
+            <svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.509l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.05 5.56-5.022c.242-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.534-.196 1.006.128.832.941z"/></svg>
+          </a>
+
+          <a href="https://github.com/horr1ble171" target="_blank" rel="noopener noreferrer" class="social-icon github-icon btn-press" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true" fill="currentColor">
+              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+            </svg>
+          </a>
+
+          <a href="https://steamcommunity.com/profiles/76561199253388936/" target="_blank" rel="noopener noreferrer" class="social-icon steam-icon btn-press" aria-label="Steam">
+            <svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true"><path d="M11.979 0C5.678 0 .511 4.86.022 11.037l6.432 2.658c.545-.371 1.203-.59 1.912-.59.063 0 .125.004.188.006l2.861-4.142V8.91c0-2.495 2.028-4.524 4.524-4.524 2.494 0 4.524 2.031 4.524 4.527s-2.03 4.525-4.524 4.525h-.105l-4.076 2.911c0 .052.004.105.004.159 0 1.875-1.515 3.396-3.39 3.396-1.635 0-3.016-1.173-3.331-2.727L.436 15.27C1.862 20.307 6.486 24 11.979 24c6.627 0 12-5.373 12-12s-5.373-12-12-12z"/><circle cx="8.4" cy="16.5" r="1.8" /><circle cx="15.9" cy="9" r="2.8" /></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" class="section skills-section-large">
+      <div class="skills-container">
+        <h2 class="skills-title">Мои навыки</h2>
+
+        <div class="skills-grid">
+          <div class="skill-category">
+            <div class="skill-header">
+              <h3 class="skill-category-title">Full-Stack разработка</h3>
+            </div>
+            <div class="skill-content">
+              <p class="skill-category-description mb-4">
+                Полный цикл разработки от проектирования архитектуры до запуска проекта.
+              </p>
+              <ul class="space-y-3">
+                <li class="flex items-center gap-3">
+                  <svg class="w-5 h-5 text-white flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-5 14H4v-4h11v4zm0-5H4V9h11v4zm5 5h-4V9h4v9z"/></svg>
+                  <span class="font-bold">Frontend</span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <svg class="w-5 h-5 text-white flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M2 20h20v-4H2v4zm2-3h2v2H4v-2zM2 4v4h20V4H2zm4 3H4V5h2v2zm-4 7h20v-4H2v4zm2-3h2v2H4v-2z"/></svg>
+                  <span class="font-bold">Backend</span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <svg class="w-5 h-5 text-white flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/></svg>
+                  <span class="font-bold">Деплой</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="skill-category">
+            <div class="skill-header">
+              <h3 class="skill-category-title">Технологии</h3>
+            </div>
+            <div class="skill-content">
+              <ul class="space-y-2 mt-2">
+                <li class="flex items-center gap-3">
+                  <svg class="w-5 h-5 text-white flex-shrink-0" fill="currentColor" viewBox="0 0 32 32"><path d="M27,4H5C3.3,4,2,5.3,2,7v18c0,1.7,1.3,3,3,3h22c1.7,0,3-1.3,3-3V7C30,5.3,28.7,4,27,4z M9.1,7.6c0.1-0.1,0.1-0.2,0.2-0.3
+	c0.1-0.1,0.2-0.2,0.3-0.2C10,6.9,10.4,7,10.7,7.3c0.1,0.1,0.2,0.2,0.2,0.3C11,7.7,11,7.9,11,8c0,0.3-0.1,0.5-0.3,0.7
+	C10.5,8.9,10.3,9,10,9C9.7,9,9.5,8.9,9.3,8.7C9.1,8.5,9,8.3,9,8C9,7.9,9,7.7,9.1,7.6z M6,8c0-0.3,0.1-0.5,0.3-0.7
+	c0,0,0.1-0.1,0.1-0.1c0.1,0,0.1-0.1,0.2-0.1c0,0,0.1,0.1,0.1,0.1c0.1,0.1,0.2,0.2,0.2,0.3C8,7.7,8,7.9,8,8c0,0.1,0,0.3-0.1,0.4C7.9,8.5,7.8,8.6,7.7,8.7C7.5,8.9,7.3,9,7,9
+	S6.5,8.9,6.3,8.7C6.1,8.5,6,8.3,6,8z M11.7,21.3c0.4,0.4,0.4,1,0,1.4C11.5,22.9,11.3,23,11,23s-0.5-0.1-0.7-0.3l-3-3
+	c-0.4-0.4-0.4-1,0-1.4l3-3c0.4-0.4,1-0.4,1.4,0s0.4,1,0,1.4L9.4,19L11.7,21.3z M12.6,8.9c-0.1-0.1-0.2-0.1-0.3-0.2
+	c-0.1-0.1,0.2-0.2,0.2-0.3C12,8.3,12,8.1,12,8c0-0.1,0-0.3,0.1-0.4c0.1-0.1,0.1-0.2,0.2-0.3c0.4-0.4,1-0.4,1.4,0
+	c0.1,0.1,0.2,0.2,0.2,0.3C14,7.7,14,7.9,14,8c0,0.1,0,0.3-0.1,0.4c-0.1,0.1-0.1,0.2-0.2,0.3C13.5,8.9,13.3,9,13,9
+	C12.9,9,12.7,9,12.6,8.9z M18.9,15.4l-4,8C14.7,23.8,14.4,24,14,24c-0.2,0-0.3,0-0.4-0.1c-0.5-0.2-0.7-0.8-0.4-1.3l4-8
+	c0.2-0.5,0.8-0.7,1.3-0.4C18.9,14.4,19.1,15,18.9,15.4z M24.7,19.7l-3,3C21.5,22.9,21.3,23,21,23s-0.5-0.1-0.7-0.3
+	c-0.4-0.4-0.4-1,0-1.4l2.3-2.3l-2.3-2.3c-0.4-0.4-0.4-1,0-1.4s1-0.4,1.4,0l3,3C25.1,18.7,25.1,19.3,24.7,19.7z"/></svg>
+                  <span class="font-bold">HTML/CSS/JavaScript</span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <svg class="w-5 h-5 text-white flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M9.585 11.692h4.328s2.432.039 2.432-2.35V5.391S16.714 3 11.936 3C7.362 3 7.647 4.983 7.647 4.983l.006 2.055h4.363v.617H5.92s-2.927-.332-2.927 4.282 2.555 4.45 2.555 4.45h1.524v-2.141s-.083-2.554 2.513-2.554zm-.056-5.74a.784.784 0 1 1 0-1.57.784.784 0 1 1 0 1.57z"/><path d="M18.452 7.532h-1.524v2.141s.083 2.554-2.513 2.554h-4.328s-2.432-.04-2.432 2.35v3.951s-.369 2.391 4.409 2.391c4.573 0 4.288-1.983 4.288-1.983l-.006-2.054h-4.363v-.617h6.097s2.927.332 2.927-4.282-2.555-4.451-2.555-4.451zm-3.981 10.436a.784.784 0 1 1 0 1.57.784.784 0 1 1 0 1.57z"/></svg>
+                  <span class="font-bold">Python</span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <svg class="w-5 h-5 text-white flex-shrink-0" fill="currentColor" viewBox="0 0 48 48"><path d="M41.4193 7.30899C41.4193 7.30899 45.3046 5.79399 44.9808 9.47328C44.8729 10.9883 43.9016 16.2908 43.1461 22.0262L40.5559 39.0159C40.5559 39.0159 40.3401 41.5048 38.3974 41.9377C36.4547 42.3705 33.5408 40.4227 33.0011 39.9898C32.5694 39.6652 24.9068 34.7955 22.2086 32.4148C21.4531 31.7655 20.5897 30.4669 22.3165 28.9519L33.6487 18.1305C34.9438 16.8319 36.2389 13.8019 30.8426 17.4812L15.7331 27.7616C15.7331 27.7616 14.0063 28.8437 10.7686 27.8698L3.75342 25.7055C3.75342 25.7055 1.16321 24.0823 5.58815 22.459C16.3807 17.3729 29.6555 12.1786 41.4193 7.30899Z"/></svg>
+                  <span class="font-bold">Telegram API</span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <svg class="w-5 h-5 text-white flex-shrink-0" fill="currentColor" viewBox="0 0 36 36"><path d="M12.75,3H5.25A1.15,1.15,0,0,0,4,4V33H14V4A1.15,1.15,0,0,0,12.75,3Z"/><path d="M33.77,31.09l-6.94-18.3a1,1,0,0,0-1.29-.58L22,13.59V9a1,1,0,0,0-1-1H16V33h6V14.69L28.93,33Z"/></svg>
+                  <span class="font-bold">Aiogram</span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <svg class="w-5 h-5 text-white flex-shrink-0" fill="currentColor" viewBox="-3 0 24 24"><path d="m18.07.169c-.148-.106-.333-.169-.532-.169-.111 0-.217.02-.316.055l.006-.002-11.077 3.938c-.361.131-.613.471-.613.869v.001 2.193.042 10.604c-.534-.295-1.169-.469-1.846-.471h-.001c-.043-.002-.093-.003-.143-.003-1.904 0-3.458 1.497-3.549 3.379v.008c.091 1.89 1.645 3.388 3.549 3.388.05 0 .1-.001.15-.003h-.007c.043.002.093.003.143.003 1.904 0 3.458-1.497 3.549-3.379v-.008-12.883l9.23-3.223v8.973c-.534-.294-1.17-.468-1.846-.47h-.001c-.043-.002-.094-.003-.144-.003-1.904 0-3.457 1.498-3.547 3.379v.008c.09 1.89 1.644 3.388 3.548 3.388.051 0 .101-.001.151-.003h-.007c.031.001.068.002.105.002 1.696 0 3.12-1.166 3.513-2.74l.005-.025c.042-.101.068-.217.069-.34v-15.754c0-.31-.153-.585-.388-.752l-.003-.002z"/></svg>
+                  <span class="font-bold">Обработка аудио</span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <svg class="w-5 h-5 text-white flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 10c3.976 0 8-1.374 8-4s-4.024-4-8-4-8 1.374-8 4 4.024 4 8 4z"/><path d="M4 10c0 2.626 4.024 4 8 4s8-1.374 8-4V8c0 2.626-4.024 4-8 4s-8-1.374-8-4v2z"/><path d="M4 14c0 2.626 4.024 4 8 4s8-1.374 8-4v-2c0 2.626-4.024 4-8 4s-8-1.374-8-4v2z"/><path d="M4 18c0 2.626 4.024 4 8 4s8-1.374 8-4v-2c0 2.626-4.024 4-8 4s-8-1.374-8-4v2z"/></svg>
+                  <span class="font-bold">Базы данных</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="skill-category">
+            <div class="skill-header">
+              <h3 class="skill-category-title">Telegram боты</h3>
+            </div>
+            <div class="skill-content">
+              <p class="skill-category-description mb-4">
+                Создание высоконагруженных ботов с обработкой медиафайлов, интеграцией API и сложной бизнес-логикой.
+              </p>
+              <ul class="space-y-3">
+                <li class="flex items-center gap-3">
+                  <svg class="w-5 h-5 text-white flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5C13 2.12 11.88 1 10.5 1S8 2.12 8 3.5V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.49 0 2.7 1.21 2.7 2.7s-1.21 2.7-2.7 2.7H2V20c0 1.1.9 2 2 2h3.8v-1.5c0-1.49 1.21-2.7 2.7-2.7 1.49 0 2.7 1.21 2.7 2.7V22H17c1.1 0 2-.9 2-2v-4h1.5c1.38 0 2.5-1.12 2.5-2.5S21.88 11 20.5 11z"/></svg>
+                  <span class="font-bold">Сложная логика</span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <svg class="w-5 h-5 text-white flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg>
+                  <span class="font-bold">Высокая нагрузка</span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <svg class="w-5 h-5 text-white flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
+                  <span class="font-bold">Платежные системы</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="skill-category">
+            <div class="skill-header">
+              <h3 class="skill-category-title">Продуктовый подход</h3>
+            </div>
+            <div class="skill-content">
+              <p class="skill-category-description mb-4">
+                Создание продуктов, которые решают реальные проблемы пользователей и растут органически без рекламы.
+              </p>
+              <ul class="space-y-3">
+                <li class="flex items-center gap-3">
+                  <svg class="w-5 h-5 text-white flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <span class="font-bold">User Experience</span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <svg class="w-5 h-5 text-white flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2v-4h2v4zm4 0h-2v-2h2v2z"/></svg>
+                  <span class="font-bold">Аналитика</span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <svg class="w-5 h-5 text-white flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>
+                  <span class="font-bold">Масштабирование</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-item">
+            <svg class="w-6 h-6 text-white mb-2 mx-auto" fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+              <path d="m14.12 10.163 1.715.858c.22.11.22.424 0 .534L8.267 15.34a.598.598 0 0 1-.534 0L.165 11.555a.299.299 0 0 1 0-.534l1.716-.858 5.317 2.659c.505.252 1.1.252 1.604 0l5.317-2.66zM7.733.063a.598.598 0 0 1 .534 0l7.568 3.784a.3.3 0 0 1 0 .535L8.267 8.165a.598.598 0 0 1-.534 0L.165 4.382a.299.299 0 0 1 0-.535L7.733.063z"/>
+              <path d="m14.12 6.576 1.715.858c.22.11.22.424 0 .534l-7.568 3.784a.598.598 0 0 1-.534 0L.165 7.968a.299.299 0 0 1 0-.534l1.716-.858 5.317 2.659c.505.252 1.1.252 1.604 0l5.317-2.659z"/>
+            </svg>
+            <div class="stat-number">4+</div>
+            <div class="stat-label">Запущенных проектов</div>
+          </div>
+          <div class="stat-item">
+            <svg class="w-8 h-8 text-white mb-2 mx-auto" fill="currentColor" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+            <div class="stat-number">1300+</div>
+            <div class="stat-label">Пользователей</div>
+          </div>
+          <div class="stat-item">
+            <svg class="w-6 h-6 text-white mb-2 mx-auto" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24"><path d="M12,2C6.5,2,2,6.5,2,12s4.5,10,10,10s10-4.5,10-10S17.5,2,12,2z M15.5,14c-0.3,0.5-0.9,0.6-1.4,0.4l-2.6-1.5C11.2,12.7,11,12.4,11,12V7c0-0.6,0.4-1,1-1s1,0.4,1,1v4.4l2.1,1.2C15.6,12.9,15.7,13.5,15.5,14z"/></svg>
+            <div class="stat-number">2+</div>
+            <div class="stat-label">Года разработки</div>
+          </div>
+          <div class="stat-item">
+            <svg class="w-8 h-8 text-white mb-2 mx-auto" fill="currentColor" viewBox="0 0 24 24"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>
+            <div class="stat-number">100%</div>
+            <div class="stat-label">Самообучение</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects-section" class="section projects-section-large">
+      <div class="projects-container">
+        <h2 class="projects-title">Мои проекты</h2>
+
+        <div class="projects-grid">
+          <div class="project-card" data-project-id="music-bot">
+            <div class="project-card-image-wrapper">
+              <img src="images/project-1.jpg" alt="Обложка проекта Music Bot" class="project-card-image" loading="lazy" />
+            </div>
+            <div class="project-card-content">
+              <h3 class="project-card-title">Музыка для профиля</h3>
+              <button type="button" class="project-card-button btn-press" data-project-id="music-bot">Подробнее</button>
+            </div>
+          </div>
+
+          <div class="project-card" data-project-id="portfolio-site">
+            <div class="project-card-image-wrapper">
+              <img src="images/avatar.jpg" alt="Обложка проекта Portfolio Site" class="project-card-image" loading="lazy" />
+            </div>
+            <div class="project-card-content">
+              <h3 class="project-card-title">Портфолио</h3>
+              <button type="button" class="project-card-button btn-press" data-project-id="portfolio-site">Подробнее</button>
+            </div>
+          </div>
+
+          <div class="project-card" data-project-id="shop-bot">
+            <div class="project-card-image-wrapper">
+              <img src="images/project-4.jpg" alt="Обложка проекта Shop Bot" class="project-card-image" loading="lazy" />
+            </div>
+            <div class="project-card-content">
+              <h3 class="project-card-title">GEO stars</h3>
+              <button type="button" class="project-card-button btn-press" data-project-id="shop-bot">Подробнее</button>
+            </div>
+          </div>
+
+          <div class="project-card" data-project-id="ascii-art-bot">
+            <div class="project-card-image-wrapper">
+              <img src="images/project-5.jpg" alt="Обложка проекта Ascii Art Bot" class="project-card-image" loading="lazy" />
+            </div>
+            <div class="project-card-content">
+              <h3 class="project-card-title">Ascii art generator</h3>
+              <button type="button" class="project-card-button btn-press" data-project-id="ascii-art-bot">Подробнее</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="spotify" class="section spotify-section-large">
+      <div class="spotify-container">
+        <h2 class="spotify-title">Мой любимый альбом на Spotify</h2>
+
+        <div class="spotify-player-wrapper">
+          <div class="spotify-player" role="region" aria-label="Spotify player">
+            <div class="spotify-header">
+              <div class="spotify-logo-title">
+                <div class="spotify-logo-small">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-2-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
+                  </svg>
+                </div>
+                <h3 class="spotify-player-title">Spotify</h3>
+              </div>
+              <span class="spotify-playing-indicator"><span class="playing-dot">●</span> Сейчас играет</span>
+            </div>
+
+            <div class="spotify-content">
+              <div class="spotify-track-info">
+                <div class="album-cover-container">
+                  <img src="images/album-cover.jpg"
+                       alt="horri album cover"
+                       class="album-cover-image">
+                </div>
+                <div class="track-details">
+                  <p class="track-name">Eve 2</p>
+                  <p class="artist-name">Sqwore</p>
+                </div>
+              </div>
+
+              <div class="progress-container">
+                <div class="progress-time">
+                  <span>0:40</span>
+                  <span>1:48</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-bar-fill"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="spotify-controls">
+              <button type="button" class="spotify-control-btn prev-btn btn-press" aria-label="Предыдущий трек">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/>
+                </svg>
+              </button>
+              <button type="button" class="spotify-play-btn btn-press" aria-label="Пауза">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+                </svg>
+              </button>
+              <button type="button" class="spotify-control-btn next-btn btn-press" aria-label="Следующий трек">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/>
+                </svg>
+              </button>
+            </div>
+
+            <div class="spotify-link-container">
+              <a href="https://open.spotify.com/album/5VcpsPJC0VbNlJXetYo62I?si=tHFyFNiSQ0G0FrRWyAFx0w"
+                 target="_blank"
+                 class="spotify-link-btn btn-press">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 8px;">
+                  <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-2-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
+                </svg>
+                Открыть в Spotify
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <h3>horr1ble</h3>
+        <p>Разработчик Telegram ботов и создатель продуктов</p>
+      </div>
+
+      <div class="footer-links">
+        <h4>Контакты</h4>
+        <ul>
+          <li><a href="https://t.me/zxchorrible" target="_blank" rel="noopener noreferrer" class="btn-press">Telegram</a></li>
+          <li><a href="https://github.com/horr1ble171" target="_blank" rel="noopener noreferrer" class="btn-press">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-copyright">
+        © 2025 - 2026 horr1ble. Все права защищены.
+      </div>
+      <div class="footer-legal">
+        <a href="#" class="btn-press">Политика конфиденциальности</a>
+        <a href="#" class="btn-press">Условия использования</a>
+      </div>
+    </div>
+  </footer>
+
+  <div class="lightbox-modal" id="lightbox">
+    <button type="button" class="lightbox-close btn-press" aria-label="Закрыть">
+      <svg viewBox="0 0 24 24">
+        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+      </svg>
+    </button>
+    <img src="" alt="Full screen view" class="lightbox-image" id="lightbox-img">
+  </div>
+
+  <div class="project-modal-overlay" id="project-modal-music-bot">
+    <div class="project-modal-content">
+      <button type="button" class="project-modal-close btn-press" aria-label="Закрыть">
+        <svg viewBox="0 0 24 24">
+          <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+        </svg>
+      </button>
+      <div class="project-modal-header">
+        <div class="project-modal-image-wrapper">
+          <img src="images/project-1.jpg" alt="Обложка проекта Music Bot" class="project-modal-image" loading="lazy" />
+        </div>
+        <div class="project-header-text">
+          <h3 class="project-modal-title">Музыка для профиля</h3>
+          <div class="project-modal-info-grid">
+            <div class="info-box">
+              <span class="info-label">Дата начала</span>
+              <span class="info-value">19.09.2025</span>
+            </div>
+            <div class="info-box">
+              <span class="info-label">Статус</span>
+              <span class="info-value">Активен</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="project-modal-body">
+        <p class="project-modal-description">Этот бот позволяет пользователям добавлять или изменять обложку, название, исполнителя и название альбома для аудиофайлов прямо в Telegram. Он поддерживает различные форматы аудио и обеспечивает удобный интерфейс для редактирования метаданных.</p>
+        <div class="project-modal-technologies">
+          <h4>Технологии:</h4>
+          <div class="tech-icons">
+            <div class="tech-item">
+              <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M9.585 11.692h4.328s2.432.039 2.432-2.35V5.391S16.714 3 11.936 3C7.362 3 7.647 4.983 7.647 4.983l.006 2.055h4.363v.617H5.92s-2.927-.332-2.927 4.282 2.555 4.45 2.555 4.45h1.524v-2.141s-.083-2.554 2.513-2.554zm-.056-5.74a.784.784 0 1 1 0-1.57.784.784 0 1 1 0 1.57z"/><path d="M18.452 7.532h-1.524v2.141s.083 2.554-2.513 2.554h-4.328s-2.432-.04-2.432 2.35v3.951s-.369 2.391 4.409 2.391c4.573 0 4.288-1.983 4.288-1.983l-.006-2.054h-4.363v-.617h6.097s2.927.332 2.927-4.282-2.555-4.451-2.555-4.451zm-3.981 10.436a.784.784 0 1 1 0 1.57.784.784 0 1 1 0 1.57z"/></svg>
+              <span>Python</span>
+            </div>
+            <div class="tech-item">
+              <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 36 36"><path d="M12.75,3H5.25A1.15,1.15,0,0,0,4,4V33H14V4A1.15,1.15,0,0,0,12.75,3Z"/><path d="M33.77,31.09l-6.94-18.3a1,1,0,0,0-1.29-.58L22,13.59V9a1,1,0,0,0-1-1H16V33h6V14.69L28.93,33Z"/></svg>
+              <span>Aiogram</span>
+            </div>
+            <div class="tech-item">
+              <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 10c3.976 0 8-1.374 8-4s-4.024-4-8-4-8 1.374-8 4 4.024 4 8 4z"/><path d="M4 10c0 2.626 4.024 4 8 4s8-1.374 8-4V8c0 2.626-4.024 4-8 4s-8-1.374-8-4v2z"/><path d="M4 14c0 2.626 4.024 4 8 4s8-1.374 8-4v-2c0 2.626-4.024 4-8 4s-8-1.374-8-4v2z"/><path d="M4 18c0 2.626 4.024 4 8 4s8-1.374 8-4v-2c0 2.626-4.024 4-8 4s-8-1.374-8-4v2z"/></svg>
+              <span>Базы данных</span>
+            </div>
+            <div class="tech-item">
+              <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="-3 0 24 24"><path d="m18.07.169c-.148-.106-.333-.169-.532-.169-.111 0-.217.02-.316.055l.006-.002-11.077 3.938c-.361.131-.613.471-.613.869v.001 2.193.042 10.604c-.534-.295-1.169-.469-1.846-.471h-.001c-.043-.002-.093-.003-.143-.003-1.904 0-3.458 1.497-3.549 3.379v.008c.091 1.89 1.645 3.388 3.549 3.388.05 0 .1-.001.15-.003h-.007c.043.002.093.003.143.003 1.904 0 3.458-1.497 3.549-3.379v-.008-12.883l9.23-3.223v8.973c-.534-.294-1.17-.468-1.846-.47h-.001c-.043-.002-.094-.003-.144-.003-1.904 0-3.457 1.498-3.547 3.379v.008c.09 1.89 1.644 3.388 3.548 3.388.051 0 .101-.001.151-.003h-.007c.031.001.068.002.105.002 1.696 0 3.12-1.166 3.513-2.74l.005-.025c.042-.101.068-.217.069-.34v-15.754c0-.31-.153-.585-.388-.752l-.003-.002z"/></svg>
+              <span>Обработка аудио</span>
+            </div>
+            <div class="tech-item">
+              <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 48 48"><path d="M41.4193 7.30899C41.4193 7.30899 45.3046 5.79399 44.9808 9.47328C44.8729 10.9883 43.9016 16.2908 43.1461 22.0262L40.5559 39.0159C40.5559 39.0159 40.3401 41.5048 38.3974 41.9377C36.4547 42.3705 33.5408 40.4227 33.0011 39.9898C32.5694 39.6652 24.9068 34.7955 22.2086 32.4148C21.4531 31.7655 20.5897 30.4669 22.3165 28.9519L33.6487 18.1305C34.9438 16.8319 36.2389 13.8019 30.8426 17.4812L15.7331 27.7616C15.7331 27.7616 14.0063 28.8437 10.7686 27.8698L3.75342 25.7055C3.75342 25.7055 1.16321 24.0823 5.58815 22.459C16.3807 17.3729 29.6555 12.1786 41.4193 7.30899Z"/></svg>
+              <span>Telegram API</span>
+            </div>
+          </div>
+        </div>
+        <a class="project-modal-button btn-press" href="https://t.me/music_horr1ble_bot" target="_blank" rel="noopener noreferrer">
+          Попробовать бота
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="margin-left: 8px;">
+            <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+    <div class="mobile-swipe-hint">
+      <svg class="swipe-arrow-left" viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+      <span>свайпните для навигации</span>
+      <svg class="swipe-arrow-right" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+    </div>
+  </div>
+
+  <div class="project-modal-overlay" id="project-modal-portfolio-site">
+    <div class="project-modal-content">
+      <button type="button" class="project-modal-close btn-press" aria-label="Закрыть">
+        <svg viewBox="0 0 24 24">
+          <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+        </svg>
+      </button>
+      <div class="project-modal-header">
+        <div class="project-modal-image-wrapper">
+          <img src="images/avatar.jpg" alt="Обложка проекта Portfolio Site" class="project-modal-image" loading="lazy" />
+        </div>
+        <div class="project-header-text">
+          <h3 class="project-modal-title">Портфолио</h3>
+          <div class="project-modal-info-grid">
+            <div class="info-box">
+              <span class="info-label">Дата начала</span>
+              <span class="info-value">09.10.2025</span>
+            </div>
+            <div class="info-box">
+              <span class="info-label">Статус</span>
+              <span class="info-value">Активен</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="project-modal-body">
+        <p class="project-modal-description">Это мой личный сайт-портфолио, созданный для демонстрации моих навыков, проектов и интересов. Он разработан с акцентом на современный дизайн, адаптивность и интерактивность, чтобы обеспечить наилучший пользовательский опыт.</p>
+        <div class="project-modal-technologies">
+          <h4>Технологии:</h4>
+          <div class="tech-icons">
+            <div class="tech-item">
+              <svg class="w-5 h-5 text-white flex-shrink-0" fill="currentColor" viewBox="0 0 32 32"><path d="M27,4H5C3.3,4,2,5.3,2,7v18c0,1.7,1.3,3,3,3h22c1.7,0,3-1.3,3-3V7C30,5.3,28.7,4,27,4z M9.1,7.6c0.1-0.1,0.1-0.2,0.2-0.3
+	c0.1-0.1,0.2-0.2,0.3-0.2C10,6.9,10.4,7,10.7,7.3c0.1,0.1,0.2,0.2,0.2,0.3C11,7.7,11,7.9,11,8c0,0.3-0.1,0.5-0.3,0.7
+	C10.5,8.9,10.3,9,10,9C9.7,9,9.5,8.9,9.3,8.7C9.1,8.5,9,8.3,9,8C9,7.9,9,7.7,9.1,7.6z M6,8c0-0.3,0.1-0.5,0.3-0.7
+	c0,0,0.1-0.1,0.1-0.1c0.1,0,0.1-0.1,0.2-0.1c0,0,0.1,0.1,0.1,0.1c0.1,0.1,0.2,0.2,0.2,0.3C8,7.7,8,7.9,8,8c0,0.1,0,0.3-0.1,0.4C7.9,8.5,7.8,8.6,7.7,8.7C7.5,8.9,7.3,9,7,9
+	S6.5,8.9,6.3,8.7C6.1,8.5,6,8.3,6,8z M11.7,21.3c0.4,0.4,0.4,1,0,1.4C11.5,22.9,11.3,23,11,23s-0.5-0.1-0.7-0.3l-3-3
+	c-0.4-0.4-0.4-1,0-1.4l3-3c0.4-0.4,1-0.4,1.4,0s0.4,1,0,1.4L9.4,19L11.7,21.3z M12.6,8.9c-0.1-0.1-0.2-0.1-0.3-0.2
+	c-0.1-0.1,0.2-0.2,0.2-0.3C12,8.3,12,8.1,12,8c0-0.1,0-0.3,0.1-0.4c0.1-0.1,0.1-0.2,0.2-0.3c0.4-0.4,1-0.4,1.4,0
+	c0.1,0.1,0.2,0.2,0.2,0.3C14,7.7,14,7.9,14,8c0,0.1,0,0.3-0.1,0.4c-0.1,0.1-0.1,0.2-0.2,0.3C13.5,8.9,13.3,9,13,9
+	C12.9,9,12.7,9,12.6,8.9z M18.9,15.4l-4,8C14.7,23.8,14.4,24,14,24c-0.2,0-0.3,0-0.4-0.1c-0.5-0.2-0.7-0.8-0.4-1.3l4-8
+	c0.2-0.5,0.8-0.7,1.3-0.4C18.9,14.4,19.1,15,18.9,15.4z M24.7,19.7l-3,3C21.5,22.9,21.3,23,21,23s-0.5-0.1-0.7-0.3
+	c-0.4-0.4-0.4-1,0-1.4l2.3-2.3l-2.3-2.3c-0.4-0.4-0.4-1,0-1.4s1-0.4,1.4,0l3,3C25.1,18.7,25.1,19.3,24.7,19.7z"/></svg>
+              <span>HTML/CSS/JS</span>
+            </div>
+            <div class="tech-item">
+              <svg class="w-5 h-5 text-white flex-shrink-0" fill="currentColor" viewBox="0 0 36 36"><path d="M12.75,3H5.25A1.15,1.15,0,0,0,4,4V33H14V4A1.15,1.15,0,0,0,12.75,3Z"/><path d="M33.77,31.09l-6.94-18.3a1,1,0,0,0-1.29-.58L22,13.59V9a1,1,0,0,0-1-1H16V33h6V14.69L28.93,33Z"/></svg>
+              <span>TailwindCSS</span>
+            </div>
+          </div>
+        </div>
+        <a class="project-modal-button btn-press" href="https://horr1ble171.github.io/portfolio/" target="_blank" rel="noopener noreferrer">
+          Попробовать сайт
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="margin-left: 8px;">
+            <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+    <div class="mobile-swipe-hint">
+      <svg class="swipe-arrow-left" viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+      <span>свайпните для навигации</span>
+      <svg class="swipe-arrow-right" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+    </div>
+  </div>
+
+  <div class="project-modal-overlay" id="project-modal-shop-bot">
+    <div class="project-modal-content">
+      <button type="button" class="project-modal-close btn-press" aria-label="Закрыть">
+        <svg viewBox="0 0 24 24">
+          <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+        </svg>
+      </button>
+      <div class="project-modal-header">
+        <div class="project-modal-image-wrapper">
+          <img src="images/project-4.jpg" alt="Обложка проекта Shop Bot" class="project-modal-image" loading="lazy" />
+        </div>
+        <div class="project-header-text">
+          <h3 class="project-modal-title">GEO stars</h3>
+          <div class="project-modal-info-grid">
+            <div class="info-box">
+              <span class="info-label">Дата начала</span>
+              <span class="info-value">20.11.2025</span>
+            </div>
+            <div class="info-box">
+              <span class="info-label">Статус</span>
+              <span class="info-value">Завершён</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="project-modal-body">
+        <p class="project-modal-description">Бот, разработанный на заказ, для продажи звезд и премиум-статусов Telegram. Включает интеграцию с платежными системами, систему учета заказов и управление пользователями. (Бот находится во владении другого человека)</p>
+        <div class="project-modal-technologies">
+          <h4>Технологии:</h4>
+          <div class="tech-icons">
+            <div class="tech-item">
+              <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M9.585 11.692h4.328s2.432.039 2.432-2.35V5.391S16.714 3 11.936 3C7.362 3 7.647 4.983 7.647 4.983l.006 2.055h4.363v.617H5.92s-2.927-.332-2.927 4.282 2.555 4.45 2.555 4.45h1.524v-2.141s-.083-2.554 2.513-2.554zm-.056-5.74a.784.784 0 1 1 0-1.57.784.784 0 1 1 0 1.57z"/><path d="M18.452 7.532h-1.524v2.141s.083 2.554-2.513 2.554h-4.328s-2.432-.04-2.432 2.35v3.951s-.369 2.391 4.409 2.391c4.573 0 4.288-1.983 4.288-1.983l-.006-2.054h-4.363v-.617h6.097s2.927.332 2.927-4.282-2.555-4.451-2.555-4.451zm-3.981 10.436a.784.784 0 1 1 0 1.57.784.784 0 1 1 0 1.57z"/></svg>
+              <span>Python</span>
+            </div>
+            <div class="tech-item">
+              <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 36 36"><path d="M12.75,3H5.25A1.15,1.15,0,0,0,4,4V33H14V4A1.15,1.15,0,0,0,12.75,3Z"/><path d="M33.77,31.09l-6.94-18.3a1,1,0,0,0-1.29-.58L22,13.59V9a1,1,0,0,0-1-1H16V33h6V14.69L28.93,33Z"/></svg>
+              <span>Aiogram</span>
+            </div>
+            <div class="tech-item">
+              <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 10c3.976 0 8-1.374 8-4s-4.024-4-8-4-8 1.374-8 4 4.024 4 8 4z"/><path d="M4 10c0 2.626 4.024 4 8 4s8-1.374 8-4V8c0 2.626-4.024 4-8 4s-8-1.374-8-4v2z"/><path d="M4 14c0 2.626 4.024 4 8 4s8-1.374 8-4v-2c0 2.626-4.024 4-8 4s-8-1.374-8-4v2z"/><path d="M4 18c0 2.626 4.024 4 8 4s8-1.374 8-4v-2c0 2.626-4.024 4-8 4s-8-1.374-8-4v2z"/></svg>
+              <span>Базы данных</span>
+            </div>
+            <div class="tech-item">
+              <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
+              <span>Платежные системы</span>
+            </div>
+            <div class="tech-item">
+              <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 48 48"><path d="M41.4193 7.30899C41.4193 7.30899 45.3046 5.79399 44.9808 9.47328C44.8729 10.9883 43.9016 16.2908 43.1461 22.0262L40.5559 39.0159C40.5559 39.0159 40.3401 41.5048 38.3974 41.9377C36.4547 42.3705 33.5408 40.4227 33.0011 39.9898C32.5694 39.6652 24.9068 34.7955 22.2086 32.4148C21.4531 31.7655 20.5897 30.4669 22.3165 28.9519L33.6487 18.1305C34.9438 16.8319 36.2389 13.8019 30.8426 17.4812L15.7331 27.7616C15.7331 27.7616 14.0063 28.8437 10.7686 27.8698L3.75342 25.7055C3.75342 25.7055 1.16321 24.0823 5.58815 22.459C16.3807 17.3729 29.6555 12.1786 41.4193 7.30899Z"/></svg>
+              <span>Telegram API</span>
+            </div>
+          </div>
+        </div>
+        <a class="project-modal-button btn-press" href="https://t.me/shop_star_prem_bot" target="_blank" rel="noopener noreferrer">
+          Попробовать бота
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="margin-left: 8px;">
+            <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+    <div class="mobile-swipe-hint">
+      <svg class="swipe-arrow-left" viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+      <span>свайпните для навигации</span>
+      <svg class="swipe-arrow-right" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+    </div>
+  </div>
+
+  <div class="project-modal-overlay" id="project-modal-ascii-art-bot">
+    <div class="project-modal-content">
+      <button type="button" class="project-modal-close btn-press" aria-label="Закрыть">
+        <svg viewBox="0 0 24 24">
+          <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+        </svg>
+      </button>
+      <div class="project-modal-header">
+        <div class="project-modal-image-wrapper">
+          <img src="images/project-5.jpg" alt="Обложка проекта Ascii Art Bot" class="project-modal-image" loading="lazy" />
+        </div>
+        <div class="project-header-text">
+          <h3 class="project-modal-title">Ascii art generator</h3>
+          <div class="project-modal-info-grid">
+            <div class="info-box">
+              <span class="info-label">Дата начала</span>
+              <span class="info-value">16.02.2026</span>
+            </div>
+            <div class="info-box">
+              <span class="info-label">Статус</span>
+              <span class="info-value">Активен</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="project-modal-body">
+        <p class="project-modal-description">Бот для преобразования изображений в ASCII-арт. Пользователи могут загружать фотографии, а бот генерирует текстовые изображения, используя различные символы и настройки плотности.</p>
+        <div class="project-modal-technologies">
+          <h4>Технологии:</h4>
+          <div class="tech-icons">
+            <div class="tech-item">
+              <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M9.585 11.692h4.328s2.432.039 2.432-2.35V5.391S16.714 3 11.936 3C7.362 3 7.647 4.983 7.647 4.983l.006 2.055h4.363v.617H5.92s-2.927-.332-2.927 4.282 2.555 4.45 2.555 4.45h1.524v-2.141s-.083-2.554 2.513-2.554zm-.056-5.74a.784.784 0 1 1 0-1.57.784.784 0 1 1 0 1.57z"/><path d="M18.452 7.532h-1.524v2.141s.083 2.554-2.513 2.554h-4.328s-2.432-.04-2.432 2.35v3.951s-.369 2.391 4.409 2.391c4.573 0 4.288-1.983 4.288-1.983l-.006-2.054h-4.363v-.617h6.097s2.927.332 2.927-4.282-2.555-4.451-2.555-4.451zm-3.981 10.436a.784.784 0 1 1 0 1.57.784.784 0 1 1 0 1.57z"/></svg>
+              <span>Python</span>
+            </div>
+            <div class="tech-item">
+              <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 36 36"><path d="M12.75,3H5.25A1.15,1.15,0,0,0,4,4V33H14V4A1.15,1.15,0,0,0,12.75,3Z"/><path d="M33.77,31.09l-6.94-18.3a1,1,0,0,0-1.29-.58L22,13.59V9a1,1,0,0,0-1-1H16V33h6V14.69L28.93,33Z"/></svg>
+              <span>Aiogram</span>
+            </div>
+            <div class="tech-item">
+              <svg class="w-5 h-5 text-white flex-shrink-0" fill="currentColor" viewBox="0 0 36 36"><path d="M12.75,3H5.25A1.15,1.15,0,0,0,4,4V33H14V4A1.15,1.15,0,0,0,12.75,3Z"/><path d="M33.77,31.09l-6.94-18.3a1,1,0,0,0-1.29-.58L22,13.59V9a1,1,0,0,0-1-1H16V33h6V14.69L28.93,33Z"/></svg>
+              <span>Pillow</span>
+            </div>
+            <div class="tech-item">
+              <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 10c3.976 0 8-1.374 8-4s-4.024-4-8-4-8 1.374-8 4 4.024 4 8 4z"/><path d="M4 10c0 2.626 4.024 4 8 4s8-1.374 8-4V8c0 2.626-4.024 4-8 4s-8-1.374-8-4v2z"/><path d="M4 14c0 2.626 4.024 4 8 4s8-1.374 8-4v-2c0 2.626-4.024 4-8 4s-8-1.374-8-4v2z"/><path d="M4 18c0 2.626 4.024 4 8 4s8-1.374 8-4v-2c0 2.626-4.024 4-8 4s-8-1.374-8-4v2z"/></svg>
+              <span>Базы данных</span>
+            </div>
+            <div class="tech-item">
+              <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 48 48"><path d="M41.4193 7.30899C41.4193 7.30899 45.3046 5.79399 44.9808 9.47328C44.8729 10.9883 43.9016 16.2908 43.1461 22.0262L40.5559 39.0159C40.5559 39.0159 40.3401 41.5048 38.3974 41.9377C36.4547 42.3705 33.5408 40.4227 33.0011 39.9898C32.5694 39.6652 24.9068 34.7955 22.2086 32.4148C21.4531 31.7655 20.5897 30.4669 22.3165 28.9519L33.6487 18.1305C34.9438 16.8319 36.2389 13.8019 30.8426 17.4812L15.7331 27.7616C15.7331 27.7616 14.0063 28.8437 10.7686 27.8698L3.75342 25.7055C3.75342 25.7055 1.16321 24.0823 5.58815 22.459C16.3807 17.3729 29.6555 12.1786 41.4193 7.30899Z"/></svg>
+              <span>Telegram API</span>
+            </div>
+          </div>
+        </div>
+        <a class="project-modal-button btn-press" href="https://t.me/ascii_art_generator_bot" target="_blank" rel="noopener noreferrer">
+          Попробовать бота
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="margin-left: 8px;">
+            <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+    <div class="mobile-swipe-hint">
+      <svg class="swipe-arrow-left" viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+      <span>свайпните для навигации</span>
+      <svg class="swipe-arrow-right" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
