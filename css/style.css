@@ -68,7 +68,9 @@ body {
 .info-value,
 .tech-item span,
 .tech-item svg,
-.nav-link {
+.nav-link,
+.skill-tag span,
+.studio-tag span {
   /* Added .nav-link here for text smoothing */
   backface-visibility: hidden;
   transform: translateZ(0);
@@ -79,6 +81,35 @@ body {
   /* Subtle text-shadow to force GPU rendering for text */
 }
 
+/* Base smoothing for the containers themselves */
+.skill-tag,
+.studio-tag {
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+/* =============================================
+   Native utility classes (replaced Tailwind CDN)
+   ============================================= */
+.flex           { display: flex; }
+.items-center   { align-items: center; }
+.flex-shrink-0  { flex-shrink: 0; }
+.text-white     { color: #ffffff; }
+.w-fit          { width: fit-content; }
+.mx-auto        { margin-left: auto; margin-right: auto; }
+.mb-2           { margin-bottom: 8px; }
+.mb-12          { margin-bottom: 48px; }
+.justify-center { justify-content: center; }
+
+.w-5  { width:  20px; }
+.h-5  { height: 20px; }
+.w-6  { width:  24px; }
+.h-6  { height: 24px; }
+.w-8  { width:  32px; }
+.h-8  { height: 32px; }
+
+.space-y-3 > * + * { margin-top: 12px; }
 
 .fixed-header {
   position: fixed;
@@ -588,7 +619,21 @@ body {
   line-height: 1.6;
   font-size: 1.1rem;
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-  margin: 0;
+  margin: 0 0 16px 0;
+}
+
+/* Native replacement for Tailwind grid utils in skills tech list */
+.skills-tech-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-top: 16px;
+  list-style: none;
+  padding: 0;
+}
+
+.mb-4 {
+  margin-bottom: 16px;
 }
 
 .stats-grid {
@@ -802,15 +847,14 @@ body {
   text-decoration: none;
   font-weight: 700;
   transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   outline: none;
   font-size: 1.1rem;
-  /* Removed backdrop-filter to fix rendering artifacts */
-  border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
   cursor: pointer;
   margin-top: auto;
+  touch-action: manipulation;
 }
 
 @media (hover: hover) {
@@ -1111,14 +1155,14 @@ body {
   text-decoration: none;
   font-weight: 700;
   transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   outline: none;
   font-size: 1.2rem;
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
   cursor: pointer;
+  touch-action: manipulation;
 }
 
 @media (hover: hover) {
@@ -1141,7 +1185,6 @@ body {
   padding: 60px 16px 40px;
   position: relative;
   overflow: hidden;
-  will-change: transform, opacity;
 }
 
 .footer::before {
@@ -1726,9 +1769,11 @@ body.scrolled-mode .lightbox-close {
     height: auto;
     aspect-ratio: 1 / 1;
     padding: 10px;
-    /* Added padding inside wrapper */
     box-sizing: border-box;
-    /* Ensure padding is included in width */
+  }
+
+  .project-card-image {
+    object-fit: cover;
   }
 
   .read-more {
@@ -1785,12 +1830,6 @@ body.scrolled-mode .lightbox-close {
     font-size: 0.9rem;
   }
 
-  .project-nav-arrow {
-    display: none;
-  }
-}
-
-@media (max-width: 1024px) {
   .project-nav-arrow {
     display: none;
   }
@@ -1944,6 +1983,23 @@ body.scrolled-mode .lightbox-close {
     flex-direction: row;
     padding: 48px;
   }
+
+  .studio-name {
+    font-size: 3.5rem;
+  }
+
+  .studio-team-section {
+    padding-top: 0;
+    padding-left: 48px;
+    border-top: none;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .studio-actions {
+    flex-direction: row;
+    align-items: center;
+    gap: 32px;
+  }
 }
 
 .studio-card::before {
@@ -1987,11 +2043,7 @@ body.scrolled-mode .lightbox-close {
   line-height: 1.1;
 }
 
-@media (min-width: 769px) {
-  .studio-name {
-    font-size: 3.5rem;
-  }
-}
+
 
 .studio-subtitle {
   color: var(--gray-300);
@@ -2008,7 +2060,8 @@ body.scrolled-mode .lightbox-close {
   margin-bottom: 32px;
 }
 
-.studio-tag {
+.studio-tag,
+.skill-tag {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -2023,14 +2076,19 @@ body.scrolled-mode .lightbox-close {
   backface-visibility: hidden;
   transform: translateZ(0);
   will-change: transform, box-shadow, background-color, border-color;
+  /* Extra fix for shaking letters */
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
 }
 
 @media (hover: hover) {
-  .studio-tag:hover {
-    transform: scale(1.08) translateZ(0);
+  .studio-tag:hover,
+  .skill-tag:hover {
+    transform: scale(1.05) translateZ(0);
     background-color: rgba(255, 255, 255, 0.1);
     border-color: rgba(255, 255, 255, 0.3);
     box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1), 0 5px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1;
   }
 }
 
@@ -2073,17 +2131,9 @@ body.scrolled-mode .lightbox-close {
   display: flex;
   flex-direction: column;
   padding-top: 32px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-@media (min-width: 769px) {
-  .studio-team-section {
-    padding-top: 0;
-    padding-left: 48px;
-    border-top: none;
-    border-left: 1px solid rgba(255, 255, 255, 0.1);
-  }
-}
+
 
 .studio-team-title {
   font-size: 1.25rem;
@@ -2110,11 +2160,18 @@ body.scrolled-mode .lightbox-close {
   padding: 16px;
   transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
   text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 @media (hover: hover) {
   .studio-team-member:hover {
-    transform: scale(1.03);
+    transform: scale(1.03) translateZ(0);
     background: rgba(255, 255, 255, 0.08);
     border-color: rgba(255, 255, 255, 0.2);
   }
@@ -2135,6 +2192,8 @@ body.scrolled-mode .lightbox-close {
   border: 2px solid rgba(255, 255, 255, 0.1);
   cursor: pointer;
   transition: transform 0.3s ease, border-color 0.3s ease;
+  position: relative;
+  z-index: 5;
 }
 
 .member-avatar:hover {
@@ -2148,6 +2207,10 @@ body.scrolled-mode .lightbox-close {
   object-fit: cover;
 }
 
+.member-info {
+  flex-grow: 1;
+}
+
 .member-name {
   font-size: 1.1rem;
   font-weight: 700;
@@ -2157,6 +2220,42 @@ body.scrolled-mode .lightbox-close {
 .member-role {
   font-size: 0.9rem;
   color: var(--gray-400);
+  margin-bottom: 8px;
+}
+
+.member-more {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--gray-300);
+  opacity: 0.6;
+  transition: all 0.3s ease;
+}
+
+.studio-team-member:hover .member-more {
+  opacity: 1;
+  color: var(--white);
+  transform: translateX(4px);
+}
+
+.member-more svg {
+  transition: transform 0.3s ease;
+}
+
+.studio-team-member:hover .member-more svg {
+  transform: translateX(2px);
+}
+
+.member-link-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  cursor: pointer;
 }
 
 .studio-actions {
@@ -2166,12 +2265,15 @@ body.scrolled-mode .lightbox-close {
   margin-top: auto;
 }
 
-@media (min-width: 769px) {
-  .studio-actions {
-    flex-direction: row;
-    align-items: center;
-    gap: 32px;
-  }
+/* .btn-svg-icon — utility for SVG icons inside buttons */
+.btn-svg-icon {
+  margin-left: 8px;
+  flex-shrink: 0;
+}
+
+.btn-svg-icon-left {
+  margin-right: 8px;
+  flex-shrink: 0;
 }
 
 .studio-contact {
@@ -2188,4 +2290,22 @@ body.scrolled-mode .lightbox-close {
 
 .studio-contact a:hover {
   color: var(--gray-300);
+}
+
+.card-decoration {
+  color: var(--white);
+  pointer-events: none;
+  transform: rotate(-15deg);
+  transition: all 0.5s ease;
+}
+
+.skill-tag-detailed:hover .card-decoration {
+  opacity: 0.07;
+  transform: rotate(0deg) scale(1.1);
+}
+
+@media (max-width: 480px) {
+  .skill-tag-detailed {
+    padding: 16px;
+  }
 }
