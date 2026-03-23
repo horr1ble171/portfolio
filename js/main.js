@@ -156,7 +156,7 @@ function initProjectModals() {
 
       setupDescription(modal);
       setupTechnologies(modal);
-      setupNavigation(modal, modalId);
+      setupNavigation(modal);
 
       currentModalIndex = modalIds.indexOf(modalId);
 
@@ -243,7 +243,7 @@ function initProjectModals() {
     }
   }
 
-  function setupNavigation(modal, currentId) {
+  function setupNavigation(modal) {
     const oldArrows = modal.querySelectorAll('.project-nav-arrow');
     oldArrows.forEach(arrow => arrow.remove());
 
@@ -269,28 +269,6 @@ function initProjectModals() {
       modal.appendChild(prevBtn);
       modal.appendChild(nextBtn);
     }
-
-    let touchStartX = 0;
-    let touchEndX = 0;
-
-    modal.addEventListener('touchstart', (e) => {
-      touchStartX = e.changedTouches[0].screenX;
-    }, { passive: true });
-
-    modal.addEventListener('touchend', (e) => {
-      touchEndX = e.changedTouches[0].screenX;
-      handleSwipe();
-    }, { passive: true });
-
-    function handleSwipe() {
-      const swipeThreshold = 50;
-      if (touchEndX < touchStartX - swipeThreshold) {
-        navigateProject(1);
-      }
-      if (touchEndX > touchStartX + swipeThreshold) {
-        navigateProject(-1);
-      }
-    }
   }
 
   function navigateProject(direction) {
@@ -309,7 +287,7 @@ function initProjectModals() {
 
     setupDescription(nextModal);
     setupTechnologies(nextModal);
-    setupNavigation(nextModal, nextId);
+    setupNavigation(nextModal);
 
     // Мгновенное переключение без анимации
     currentModal.classList.remove('active');
@@ -344,6 +322,24 @@ function initProjectModals() {
         closeModal(modal);
       }
     });
+
+    // Добавляем поддержку свайпов один раз при инициализации
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    modal.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    modal.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      const swipeThreshold = 50;
+      if (touchEndX < touchStartX - swipeThreshold) {
+        navigateProject(1);
+      } else if (touchEndX > touchStartX + swipeThreshold) {
+        navigateProject(-1);
+      }
+    }, { passive: true });
   });
 
   document.addEventListener('keydown', (e) => {
@@ -487,17 +483,19 @@ function initLightbox() {
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = document.getElementById('lightbox-img');
   const closeBtn = document.querySelector('.lightbox-close');
-  const triggers = document.querySelectorAll('.avatar-image, .album-cover-image, .project-modal-image');
+  const triggers = document.querySelectorAll('.avatar-image, .album-cover-image, .project-modal-image, .member-image');
 
   if (!lightbox || !lightboxImg) return;
 
   function openLightbox(src) {
     lightboxImg.src = src;
     lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
   }
 
   function closeLightbox() {
     lightbox.classList.remove('active');
+    document.body.style.overflow = '';
   }
 
   triggers.forEach(img => {
