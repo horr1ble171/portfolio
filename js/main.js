@@ -146,8 +146,6 @@ function initProjectModals() {
 
   const modalIds = [...new Set(Array.from(openButtons).map(btn => `project-modal-${btn.dataset.projectId}`))];
 
-  const swipeHint = document.getElementById('global-swipe-hint');
-
   function openModal(modalId) {
     const modal = document.getElementById(modalId);
     if (modal) {
@@ -162,11 +160,6 @@ function initProjectModals() {
 
       currentModalIndex = modalIds.indexOf(modalId);
 
-      // Show swipe hint on mobile
-      if (swipeHint && window.innerWidth <= 1024) {
-        swipeHint.style.display = 'flex';
-      }
-
       const content = modal.querySelector('.project-modal-content');
       gsap.fromTo(content,
         { scale: 0.9, opacity: 0 },
@@ -178,8 +171,6 @@ function initProjectModals() {
   function closeModal(modal) {
     modal.classList.remove('active');
     document.body.style.overflow = '';
-    // Hide swipe hint
-    if (swipeHint) swipeHint.style.display = 'none';
   }
 
   function setupDescription(modal) {
@@ -564,32 +555,24 @@ function animateStatNumbers() {
 function initScrollSpy() {
   const navLinks = document.querySelectorAll('.nav-link');
   const sections = document.querySelectorAll('section');
-  let ticking = false;
 
   window.addEventListener('scroll', () => {
-    if (!ticking) {
-      requestAnimationFrame(() => {
-        let current = '';
+    let current = '';
 
-        sections.forEach(section => {
-          const sectionTop = section.offsetTop;
-          const sectionHeight = section.clientHeight;
-          if (scrollY >= (sectionTop - sectionHeight / 3)) {
-            current = section.getAttribute('id');
-          }
-        });
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      const sectionHeight = section.clientHeight;
+      if (scrollY >= (sectionTop - sectionHeight / 3)) {
+        current = section.getAttribute('id');
+      }
+    });
 
-        navLinks.forEach(link => {
-          link.classList.remove('active');
-          if (link.getAttribute('href').includes(current)) {
-            link.classList.add('active');
-          }
-        });
-
-        ticking = false;
-      });
-      ticking = true;
-    }
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href').includes(current)) {
+        link.classList.add('active');
+      }
+    });
   }, { passive: true });
 }
 

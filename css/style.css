@@ -89,27 +89,6 @@ body {
   -webkit-font-smoothing: subpixel-antialiased;
 }
 
-/* =============================================
-   Native utility classes (replaced Tailwind CDN)
-   ============================================= */
-.flex           { display: flex; }
-.items-center   { align-items: center; }
-.flex-shrink-0  { flex-shrink: 0; }
-.text-white     { color: #ffffff; }
-.w-fit          { width: fit-content; }
-.mx-auto        { margin-left: auto; margin-right: auto; }
-.mb-2           { margin-bottom: 8px; }
-.mb-12          { margin-bottom: 48px; }
-.justify-center { justify-content: center; }
-
-.w-5  { width:  20px; }
-.h-5  { height: 20px; }
-.w-6  { width:  24px; }
-.h-6  { height: 24px; }
-.w-8  { width:  32px; }
-.h-8  { height: 32px; }
-
-.space-y-3 > * + * { margin-top: 12px; }
 
 .fixed-header {
   position: fixed;
@@ -619,21 +598,7 @@ body {
   line-height: 1.6;
   font-size: 1.1rem;
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-  margin: 0 0 16px 0;
-}
-
-/* Native replacement for Tailwind grid utils in skills tech list */
-.skills-tech-list {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
-  margin-top: 16px;
-  list-style: none;
-  padding: 0;
-}
-
-.mb-4 {
-  margin-bottom: 16px;
+  margin: 0;
 }
 
 .stats-grid {
@@ -847,14 +812,15 @@ body {
   text-decoration: none;
   font-weight: 700;
   transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: none;
   outline: none;
   font-size: 1.1rem;
+  /* Removed backdrop-filter to fix rendering artifacts */
+  border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
   cursor: pointer;
   margin-top: auto;
-  touch-action: manipulation;
 }
 
 @media (hover: hover) {
@@ -1155,14 +1121,14 @@ body {
   text-decoration: none;
   font-weight: 700;
   transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: none;
   outline: none;
   font-size: 1.2rem;
   backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
   cursor: pointer;
-  touch-action: manipulation;
 }
 
 @media (hover: hover) {
@@ -1185,6 +1151,7 @@ body {
   padding: 60px 16px 40px;
   position: relative;
   overflow: hidden;
+  will-change: transform, opacity;
 }
 
 .footer::before {
@@ -1758,6 +1725,15 @@ body.scrolled-mode .lightbox-close {
     grid-template-columns: 1fr;
   }
 
+  /* Технологии в навыках — одна колонка на мобильных */
+  .grid.grid-cols-2 {
+    grid-template-columns: 1fr !important;
+  }
+
+  .grid.grid-cols-2 .skill-tag {
+    width: fit-content;
+  }
+
   .project-card {
     flex-direction: column;
     padding: 24px;
@@ -1769,11 +1745,9 @@ body.scrolled-mode .lightbox-close {
     height: auto;
     aspect-ratio: 1 / 1;
     padding: 10px;
+    /* Added padding inside wrapper */
     box-sizing: border-box;
-  }
-
-  .project-card-image {
-    object-fit: cover;
+    /* Ensure padding is included in width */
   }
 
   .read-more {
@@ -1830,6 +1804,12 @@ body.scrolled-mode .lightbox-close {
     font-size: 0.9rem;
   }
 
+  .project-nav-arrow {
+    display: none;
+  }
+}
+
+@media (max-width: 1024px) {
   .project-nav-arrow {
     display: none;
   }
@@ -1983,23 +1963,6 @@ body.scrolled-mode .lightbox-close {
     flex-direction: row;
     padding: 48px;
   }
-
-  .studio-name {
-    font-size: 3.5rem;
-  }
-
-  .studio-team-section {
-    padding-top: 0;
-    padding-left: 48px;
-    border-top: none;
-    border-left: 1px solid rgba(255, 255, 255, 0.1);
-  }
-
-  .studio-actions {
-    flex-direction: row;
-    align-items: center;
-    gap: 32px;
-  }
 }
 
 .studio-card::before {
@@ -2043,7 +2006,11 @@ body.scrolled-mode .lightbox-close {
   line-height: 1.1;
 }
 
-
+@media (min-width: 769px) {
+  .studio-name {
+    font-size: 3.5rem;
+  }
+}
 
 .studio-subtitle {
   color: var(--gray-300);
@@ -2131,6 +2098,16 @@ body.scrolled-mode .lightbox-close {
   display: flex;
   flex-direction: column;
   padding-top: 32px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@media (min-width: 769px) {
+  .studio-team-section {
+    padding-top: 0;
+    padding-left: 48px;
+    border-top: none;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+  }
 }
 
 
@@ -2265,15 +2242,12 @@ body.scrolled-mode .lightbox-close {
   margin-top: auto;
 }
 
-/* .btn-svg-icon — utility for SVG icons inside buttons */
-.btn-svg-icon {
-  margin-left: 8px;
-  flex-shrink: 0;
-}
-
-.btn-svg-icon-left {
-  margin-right: 8px;
-  flex-shrink: 0;
+@media (min-width: 769px) {
+  .studio-actions {
+    flex-direction: row;
+    align-items: center;
+    gap: 32px;
+  }
 }
 
 .studio-contact {
