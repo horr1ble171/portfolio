@@ -610,10 +610,20 @@
       </div>
 
       <div class="footer-links">
+        <h4>Студия</h4>
+        <ul>
+          <li><a href="https://www.oraclestudio.space/" target="_blank" rel="noopener noreferrer"
+              class="btn-press">Oracle Studio</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-links">
         <h4>Контакты</h4>
         <ul>
           <li><a href="https://t.me/zxchorrible" target="_blank" rel="noopener noreferrer"
               class="btn-press">Telegram</a></li>
+          <li><a href="https://discordapp.com/users/991642165908340798" target="_blank" rel="noopener noreferrer"
+              class="btn-press">Discord</a></li>
           <li><a href="https://github.com/horr1ble171" target="_blank" rel="noopener noreferrer"
               class="btn-press">GitHub</a></li>
         </ul>
@@ -622,11 +632,11 @@
 
     <div class="footer-bottom">
       <div class="footer-copyright">
-        © 2025 - 2026 horr1ble. Все права защищены.
+        © 2025 - 2026 horr1ble.space Все права защищены.
       </div>
       <div class="footer-legal">
-        <a href="#" class="btn-press">Политика конфиденциальности</a>
-        <a href="#" class="btn-press">Условия использования</a>
+        <a href="javascript:void(0)" class="btn-press" id="open-privacy">Политика конфиденциальности</a>
+        <a href="javascript:void(0)" class="btn-press" id="open-terms">Условия использования</a>
       </div>
     </div>
   </footer>
@@ -1100,6 +1110,50 @@
       <svg class="swipe-arrow-right" viewBox="0 0 24 24">
         <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
       </svg>
+    </div>
+  </div>
+
+  <div class="project-modal-overlay" id="legal-modal-privacy">
+    <div class="project-modal-content">
+      <button type="button" class="project-modal-close btn-press" aria-label="Закрыть">
+        <svg viewBox="0 0 24 24">
+          <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+        </svg>
+      </button>
+      <div class="project-modal-header">
+        <h3 class="project-modal-title">Политика конфиденциальности</h3>
+      </div>
+      <div class="project-modal-body">
+        <p class="project-modal-description">Ваша конфиденциальность очень важна для меня. На этом сайте данные не собираются автоматически, за исключением стандартных логов сервера.</p>
+        <h4 class="text-white mb-2">Какие данные я собираю?</h4>
+        <p class="project-modal-description">Я не собираю личную информацию о посетителях сайта. Если вы связываетесь со мной через сторонние платформы (Telegram, Discord), ваши данные обрабатываются в соответствии с их политикой конфиденциальности.</p>
+        <h4 class="text-white mb-2">Cookies</h4>
+        <p class="project-modal-description">Данный сайт не использует куки-файлы для отслеживания ваших действий.</p>
+        <h4 class="text-white mb-2">Сторонние сервисы</h4>
+        <p class="project-modal-description">На сайте могут присутствовать ссылки на сторонние ресурсы (GitHub, Spotify, Telegram). Я не несу ответственности за содержание и политику конфиденциальности этих сайтов.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="project-modal-overlay" id="legal-modal-terms">
+    <div class="project-modal-content">
+      <button type="button" class="project-modal-close btn-press" aria-label="Закрыть">
+        <svg viewBox="0 0 24 24">
+          <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+        </svg>
+      </button>
+      <div class="project-modal-header">
+        <h3 class="project-modal-title">Условия использования</h3>
+      </div>
+      <div class="project-modal-body">
+        <p class="project-modal-description">Используя этот сайт, вы соглашаетесь со следующими условиями:</p>
+        <h4 class="text-white mb-2">Контент</h4>
+        <p class="project-modal-description">Весь контент, представленный на сайте (тексты, изображения, примеры кода), является интеллектуальной собственностью и предназначен для ознакомления.</p>
+        <h4 class="text-white mb-2">Отказ от ответственности</h4>
+        <p class="project-modal-description">Сайт предоставляется "как есть". Я не несу ответственности за любые технические ошибки или убытки, возникшие в результате использования информации с этого сайта.</p>
+        <h4 class="text-white mb-2">Изменения</h4>
+        <p class="project-modal-description">Я оставляю за собой право изменять содержание сайта и данные условия в любое время без предварительного уведомления.</p>
+      </div>
     </div>
   </div>
 

@@ -576,10 +576,49 @@ function initScrollSpy() {
   }, { passive: true });
 }
 
+function initLegalModals() {
+  const privacyTrigger = document.getElementById('open-privacy');
+  const termsTrigger = document.getElementById('open-terms');
+  const privacyModal = document.getElementById('legal-modal-privacy');
+  const termsModal = document.getElementById('legal-modal-terms');
+
+  if (!privacyTrigger || !termsTrigger || !privacyModal || !termsModal) return;
+
+  function openLegalModal(modal) {
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    
+    const content = modal.querySelector('.project-modal-content');
+    gsap.fromTo(content, 
+      { scale: 0.9, opacity: 0 },
+      { scale: 1, opacity: 1, duration: 0.3, ease: "power2.out" }
+    );
+  }
+
+  function closeLegalModal(modal) {
+    modal.classList.remove('active');
+    if (!document.querySelector('.project-modal-overlay.active')) {
+      document.body.style.overflow = '';
+    }
+  }
+
+  privacyTrigger.addEventListener('click', () => openLegalModal(privacyModal));
+  termsTrigger.addEventListener('click', () => openLegalModal(termsModal));
+
+  [privacyModal, termsModal].forEach(modal => {
+    const closeBtn = modal.querySelector('.project-modal-close');
+    closeBtn.addEventListener('click', () => closeLegalModal(modal));
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeLegalModal(modal);
+    });
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   optimizeForMobile();
   initAnimations();
   initProjectModals();
+  initLegalModals();
   imagesFallback();
   initSpotifyPlayer();
   initNavigation();

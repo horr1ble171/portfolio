@@ -2049,6 +2049,7 @@ body.scrolled-mode .lightbox-close {
 }
 
 @media (hover: hover) {
+
   .studio-tag:hover,
   .skill-tag:hover {
     transform: scale(1.05) translateZ(0);
