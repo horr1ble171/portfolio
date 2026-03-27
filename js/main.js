@@ -571,26 +571,41 @@ function animateStatNumbers() {
 
 function initScrollSpy() {
   const navLinks = document.querySelectorAll('.nav-link');
-  const sections = document.querySelectorAll('section');
+  const sections = document.querySelectorAll('section[id]');
 
-  window.addEventListener('scroll', () => {
+  function handleScroll() {
     let current = '';
+    const scrollY = window.scrollY;
+    
+    // Header height + some buffer
+    const offset = 140; 
 
+    // Find the right section
     sections.forEach(section => {
-      const sectionTop = section.offsetTop;
-      const sectionHeight = section.clientHeight;
-      if (scrollY >= (sectionTop - sectionHeight / 3)) {
+      const sectionTop = section.offsetTop - offset;
+      if (scrollY >= sectionTop) {
         current = section.getAttribute('id');
       }
     });
 
+    // Handle home specifically when at the very top
+    if (scrollY < 100) {
+      current = 'hero';
+    }
+
     navLinks.forEach(link => {
       link.classList.remove('active');
-      if (link.getAttribute('href').includes(current)) {
+      const href = link.getAttribute('href');
+      // Direct comparison with the section ID to avoid partial matches
+      if (href === `#${current}`) {
         link.classList.add('active');
       }
     });
-  }, { passive: true });
+  }
+
+  window.addEventListener('scroll', handleScroll, { passive: true });
+  // Set initial state
+  handleScroll();
 }
 
 function initLegalModals() {
