@@ -631,9 +631,57 @@ function initLegalModals() {
   });
 }
 
+function initPreloader() {
+  const preloader = document.getElementById('preloader');
+  const bar = document.getElementById('preloader-bar');
+  const percentage = document.getElementById('preloader-percentage');
+  const body = document.body;
+
+  if (!preloader || !bar || !percentage) return;
+
+  let width = 0;
+  const interval = setInterval(() => {
+    if (width < 95) {
+      width += Math.random() * 3;
+      if (width > 95) width = 95;
+      bar.style.width = width + '%';
+      percentage.textContent = Math.floor(width) + '%';
+    }
+  }, 70);
+
+  const finishLoading = () => {
+    clearInterval(interval);
+    
+    // Smooth finish to 100%
+    const finishInterval = setInterval(() => {
+      if (width >= 100) {
+        clearInterval(finishInterval);
+        
+        setTimeout(() => {
+          preloader.classList.add('fade-out');
+          body.classList.remove('loading');
+          
+          // Start initial animations after preloader is gone
+          initAnimations();
+        }, 400);
+      } else {
+        width += 1; // Increment by 1 as requested
+        bar.style.width = width + '%';
+        percentage.textContent = Math.floor(width) + '%';
+      }
+    }, 8); // Fast but visible finish
+  };
+
+  if (document.readyState === 'complete') {
+    finishLoading();
+  } else {
+    window.addEventListener('load', finishLoading);
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   optimizeForMobile();
-  initAnimations();
+  initPreloader(); // Инициализация прелоадера
   initProjectModals();
   initLegalModals();
   imagesFallback();

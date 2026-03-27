@@ -21,7 +21,18 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body class="bg-black text-white">
+<body class="bg-black text-white loading">
+  <div id="preloader" class="preloader">
+    <div class="preloader-content">
+      <div class="preloader-logo">horr1ble</div>
+      <p class="preloader-text">Портфолио загружается...</p>
+      <div class="preloader-bar-wrapper">
+        <div class="preloader-bar" id="preloader-bar"></div>
+      </div>
+      <div class="preloader-percentage" id="preloader-percentage">0%</div>
+    </div>
+  </div>
+
   <header class="fixed-header">
     <div class="header-content">
       <button type="button" class="hamburger btn-press" aria-label="Меню">
