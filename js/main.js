@@ -32,6 +32,13 @@ function optimizeForMobile() {
 
 function initAnimations() {
   const tl = gsap.timeline();
+  const heroTitle = document.querySelector('.hero-title');
+  const heroSubtitle = document.querySelector('.hero-subtitle');
+  const socialIcons = document.querySelector('.social-icons-container');
+  const titleText = heroTitle.textContent;
+  
+  heroTitle.textContent = '';
+  heroTitle.classList.add('typing-active');
 
   tl.from('.avatar-wrapper', {
     duration: 0.8,
@@ -45,20 +52,30 @@ function initAnimations() {
     y: -100,
     ease: 'power3.out'
   }, '-=0.4')
-
-  .from('.hero-title', {
+  .to(heroTitle, {
+    duration: 1,
+    onStart: () => {
+      let count = 0;
+      const typeInterval = setInterval(() => {
+        if (count <= titleText.length) {
+          heroTitle.textContent = titleText.substring(0, count);
+          count++;
+        } else {
+          clearInterval(typeInterval);
+          // Wait a bit and stop the cursor if needed, 
+          // but usually kept for better aesthetics or removed after some time
+          setTimeout(() => heroTitle.classList.remove('typing-active'), 1500);
+        }
+      }, 60); // Speed of typing
+    }
+  }, '-=0.6')
+  .from(heroSubtitle, {
     duration: 0.8,
     autoAlpha: 0,
     y: 30,
     ease: 'power3.out'
-  }, '-=0.6')
-  .from('.hero-subtitle', {
-    duration: 0.8,
-    autoAlpha: 0,
-    y: 30,
-    ease: 'power3.out'
-  }, '-=0.6')
-  .from('.social-icons-container', {
+  }, '-=0.2')
+  .from(socialIcons, {
     duration: 0.8,
     autoAlpha: 0,
     y: 30,
