@@ -36,7 +36,7 @@ function initAnimations() {
   const heroSubtitle = document.querySelector('.hero-subtitle');
   const socialIcons = document.querySelector('.social-icons-container');
   const titleText = heroTitle.textContent;
-  
+
   heroTitle.textContent = '';
   heroTitle.classList.add('typing-active');
 
@@ -47,40 +47,40 @@ function initAnimations() {
     scale: 0.95,
     ease: 'power3.out'
   })
-  .from('.fixed-header', {
-    duration: 0.8,
-    y: -100,
-    ease: 'power3.out'
-  }, '-=0.4')
-  .to(heroTitle, {
-    duration: 1,
-    onStart: () => {
-      let count = 0;
-      const typeInterval = setInterval(() => {
-        if (count <= titleText.length) {
-          heroTitle.textContent = titleText.substring(0, count);
-          count++;
-        } else {
-          clearInterval(typeInterval);
-          // Wait a bit and stop the cursor if needed, 
-          // but usually kept for better aesthetics or removed after some time
-          setTimeout(() => heroTitle.classList.remove('typing-active'), 1500);
-        }
-      }, 60); // Speed of typing
-    }
-  }, '-=0.6')
-  .from(heroSubtitle, {
-    duration: 0.8,
-    autoAlpha: 0,
-    y: 30,
-    ease: 'power3.out'
-  }, '-=0.2')
-  .from(socialIcons, {
-    duration: 0.8,
-    autoAlpha: 0,
-    y: 30,
-    ease: 'power3.out'
-  }, '-=0.6');
+    .from('.fixed-header', {
+      duration: 0.8,
+      y: -100,
+      ease: 'power3.out'
+    }, '-=0.4')
+    .to(heroTitle, {
+      duration: 1,
+      onStart: () => {
+        let count = 0;
+        const typeInterval = setInterval(() => {
+          if (count <= titleText.length) {
+            heroTitle.textContent = titleText.substring(0, count);
+            count++;
+          } else {
+            clearInterval(typeInterval);
+            // Wait a bit and stop the cursor if needed, 
+            // but usually kept for better aesthetics or removed after some time
+            setTimeout(() => heroTitle.classList.remove('typing-active'), 1500);
+          }
+        }, 60); // Speed of typing
+      }
+    }, '-=0.6')
+    .from(heroSubtitle, {
+      duration: 0.8,
+      autoAlpha: 0,
+      y: 30,
+      ease: 'power3.out'
+    }, '-=0.2')
+    .from(socialIcons, {
+      duration: 0.8,
+      autoAlpha: 0,
+      y: 30,
+      ease: 'power3.out'
+    }, '-=0.6');
 
   if (window.innerWidth > 768) {
 
@@ -271,11 +271,11 @@ function initProjectModals() {
         }
       });
     } else if (e.key === 'ArrowLeft') {
-        const activeModal = document.querySelector('.project-modal-overlay.active');
-        if (activeModal && typeof navigateProject === 'function') navigateProject(-1);
+      const activeModal = document.querySelector('.project-modal-overlay.active');
+      if (activeModal && typeof navigateProject === 'function') navigateProject(-1);
     } else if (e.key === 'ArrowRight') {
-        const activeModal = document.querySelector('.project-modal-overlay.active');
-        if (activeModal && typeof navigateProject === 'function') navigateProject(1);
+      const activeModal = document.querySelector('.project-modal-overlay.active');
+      if (activeModal && typeof navigateProject === 'function') navigateProject(1);
     }
   });
 
@@ -288,7 +288,7 @@ function imagesFallback() {
   document.querySelectorAll('img').forEach(img => {
     if (img.id === 'lightbox-img') return;
 
-    img.addEventListener('error', function() {
+    img.addEventListener('error', function () {
       if (!this.getAttribute('src')) return;
 
       this.style.display = 'none';
@@ -330,19 +330,19 @@ function initSpotifyPlayer() {
   const progressFill = document.querySelector('.progress-bar-fill');
 
   if (playBtn) {
-    playBtn.addEventListener('click', function() {
+    playBtn.addEventListener('click', function () {
       animateClick(this, 0.9);
     });
   }
 
   if (prevBtn) {
-    prevBtn.addEventListener('click', function() {
+    prevBtn.addEventListener('click', function () {
       animateClick(this, 0.85);
     });
   }
 
   if (nextBtn) {
-    nextBtn.addEventListener('click', function() {
+    nextBtn.addEventListener('click', function () {
       animateClick(this, 0.85);
     });
   }
@@ -385,20 +385,20 @@ function initNavigation() {
 
       const targetId = this.getAttribute('href');
       if (targetId.startsWith('#')) {
-          e.preventDefault();
-          const targetElement = document.querySelector(targetId);
+        e.preventDefault();
+        const targetElement = document.querySelector(targetId);
 
-          if (hamburger && navbar.classList.contains('active')) {
-            hamburger.classList.remove('active');
-            navbar.classList.remove('active');
-          }
+        if (hamburger && navbar.classList.contains('active')) {
+          hamburger.classList.remove('active');
+          navbar.classList.remove('active');
+        }
 
-          if (targetElement) {
-            window.scrollTo({
-              top: targetElement.offsetTop - 80,
-              behavior: 'smooth'
-            });
-          }
+        if (targetElement) {
+          window.scrollTo({
+            top: targetElement.offsetTop - 80,
+            behavior: 'smooth'
+          });
+        }
       }
     });
   });
@@ -484,9 +484,9 @@ function initScrollSpy() {
   function handleScroll() {
     let current = '';
     const scrollY = window.scrollY;
-    
+
     // Header height + some buffer
-    const offset = 140; 
+    const offset = 140;
 
     // Find the right section
     sections.forEach(section => {
@@ -537,9 +537,9 @@ function initLegalModals() {
   function openLegalModal(modal) {
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
-    
+
     const content = modal.querySelector('.project-modal-content');
-    gsap.fromTo(content, 
+    gsap.fromTo(content,
       { scale: 0.9, opacity: 0 },
       { scale: 1, opacity: 1, duration: 0.3, ease: "power2.out" }
     );
@@ -584,16 +584,16 @@ function initPreloader() {
 
   const finishLoading = () => {
     clearInterval(interval);
-    
+
     // Smooth finish to 100%
     const finishInterval = setInterval(() => {
       if (width >= 100) {
         clearInterval(finishInterval);
-        
+
         setTimeout(() => {
           preloader.classList.add('fade-out');
           body.classList.remove('loading');
-          
+
           // Start initial animations after preloader is gone
           initAnimations();
         }, 400);
@@ -607,7 +607,7 @@ function initPreloader() {
 
   if (document.readyState === 'complete') {
     finishLoading();
-} else {
+  } else {
     window.addEventListener('load', finishLoading);
   }
 }
@@ -824,7 +824,7 @@ function initI18n() {
   const pcLangWrapper = document.querySelector('.lang-selector-pc-wrapper');
   const pcLangBtn = document.querySelector('.lang-hamburger');
   const activeLangLabel = document.querySelector('.active-lang');
-  
+
   const savedLang = localStorage.getItem('selectedLang');
   let currentLang = 'ru';
 
@@ -842,10 +842,10 @@ function initI18n() {
       const key = el.getAttribute('data-i18n');
       if (translations[lang] && translations[lang][key]) {
         el.innerHTML = translations[lang][key];
-        
+
         // Clear cached full text for description truncation on mobile
         if (el.classList.contains('project-modal-description')) {
-            delete el.dataset.fullText;
+          delete el.dataset.fullText;
         }
       }
     });
@@ -853,7 +853,7 @@ function initI18n() {
     // Re-run setup for active modal if it exists
     const activeModal = document.querySelector('.project-modal-overlay.active');
     if (activeModal && typeof setupDescription === 'function') {
-        setupDescription(activeModal);
+      setupDescription(activeModal);
     }
 
     // Update active states in all selectors
@@ -864,7 +864,7 @@ function initI18n() {
     if (activeLangLabel) {
       activeLangLabel.textContent = lang.toUpperCase();
     }
-    
+
     document.documentElement.lang = lang;
     localStorage.setItem('selectedLang', lang);
   };
@@ -907,6 +907,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initLightbox();
   animateStatNumbers();
   initScrollSpy(); // Инициализация подсветки меню
+  initGradualBlur(); // Инициализация постепенного размытия
 });
 
 function setupDescription(modal) {
@@ -919,20 +920,20 @@ function setupDescription(modal) {
 
       const fullText = description.dataset.fullText;
       if (fullText.length > 100) {
-          const shortText = fullText.substring(0, 100);
-          // Use localized "more" text
-          const moreText = localStorage.getItem('selectedLang') === 'en' ? ' more' : ' еще';
-          description.innerHTML = `${shortText}<span class="read-more">... ${moreText}</span>`;
+        const shortText = fullText.substring(0, 100);
+        // Use localized "more" text
+        const moreText = localStorage.getItem('selectedLang') === 'en' ? ' more' : ' еще';
+        description.innerHTML = `${shortText}<span class="read-more">... ${moreText}</span>`;
 
-          const readMore = description.querySelector('.read-more');
-          readMore.style.cursor = 'pointer';
-          readMore.style.color = 'var(--gray-400)';
-          readMore.addEventListener('click', (e) => {
-            e.stopPropagation();
-            description.innerHTML = fullText;
-          });
-      } else {
+        const readMore = description.querySelector('.read-more');
+        readMore.style.cursor = 'pointer';
+        readMore.style.color = 'var(--gray-400)';
+        readMore.addEventListener('click', (e) => {
+          e.stopPropagation();
           description.innerHTML = fullText;
+        });
+      } else {
+        description.innerHTML = fullText;
       }
     }
   }
@@ -968,16 +969,16 @@ function setupTechnologies(modal) {
       });
     }
   } else {
-      const techContainer = modal.querySelector('.tech-icons');
-      if (techContainer) {
-          const items = techContainer.querySelectorAll('.tech-item');
-          items.forEach(item => item.style.display = 'flex');
+    const techContainer = modal.querySelector('.tech-icons');
+    if (techContainer) {
+      const items = techContainer.querySelectorAll('.tech-item');
+      items.forEach(item => item.style.display = 'flex');
 
-          const existingBtn = techContainer.querySelector('.tech-more-btn');
-          if (existingBtn) {
-              existingBtn.remove();
-          }
+      const existingBtn = techContainer.querySelector('.tech-more-btn');
+      if (existingBtn) {
+        existingBtn.remove();
       }
+    }
   }
 }
 
@@ -997,14 +998,14 @@ function setupNavigation(modal) {
     prevBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       if (typeof window._navigateProject === 'function') {
-          window._navigateProject(-1);
+        window._navigateProject(-1);
       }
     });
 
     nextBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       if (typeof window._navigateProject === 'function') {
-          window._navigateProject(1);
+        window._navigateProject(1);
       }
     });
 
@@ -1012,4 +1013,9 @@ function setupNavigation(modal) {
     modal.appendChild(nextBtn);
   }
 }
-
+
+function initGradualBlur() {
+  // Gradual Blur removed as requested
+}
+
+
