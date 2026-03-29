@@ -973,11 +973,11 @@ function setupNavigation(modal) {
 
   if (window.innerWidth > 1024) {
     const prevBtn = document.createElement('button');
-    prevBtn.className = 'project-nav-arrow prev';
+    prevBtn.className = 'project-nav-arrow prev btn-press';
     prevBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>';
 
     const nextBtn = document.createElement('button');
-    nextBtn.className = 'project-nav-arrow next';
+    nextBtn.className = 'project-nav-arrow next btn-press';
     nextBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>';
 
     prevBtn.addEventListener('click', (e) => {

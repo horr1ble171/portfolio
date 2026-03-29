@@ -2224,6 +2224,11 @@ body.scrolled-mode .lightbox-close {
     transform: scale(0.95);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   }
+
+  /* Specific fix for nav arrows to keep vertical centering during press */
+  .project-nav-arrow.btn-press:active {
+    transform: translateY(-50%) scale(0.95);
+  }
 }
 
 .mobile-swipe-hint {
