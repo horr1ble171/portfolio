@@ -55,13 +55,14 @@ html {
   scroll-behavior: smooth;
 }
 
+@media (max-width: 768px) {
+  html {
+    scroll-behavior: auto !important; /* Prevents jitter on mobile touch */
+  }
+}
+
 body {
   font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-  background:
-    linear-gradient(135deg,
-      rgba(0, 0, 0, 0.7) 0%,
-      rgba(0, 0, 0, 0.8) 100%),
-    url('../images/background.jpg') center/cover no-repeat fixed;
   background-color: var(--black);
   color: var(--white);
   min-height: 100vh;
@@ -69,6 +70,26 @@ body {
   overflow-x: hidden;
   text-rendering: optimizeLegibility;
   touch-action: manipulation;
+  /* Use ::before for fixed background to prevent mobile scrolling jitter */
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    linear-gradient(135deg,
+      rgba(0, 0, 0, 0.7) 0%,
+      rgba(0, 0, 0, 0.8) 100%),
+    url('../images/background.jpg') center/cover no-repeat;
+  z-index: -1;
+  /* Hardware acceleration for the background layer */
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 /* --- General Interactive Element Fixes --- */
@@ -1504,11 +1525,11 @@ body.loading {
 .footer {
   background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.95) 100%);
   backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding: 60px 16px 40px;
   position: relative;
   overflow: hidden;
-  will-change: transform, opacity;
 }
 
 .footer::before {
@@ -2073,9 +2094,10 @@ body.scrolled-mode .lightbox-close {
 
   .project-item,
   .skill-category,
-  .spotify-player {
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+  .spotify-player,
+  .footer {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
   }
 
   .projects-grid {

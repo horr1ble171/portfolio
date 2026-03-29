@@ -84,8 +84,9 @@ function initAnimations() {
 
   if (window.innerWidth > 768) {
 
-    // Убрал .projects-section-large
-    gsap.utils.toArray('.skills-section-large, .spotify-section-large').forEach(el => {
+    // Section fade-in
+    const sectionsToAnimate = '.skills-section-large, .projects-section-large, .studio-section-large, .spotify-section-large';
+    gsap.utils.toArray(sectionsToAnimate).forEach(el => {
       gsap.fromTo(el, { autoAlpha: 0, y: 30 }, {
         duration: 0.8,
         autoAlpha: 1,
@@ -101,8 +102,8 @@ function initAnimations() {
       });
     });
 
-    // Убрал .project-card
-    const cardsSelector = '.skill-category, .spotify-player';
+    // Category/Card animations
+    const cardsSelector = '.skill-category, .project-card, .studio-card, .studio-team-member, .spotify-player';
 
     gsap.utils.toArray(cardsSelector).forEach((it, i) => {
       gsap.fromTo(it, { autoAlpha: 0, y: 30, scale: 0.95 }, {
@@ -136,11 +137,11 @@ function initAnimations() {
     });
 
   } else {
-    // Убрал .projects-section-large и .project-card
-    const mobileElements = '.skills-section-large, .skill-category, .stat-item, .spotify-section-large, .spotify-player';
+    // Mobile animations (simplified)
+    const mobileElements = '.skills-section-large, .projects-section-large, .studio-section-large, .spotify-section-large, .skill-category, .project-card, .studio-card, .studio-team-member, .stat-item, .spotify-player';
 
     gsap.utils.toArray(mobileElements).forEach(el => {
-      gsap.fromTo(el, { autoAlpha: 0, y: 30 }, {
+      gsap.fromTo(el, { autoAlpha: 0, y: 20 }, {
         duration: 0.6,
         autoAlpha: 1,
         y: 0,
@@ -510,7 +511,17 @@ function initScrollSpy() {
     });
   }
 
-  window.addEventListener('scroll', handleScroll, { passive: true });
+  let isScrolling = false;
+  window.addEventListener('scroll', () => {
+    if (!isScrolling) {
+      window.requestAnimationFrame(() => {
+        handleScroll();
+        isScrolling = false;
+      });
+      isScrolling = true;
+    }
+  }, { passive: true });
+
   // Set initial state
   handleScroll();
 }
