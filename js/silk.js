@@ -126,6 +126,10 @@ class SilkBackground {
     this.mesh = new THREE.Mesh(geometry, material);
     this.scene.add(this.mesh);
 
+    // Save initial dimension state to avoid mobile url bar jitter
+    this.lastWidth = window.innerWidth;
+    this.lastHeight = window.innerHeight;
+
     // Resize listener
     window.addEventListener('resize', () => this.onResize());
 
@@ -134,8 +138,16 @@ class SilkBackground {
   }
 
   onResize() {
-    this.renderer.setSize(window.innerWidth, window.innerHeight);
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    // Mobile browsers hide the URL bar on scroll, triggering 'resize' and changing innerHeight.
+    // Redrawing WebGL on every scroll pixel causes massive lag and visual artifacts.
+    // We only resize if the screen WIDTH changes (rotation/resize) OR height changes by >150px.
+    const heightDiff = Math.abs(this.lastHeight - window.innerHeight);
+    if (window.innerWidth !== this.lastWidth || heightDiff > 150) {
+      this.lastWidth = window.innerWidth;
+      this.lastHeight = window.innerHeight;
+      this.renderer.setSize(window.innerWidth, window.innerHeight);
+      this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    }
   }
 
   animate() {
