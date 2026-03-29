@@ -296,16 +296,32 @@ body.loading {
     display: flex;
     position: relative;
     z-index: 1001;
-    background: rgba(255, 255, 255, 0.05);
     padding: 8px;
-    border-radius: 50%;
-    /* Removed backdrop-filter from parent to avoid conflicts with child blur */
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
     width: 60px;
     height: 60px;
     align-items: center;
     justify-content: center;
+    /* Move background and blur to pseudo-element to avoid filter nesting conflict with dropdown */
+  }
+
+  .lang-selector-pc-wrapper::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    z-index: -1;
+    transition: all 0.3s ease;
+  }
+
+  /* Keep the border on hover consistency */
+  .lang-selector-pc-wrapper.active::before {
+    border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.08);
   }
 
 
