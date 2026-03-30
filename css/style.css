@@ -43,10 +43,10 @@
 
 #silk-container {
   position: fixed;
-  top: -15vh;
-  left: -5vw;
-  width: 110vw;
-  height: 130vh;
+  top: -1vh;
+  left: -1vw;
+  width: 102vw;
+  height: 102vh;
   z-index: -2;
   pointer-events: none;
   background-color: transparent;
@@ -74,7 +74,6 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
-  overscroll-behavior-y: none;
 }
 
 @media (max-width: 768px) {
@@ -91,7 +90,6 @@ body {
   min-height: 100vh;
   -webkit-tap-highlight-color: transparent;
   overflow-x: hidden;
-  overscroll-behavior-y: none;
   text-rendering: optimizeLegibility;
   touch-action: manipulation;
   /* Use ::before for fixed background to prevent mobile scrolling jitter */
