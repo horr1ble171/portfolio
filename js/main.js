@@ -284,25 +284,6 @@ function initProjectModals() {
 }
 
 
-function imagesFallback() {
-  document.querySelectorAll('img').forEach(img => {
-    if (img.id === 'lightbox-img') return;
-
-    img.addEventListener('error', function () {
-      if (!this.getAttribute('src')) return;
-
-      this.style.display = 'none';
-      const ph = document.createElement('div');
-      ph.style.width = this.width ? this.width + 'px' : '140px';
-      ph.style.height = this.height ? this.height + 'px' : '140px';
-      ph.style.borderRadius = '12px';
-      ph.style.background = 'linear-gradient(135deg, var(--gray-600), var(--black))';
-      ph.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.3)';
-      ph.style.border = '2px solid var(--gray-600)';
-      this.parentNode && this.parentNode.appendChild(ph);
-    });
-  });
-}
 
 function animateClick(element, scaleTo) {
   element.style.transition = 'none';
@@ -901,13 +882,11 @@ document.addEventListener('DOMContentLoaded', () => {
   initPreloader(); // Инициализация прелоадера
   initProjectModals();
   initLegalModals();
-  imagesFallback();
   initSpotifyPlayer();
   initNavigation();
   initLightbox();
   animateStatNumbers();
   initScrollSpy(); // Инициализация подсветки меню
-  initGradualBlur(); // Инициализация постепенного размытия
 });
 
 function setupDescription(modal) {
@@ -1014,8 +993,5 @@ function setupNavigation(modal) {
   }
 }
 
-function initGradualBlur() {
-  // Gradual Blur removed as requested
-}
 
 
