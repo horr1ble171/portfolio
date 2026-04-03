@@ -161,63 +161,132 @@ function initProjectModals() {
   const openButtons = document.querySelectorAll('.project-card-button');
   const modals = document.querySelectorAll('.project-modal-overlay');
   let currentModalIndex = -1;
-
   const modalIds = [...new Set(Array.from(openButtons).map(btn => `project-modal-${btn.dataset.projectId}`))];
+
+  // Создаем глобальный фон и навигацию, если их еще нет
+  let globalBg = document.querySelector('.project-modal-global-bg');
+  if (!globalBg) {
+    globalBg = document.createElement('div');
+    globalBg.className = 'project-modal-global-bg';
+    document.body.appendChild(globalBg);
+  }
+
+  let globalNav = document.querySelector('.project-global-nav');
+  if (!globalNav && window.innerWidth > 1024) {
+    globalNav = document.createElement('div');
+    globalNav.className = 'project-global-nav';
+    globalNav.innerHTML = `
+      <div class="nav-arrow-wrapper prev" title="Предыдущий проект">
+        <div class="project-nav-btn">
+          <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+        </div>
+      </div>
+      <div class="nav-arrow-wrapper next" title="Следующий проект">
+        <div class="project-nav-btn">
+          <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(globalNav);
+
+    globalNav.querySelector('.prev').addEventListener('click', () => navigateProject(-1));
+    globalNav.querySelector('.next').addEventListener('click', () => navigateProject(1));
+  }
 
   function openModal(modalId) {
     const modal = document.getElementById(modalId);
-    if (modal) {
-      modals.forEach(m => m.classList.remove('active'));
+    if (!modal) return;
 
-      modal.classList.add('active');
-      document.body.style.overflow = 'hidden';
+    modals.forEach(m => m.classList.remove('active'));
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    
+    // Включаем глобальный режим навигации (фон + стрелки)
+    document.body.classList.add('project-nav-active');
+    if (globalBg) globalBg.classList.add('active');
+    if (globalNav) globalNav.classList.add('active');
 
-      setupDescription(modal);
-      setupTechnologies(modal);
-      setupNavigation(modal);
+    setupDescription(modal);
+    setupTechnologies(modal);
+    currentModalIndex = modalIds.indexOf(modalId);
 
-      currentModalIndex = modalIds.indexOf(modalId);
-
-      const content = modal.querySelector('.project-modal-content');
-      gsap.fromTo(content,
-        { scale: 0.9, opacity: 0 },
-        { scale: 1, opacity: 1, duration: 0.3, ease: "power2.out" }
-      );
-    }
+    const content = modal.querySelector('.project-modal-content');
+    gsap.fromTo(content,
+      { scale: 0.9, opacity: 0 },
+      { scale: 1, opacity: 1, duration: 0.4, ease: "power2.out" }
+    );
   }
 
   function closeModal(modal) {
+    if (!modal) return;
     modal.classList.remove('active');
     document.body.style.overflow = '';
+    
+    // Отключаем глобальный режим
+    document.body.classList.remove('project-nav-active');
+    if (globalBg) globalBg.classList.remove('active');
+    if (globalNav) globalNav.classList.remove('active');
   }
 
+  let isNavigating = false;
   function navigateProject(direction) {
-    let newIndex = currentModalIndex + direction;
+    if (isNavigating || currentModalIndex === -1) return;
 
+    let newIndex = currentModalIndex + direction;
     if (newIndex < 0) newIndex = modalIds.length - 1;
     if (newIndex >= modalIds.length) newIndex = 0;
 
-    const currentId = modalIds[currentModalIndex];
-    const nextId = modalIds[newIndex];
-
-    const currentModal = document.getElementById(currentId);
-    const nextModal = document.getElementById(nextId);
+    const currentModal = document.getElementById(modalIds[currentModalIndex]);
+    const nextModal = document.getElementById(modalIds[newIndex]);
 
     if (!currentModal || !nextModal) return;
 
+    isNavigating = true;
+
     setupDescription(nextModal);
     setupTechnologies(nextModal);
-    setupNavigation(nextModal);
 
-    // Мгновенное переключение без анимации
-    currentModal.classList.remove('active');
-    nextModal.classList.add('active');
-
-    // Очистка возможных стилей
     const currentContent = currentModal.querySelector('.project-modal-content');
     const nextContent = nextModal.querySelector('.project-modal-content');
-    if (currentContent) gsap.set(currentContent, { clearProps: "all" });
-    if (nextContent) gsap.set(nextContent, { clearProps: "all" });
+    const xPercentOffset = direction > 0 ? 100 : -100;
+
+    // Скрываем подсказку свайпа старой модалки, чтобы не было наслоения текста
+    currentModal.querySelectorAll('.mobile-swipe-hint').forEach(hint => hint.style.display = 'none');
+
+    // Просто включаем следующую модалку. Поскольку у нее теперь нет своего фона
+    // (он скрыт через CSS при project-nav-active), это будет бесшовно.
+    nextModal.style.zIndex = '10002';
+    nextModal.classList.add('active');
+
+    gsap.set(nextContent, { xPercent: xPercentOffset, opacity: 0, scale: 1 });
+
+    const tl = gsap.timeline({
+      onComplete: () => {
+        currentModal.classList.remove('active');
+        
+        // Возвращаем видимость подсказок для возможного повторного входа
+        currentModal.querySelectorAll('.mobile-swipe-hint').forEach(hint => hint.style.display = '');
+
+        nextModal.style.zIndex = '';
+        gsap.set(currentContent, { clearProps: "all" });
+        gsap.set(nextContent, { clearProps: "all" });
+        isNavigating = false;
+      }
+    });
+
+    tl.to(currentContent, {
+      xPercent: -xPercentOffset,
+      opacity: 0,
+      duration: 0.5,
+      ease: "power2.inOut"
+    }, 0);
+
+    tl.to(nextContent, {
+      xPercent: 0,
+      opacity: 1,
+      duration: 0.5,
+      ease: "power2.inOut"
+    }, 0);
 
     currentModalIndex = newIndex;
   }
