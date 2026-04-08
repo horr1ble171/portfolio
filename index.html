@@ -192,7 +192,7 @@
         <div class="skills-grid">
           <div class="skill-category">
             <div class="skill-header">
-              <h3 class="skill-category-title" data-i18n="skill_fullstack">Full-Stack разработка</h3>
+              <h3 class="skill-category-title"><span data-i18n="skill_fullstack">Full-Stack разработка</span></h3>
             </div>
             <div class="skill-content">
               <p class="skill-category-description mb-4" data-i18n="skill_fullstack_desc">
@@ -225,7 +225,7 @@
 
           <div class="skill-category">
             <div class="skill-header">
-              <h3 class="skill-category-title" data-i18n="skill_tech">Технологии</h3>
+              <h3 class="skill-category-title"><span data-i18n="skill_tech">Технологии</span></h3>
             </div>
             <div class="skill-content">
               <ul class="grid grid-cols-2 gap-2 mt-4 text-xs sm:text-sm lg:text-base">
@@ -302,7 +302,7 @@
                 <li class="skill-tag flex items-center">
                   <svg class="w-5 h-5 text-white flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
                     <path
-                      d="M12.001 4.8c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624C13.666 10.618 15.027 12 18.001 12c3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C16.337 6.182 14.976 4.8 12.001 4.8zm-6 7.2c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624 1.177 1.194 2.538 2.576 5.512 2.576 3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C10.337 13.382 8.976 12 6.001 12z" />
+                      d="M12.001 4.8c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624C13.666 10.618 15.027 12 18.001 12c3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228 1.565-.89 2.288 1.624C16.337 6.182 14.976 4.8 12.001 4.8zm-6 7.2c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624 1.177 1.194 2.538 2.576 5.512 2.576 3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228 1.565-.89 2.288 1.624C10.337 13.382 8.976 12 6.001 12z" />
                   </svg>
                   <span data-i18n="skill_tag_tailwind">TailwindCSS</span>
                 </li>
@@ -342,7 +342,7 @@
 
           <div class="skill-category">
             <div class="skill-header">
-              <h3 class="skill-category-title" data-i18n="skill_bots">Telegram боты</h3>
+              <h3 class="skill-category-title"><span data-i18n="skill_bots">Telegram боты</span></h3>
             </div>
             <div class="skill-content">
               <p class="skill-category-description mb-4" data-i18n="skill_bots_desc">
@@ -378,7 +378,7 @@
 
           <div class="skill-category">
             <div class="skill-header">
-              <h3 class="skill-category-title" data-i18n="skill_product">Продуктовый подход</h3>
+              <h3 class="skill-category-title"><span data-i18n="skill_product">Продуктовый подход</span></h3>
             </div>
             <div class="skill-content">
               <p class="skill-category-description mb-4" data-i18n="skill_product_desc">
@@ -430,7 +430,7 @@
               <path
                 d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" />
             </svg>
-            <div class="stat-number">1700+</div>
+            <div class="stat-number">1800+</div>
             <div class="stat-label" data-i18n="stat_users">Пользователей</div>
           </div>
           <div class="stat-item">
@@ -464,9 +464,12 @@
                 loading="lazy" />
             </div>
             <div class="project-card-content">
-              <h3 class="project-card-title" data-i18n="project_music_title">Музыка для профиля</h3>
-              <button type="button" class="project-card-button btn-press" data-project-id="music-bot"
-                data-i18n="more">Подробнее</button>
+              <h3 class="project-card-title">
+                <span data-i18n="project_music_title">Музыка для профиля</span>
+              </h3>
+              <button type="button" class="project-card-button btn-press" data-project-id="music-bot">
+                <span data-i18n="more">Подробнее</span>
+              </button>
             </div>
           </div>
 
@@ -476,9 +479,12 @@
                 loading="lazy" />
             </div>
             <div class="project-card-content">
-              <h3 class="project-card-title" data-i18n="project_portfolio_title">Портфолио</h3>
-              <button type="button" class="project-card-button btn-press" data-project-id="portfolio-site"
-                data-i18n="more">Подробнее</button>
+              <h3 class="project-card-title">
+                <span data-i18n="project_portfolio_title">Портфолио</span>
+              </h3>
+              <button type="button" class="project-card-button btn-press" data-project-id="portfolio-site">
+                <span data-i18n="more">Подробнее</span>
+              </button>
             </div>
           </div>
 
@@ -488,9 +494,12 @@
                 loading="lazy" />
             </div>
             <div class="project-card-content">
-              <h3 class="project-card-title" data-i18n="project_geo_title">GEO stars</h3>
-              <button type="button" class="project-card-button btn-press" data-project-id="shop-bot"
-                data-i18n="more">Подробнее</button>
+              <h3 class="project-card-title">
+                <span data-i18n="project_geo_title">GEO stars</span>
+              </h3>
+              <button type="button" class="project-card-button btn-press" data-project-id="shop-bot">
+                <span data-i18n="more">Подробнее</span>
+              </button>
             </div>
           </div>
 
@@ -501,9 +510,12 @@
                 loading="lazy" />
             </div>
             <div class="project-card-content">
-              <h3 class="project-card-title" data-i18n="project_ascii_title">Ascii art generator</h3>
-              <button type="button" class="project-card-button btn-press" data-project-id="ascii-art-bot"
-                data-i18n="more">Подробнее</button>
+              <h3 class="project-card-title">
+                <span data-i18n="project_ascii_title">Ascii art generator</span>
+              </h3>
+              <button type="button" class="project-card-button btn-press" data-project-id="ascii-art-bot">
+                <span data-i18n="more">Подробнее</span>
+              </button>
             </div>
           </div>
 
@@ -514,9 +526,12 @@
                 loading="lazy" />
             </div>
             <div class="project-card-content">
-              <h3 class="project-card-title" data-i18n="project_beam_title">Beam Builds</h3>
-              <button type="button" class="project-card-button btn-press" data-project-id="beambuilds"
-                data-i18n="more">Подробнее</button>
+              <h3 class="project-card-title">
+                <span data-i18n="project_beam_title">Beam Builds</span>
+              </h3>
+              <button type="button" class="project-card-button btn-press" data-project-id="beambuilds">
+                <span data-i18n="more">Подробнее</span>
+              </button>
             </div>
           </div>
 
@@ -530,7 +545,9 @@
 
         <div class="studio-card">
           <div class="studio-brand">
-            <h3 class="studio-name">ORACLE<br>STUDIO</h3>
+            <h3 class="studio-name">
+              <span>ORACLE<br>STUDIO</span>
+            </h3>
             <p class="studio-subtitle" data-i18n="studio_subtitle">Создаем цифровые продукты от идеи до
               реализации.<br>Веб-сайты, Telegram и Discord
               боты, полный цикл разработки.</p>
@@ -576,11 +593,6 @@
 
                   <div class="member-more">
                     <span data-i18n="more">Подробнее</span>
-
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                      stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M5 12h14M12 5l7 7-7 7" />
-                    </svg>
                   </div>
                   <a href="https://portfolio-v3-five-lyart.vercel.app/" target="_blank" rel="noopener noreferrer"
                     class="member-link-overlay" aria-label="Открыть портфолио Kyureno"></a>
@@ -597,11 +609,6 @@
 
                   <div class="member-more">
                     <span data-i18n="more">Подробнее</span>
-
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                      stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M5 12h14M12 5l7 7-7 7" />
-                    </svg>
                   </div>
                   <a href="https://www.horr1ble.space/" target="_blank" rel="noopener noreferrer"
                     class="member-link-overlay" aria-label="Открыть портфолио horr1ble"></a>
@@ -611,12 +618,8 @@
 
             <div class="studio-actions">
               <a href="https://www.oraclestudio.space/" target="_blank" rel="noopener noreferrer"
-                class="studio-btn btn-press" data-i18n="studio_btn">
-                Перейти на сайт
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
+                class="studio-btn btn-press">
+                <span data-i18n="studio_btn">Перейти на сайт</span>
               </a>
             </div>
           </div>
@@ -833,11 +836,8 @@
           </div>
         </div>
         <a class="project-modal-button btn-press" href="https://t.me/music_horr1ble_bot" target="_blank"
-          rel="noopener noreferrer" data-i18n="modal_try_bot">
-          Попробовать бота
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="margin-left: 8px;">
-            <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
-          </svg>
+          rel="noopener noreferrer">
+          <span data-i18n="modal_try_bot">Попробовать бота</span>
         </a>
       </div>
     </div>
@@ -915,12 +915,8 @@
           </div>
         </div>
         <a class="project-modal-button btn-press" href="https://www.horr1ble.space/" target="_blank"
-          rel="noopener noreferrer" data-i18n="modal_try_site">
-          Попробовать сайт
-
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="margin-left: 8px;">
-            <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
-          </svg>
+          rel="noopener noreferrer">
+          <span data-i18n="modal_try_site">Попробовать сайт</span>
         </a>
       </div>
     </div>
@@ -1013,12 +1009,8 @@
           </div>
         </div>
         <a class="project-modal-button btn-press" href="https://t.me/shop_star_prem_bot" target="_blank"
-          rel="noopener noreferrer" data-i18n="modal_try_bot">
-          Попробовать бота
-
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="margin-left: 8px;">
-            <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
-          </svg>
+          rel="noopener noreferrer">
+          <span data-i18n="modal_try_bot">Попробовать бота</span>
         </a>
       </div>
     </div>
@@ -1112,12 +1104,8 @@
           </div>
         </div>
         <a class="project-modal-button btn-press" href="https://t.me/ascii_art_generator_bot" target="_blank"
-          rel="noopener noreferrer" data-i18n="modal_try_bot">
-          Попробовать бота
-
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="margin-left: 8px;">
-            <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
-          </svg>
+          rel="noopener noreferrer">
+          <span data-i18n="modal_try_bot">Попробовать бота</span>
         </a>
       </div>
     </div>
@@ -1220,12 +1208,8 @@
             </div>
           </div>
         </div>
-        <button type="button" class="project-modal-button btn-press" data-i18n="modal_try_site">
-          Перейти на сайт
-
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="margin-left: 8px;">
-            <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
-          </svg>
+        <button type="button" class="project-modal-button btn-press">
+          <span data-i18n="modal_try_site">Перейти на сайт</span>
         </button>
       </div>
     </div>

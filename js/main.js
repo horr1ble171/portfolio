@@ -62,11 +62,9 @@ function initAnimations() {
             count++;
           } else {
             clearInterval(typeInterval);
-            // Wait a bit and stop the cursor if needed, 
-            // but usually kept for better aesthetics or removed after some time
             setTimeout(() => heroTitle.classList.remove('typing-active'), 1500);
           }
-        }, 60); // Speed of typing
+        }, 60);
       }
     }, '-=0.6')
     .from(heroSubtitle, {
@@ -83,8 +81,6 @@ function initAnimations() {
     }, '-=0.6');
 
   if (window.innerWidth > 768) {
-
-    // Section fade-in
     const sectionsToAnimate = '.skills-section-large, .projects-section-large, .studio-section-large, .spotify-section-large';
     gsap.utils.toArray(sectionsToAnimate).forEach(el => {
       gsap.fromTo(el, { autoAlpha: 0, y: 30 }, {
@@ -102,9 +98,7 @@ function initAnimations() {
       });
     });
 
-    // Category/Card animations
     const cardsSelector = '.skill-category, .project-card, .studio-card, .studio-team-member, .spotify-player';
-
     gsap.utils.toArray(cardsSelector).forEach((it, i) => {
       gsap.fromTo(it, { autoAlpha: 0, y: 30, scale: 0.95 }, {
         duration: 0.8,
@@ -135,11 +129,8 @@ function initAnimations() {
         delay: i * 0.1
       });
     });
-
   } else {
-    // Mobile animations (simplified)
     const mobileElements = '.skills-section-large, .projects-section-large, .studio-section-large, .spotify-section-large, .skill-category, .project-card, .studio-card, .studio-team-member, .stat-item, .spotify-player';
-
     gsap.utils.toArray(mobileElements).forEach(el => {
       gsap.fromTo(el, { autoAlpha: 0, y: 20 }, {
         duration: 0.6,
@@ -163,7 +154,6 @@ function initProjectModals() {
   let currentModalIndex = -1;
   const modalIds = [...new Set(Array.from(openButtons).map(btn => `project-modal-${btn.dataset.projectId}`))];
 
-  // Создаем глобальный фон и навигацию, если их еще нет
   let globalBg = document.querySelector('.project-modal-global-bg');
   if (!globalBg) {
     globalBg = document.createElement('div');
@@ -188,7 +178,6 @@ function initProjectModals() {
       </div>
     `;
     document.body.appendChild(globalNav);
-
     globalNav.querySelector('.prev').addEventListener('click', () => navigateProject(-1));
     globalNav.querySelector('.next').addEventListener('click', () => navigateProject(1));
   }
@@ -196,33 +185,23 @@ function initProjectModals() {
   function openModal(modalId) {
     const modal = document.getElementById(modalId);
     if (!modal) return;
-
     modals.forEach(m => m.classList.remove('active'));
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
-    
-    // Включаем глобальный режим навигации (фон + стрелки)
     document.body.classList.add('project-nav-active');
     if (globalBg) globalBg.classList.add('active');
     if (globalNav) globalNav.classList.add('active');
-
     setupDescription(modal);
     setupTechnologies(modal);
     currentModalIndex = modalIds.indexOf(modalId);
-
     const content = modal.querySelector('.project-modal-content');
-    gsap.fromTo(content,
-      { scale: 0.9, opacity: 0 },
-      { scale: 1, opacity: 1, duration: 0.4, ease: "power2.out" }
-    );
+    gsap.fromTo(content, { scale: 0.9, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4, ease: "power2.out" });
   }
 
   function closeModal(modal) {
     if (!modal) return;
     modal.classList.remove('active');
     document.body.style.overflow = '';
-    
-    // Отключаем глобальный режим
     document.body.classList.remove('project-nav-active');
     if (globalBg) globalBg.classList.remove('active');
     if (globalNav) globalNav.classList.remove('active');
@@ -231,66 +210,37 @@ function initProjectModals() {
   let isNavigating = false;
   function navigateProject(direction) {
     if (isNavigating || currentModalIndex === -1) return;
-
+    if (document.body.classList.contains('lightbox-active')) return;
     let newIndex = currentModalIndex + direction;
     if (newIndex < 0) newIndex = modalIds.length - 1;
     if (newIndex >= modalIds.length) newIndex = 0;
-
     const currentModal = document.getElementById(modalIds[currentModalIndex]);
     const nextModal = document.getElementById(modalIds[newIndex]);
-
     if (!currentModal || !nextModal) return;
-
     isNavigating = true;
-
     setupDescription(nextModal);
     setupTechnologies(nextModal);
-
     const currentContent = currentModal.querySelector('.project-modal-content');
     const nextContent = nextModal.querySelector('.project-modal-content');
     const xPercentOffset = direction > 0 ? 100 : -100;
-
-    // Скрываем подсказку свайпа старой модалки, чтобы не было наслоения текста
     currentModal.querySelectorAll('.mobile-swipe-hint').forEach(hint => hint.style.display = 'none');
-
-    // Просто включаем следующую модалку. Поскольку у нее теперь нет своего фона
-    // (он скрыт через CSS при project-nav-active), это будет бесшовно.
     nextModal.style.zIndex = '10002';
     nextModal.classList.add('active');
-
     gsap.set(nextContent, { xPercent: xPercentOffset, opacity: 0, scale: 1 });
-
     const tl = gsap.timeline({
       onComplete: () => {
         currentModal.classList.remove('active');
-        
-        // Возвращаем видимость подсказок для возможного повторного входа
         currentModal.querySelectorAll('.mobile-swipe-hint').forEach(hint => hint.style.display = '');
-
         nextModal.style.zIndex = '';
         gsap.set(currentContent, { clearProps: "all" });
         gsap.set(nextContent, { clearProps: "all" });
         isNavigating = false;
       }
     });
-
-    tl.to(currentContent, {
-      xPercent: -xPercentOffset,
-      opacity: 0,
-      duration: 0.5,
-      ease: "power2.inOut"
-    }, 0);
-
-    tl.to(nextContent, {
-      xPercent: 0,
-      opacity: 1,
-      duration: 0.5,
-      ease: "power2.inOut"
-    }, 0);
-
+    tl.to(currentContent, { xPercent: -xPercentOffset, opacity: 0, duration: 0.5, ease: "power2.inOut" }, 0);
+    tl.to(nextContent, { xPercent: 0, opacity: 1, duration: 0.5, ease: "power2.inOut" }, 0);
     currentModalIndex = newIndex;
   }
-
 
   openButtons.forEach(button => {
     button.addEventListener('click', () => {
@@ -302,25 +252,16 @@ function initProjectModals() {
   modals.forEach(modal => {
     const closeButton = modal.querySelector('.project-modal-close');
     if (closeButton) {
-      closeButton.addEventListener('click', () => {
-        closeModal(modal);
-      });
+      closeButton.addEventListener('click', () => closeModal(modal));
     }
-
     modal.addEventListener('click', (e) => {
-      if (e.target === modal) {
-        closeModal(modal);
-      }
+      if (e.target === modal) closeModal(modal);
     });
-
-    // Добавляем поддержку свайпов один раз при инициализации
     let touchStartX = 0;
     let touchEndX = 0;
-
     modal.addEventListener('touchstart', (e) => {
       touchStartX = e.changedTouches[0].screenX;
     }, { passive: true });
-
     modal.addEventListener('touchend', (e) => {
       touchEndX = e.changedTouches[0].screenX;
       const swipeThreshold = 50;
@@ -334,11 +275,11 @@ function initProjectModals() {
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
-      modals.forEach(modal => {
-        if (modal.classList.contains('active')) {
-          closeModal(modal);
-        }
-      });
+      if (!document.body.classList.contains('lightbox-active')) {
+        modals.forEach(modal => {
+          if (modal.classList.contains('active')) closeModal(modal);
+        });
+      }
     } else if (e.key === 'ArrowLeft') {
       const activeModal = document.querySelector('.project-modal-overlay.active');
       if (activeModal && typeof navigateProject === 'function') navigateProject(-1);
@@ -347,55 +288,28 @@ function initProjectModals() {
       if (activeModal && typeof navigateProject === 'function') navigateProject(1);
     }
   });
-
-  // Make navigateProject available to setupNavigation
   window._navigateProject = navigateProject;
 }
 
-
-
 function animateClick(element, scaleTo) {
   element.style.transition = 'none';
-
-  gsap.fromTo(element,
-    { scale: 1 },
-    {
-      scale: scaleTo,
-      duration: 0.1,
-      yoyo: true,
-      repeat: 1,
-      overwrite: true,
-      onComplete: () => {
-        gsap.set(element, { clearProps: "all" });
-      }
-    }
-  );
+  gsap.fromTo(element, { scale: 1 }, {
+    scale: scaleTo,
+    duration: 0.1,
+    yoyo: true,
+    repeat: 1,
+    overwrite: true,
+    onComplete: () => { gsap.set(element, { clearProps: "all" }); }
+  });
 }
 
 function initSpotifyPlayer() {
   const playBtn = document.querySelector('.spotify-play-btn');
   const prevBtn = document.querySelector('.prev-btn');
   const nextBtn = document.querySelector('.next-btn');
-  const progressBar = document.querySelector('.progress-bar');
-  const progressFill = document.querySelector('.progress-bar-fill');
-
-  if (playBtn) {
-    playBtn.addEventListener('click', function () {
-      animateClick(this, 0.9);
-    });
-  }
-
-  if (prevBtn) {
-    prevBtn.addEventListener('click', function () {
-      animateClick(this, 0.85);
-    });
-  }
-
-  if (nextBtn) {
-    nextBtn.addEventListener('click', function () {
-      animateClick(this, 0.85);
-    });
-  }
+  if (playBtn) playBtn.addEventListener('click', function () { animateClick(this, 0.9); });
+  if (prevBtn) prevBtn.addEventListener('click', function () { animateClick(this, 0.85); });
+  if (nextBtn) nextBtn.addEventListener('click', function () { animateClick(this, 0.85); });
 }
 
 function initNavigation() {
@@ -403,7 +317,6 @@ function initNavigation() {
   const hamburger = document.querySelector('.hamburger');
   const navbar = document.querySelector('.navbar');
   const navLinks = document.querySelectorAll('.nav-link');
-
   let isScrolled = false;
   window.addEventListener('scroll', () => {
     const shouldBeScrolled = window.scrollY > 50;
@@ -413,14 +326,12 @@ function initNavigation() {
       document.body.classList.toggle('scrolled-mode', isScrolled);
     }
   }, { passive: true });
-
   if (hamburger && navbar) {
     hamburger.addEventListener('click', (e) => {
       e.stopPropagation();
       hamburger.classList.toggle('active');
       navbar.classList.toggle('active');
     });
-
     document.addEventListener('click', (e) => {
       if (navbar.classList.contains('active') && !navbar.contains(e.target) && !hamburger.contains(e.target)) {
         hamburger.classList.remove('active');
@@ -428,26 +339,19 @@ function initNavigation() {
       }
     });
   }
-
   navLinks.forEach(anchor => {
     anchor.addEventListener('click', function (e) {
       animateClick(this, 0.95);
-
       const targetId = this.getAttribute('href');
       if (targetId.startsWith('#')) {
         e.preventDefault();
         const targetElement = document.querySelector(targetId);
-
         if (hamburger && navbar.classList.contains('active')) {
           hamburger.classList.remove('active');
           navbar.classList.remove('active');
         }
-
         if (targetElement) {
-          window.scrollTo({
-            top: targetElement.offsetTop - 80,
-            behavior: 'smooth'
-          });
+          window.scrollTo({ top: targetElement.offsetTop - 80, behavior: 'smooth' });
         }
       }
     });
@@ -459,39 +363,32 @@ function initLightbox() {
   const lightboxImg = document.getElementById('lightbox-img');
   const closeBtn = document.querySelector('.lightbox-close');
   const triggers = document.querySelectorAll('.avatar-image, .album-cover-image, .project-modal-image, .member-image');
-
   if (!lightbox || !lightboxImg) return;
-
   function openLightbox(src) {
     lightboxImg.src = src;
     lightbox.classList.add('active');
+    document.body.classList.add('lightbox-active');
     document.body.style.overflow = 'hidden';
   }
-
   function closeLightbox() {
     lightbox.classList.remove('active');
-    document.body.style.overflow = '';
+    document.body.classList.remove('lightbox-active');
+    if (!document.querySelector('.project-modal-overlay.active')) {
+      document.body.style.overflow = '';
+    }
   }
-
   triggers.forEach(img => {
     img.addEventListener('click', (e) => {
       e.stopPropagation();
       openLightbox(img.src);
     });
   });
-
   closeBtn.addEventListener('click', closeLightbox);
-
   lightbox.addEventListener('click', (e) => {
-    if (e.target === lightbox) {
-      closeLightbox();
-    }
+    if (e.target === lightbox) closeLightbox();
   });
-
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && lightbox.classList.contains('active')) {
-      closeLightbox();
-    }
+    if (e.key === 'Escape' && lightbox.classList.contains('active')) closeLightbox();
   });
 }
 
@@ -499,12 +396,9 @@ function animateStatNumbers() {
   gsap.utils.toArray('.stat-number').forEach(stat => {
     const originalText = stat.textContent.trim();
     const value = parseFloat(originalText);
-
     if (isNaN(value)) return;
-
     const suffix = originalText.replace(value, '').trim();
     const counter = { val: 0 };
-
     ScrollTrigger.create({
       trigger: stat,
       start: "top 90%",
@@ -514,9 +408,7 @@ function animateStatNumbers() {
           val: value,
           duration: 2,
           ease: "none",
-          onUpdate: () => {
-            stat.textContent = Math.floor(counter.val) + suffix;
-          }
+          onUpdate: () => { stat.textContent = Math.floor(counter.val) + suffix; }
         });
       },
       onLeaveBack: () => {
@@ -530,37 +422,20 @@ function animateStatNumbers() {
 function initScrollSpy() {
   const navLinks = document.querySelectorAll('.nav-link');
   const sections = document.querySelectorAll('section[id]');
-
   function handleScroll() {
     let current = '';
     const scrollY = window.scrollY;
-
-    // Header height + some buffer
     const offset = 140;
-
-    // Find the right section
     sections.forEach(section => {
       const sectionTop = section.offsetTop - offset;
-      if (scrollY >= sectionTop) {
-        current = section.getAttribute('id');
-      }
+      if (scrollY >= sectionTop) current = section.getAttribute('id');
     });
-
-    // Handle home specifically when at the very top
-    if (scrollY < 100) {
-      current = 'hero';
-    }
-
+    if (scrollY < 100) current = 'hero';
     navLinks.forEach(link => {
       link.classList.remove('active');
-      const href = link.getAttribute('href');
-      // Direct comparison with the section ID to avoid partial matches
-      if (href === `#${current}`) {
-        link.classList.add('active');
-      }
+      if (link.getAttribute('href') === `#${current}`) link.classList.add('active');
     });
   }
-
   let isScrolling = false;
   window.addEventListener('scroll', () => {
     if (!isScrolling) {
@@ -571,8 +446,6 @@ function initScrollSpy() {
       isScrolling = true;
     }
   }, { passive: true });
-
-  // Set initial state
   handleScroll();
 }
 
@@ -581,30 +454,19 @@ function initLegalModals() {
   const termsTrigger = document.getElementById('open-terms');
   const privacyModal = document.getElementById('legal-modal-privacy');
   const termsModal = document.getElementById('legal-modal-terms');
-
   if (!privacyTrigger || !termsTrigger || !privacyModal || !termsModal) return;
-
   function openLegalModal(modal) {
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
-
     const content = modal.querySelector('.project-modal-content');
-    gsap.fromTo(content,
-      { scale: 0.9, opacity: 0 },
-      { scale: 1, opacity: 1, duration: 0.3, ease: "power2.out" }
-    );
+    gsap.fromTo(content, { scale: 0.9, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "power2.out" });
   }
-
   function closeLegalModal(modal) {
     modal.classList.remove('active');
-    if (!document.querySelector('.project-modal-overlay.active')) {
-      document.body.style.overflow = '';
-    }
+    if (!document.querySelector('.project-modal-overlay.active')) document.body.style.overflow = '';
   }
-
   privacyTrigger.addEventListener('click', () => openLegalModal(privacyModal));
   termsTrigger.addEventListener('click', () => openLegalModal(termsModal));
-
   [privacyModal, termsModal].forEach(modal => {
     const closeBtn = modal.querySelector('.project-modal-close');
     closeBtn.addEventListener('click', () => closeLegalModal(modal));
@@ -619,9 +481,7 @@ function initPreloader() {
   const bar = document.getElementById('preloader-bar');
   const percentage = document.getElementById('preloader-percentage');
   const body = document.body;
-
   if (!preloader || !bar || !percentage) return;
-
   let width = 0;
   const interval = setInterval(() => {
     if (width < 95) {
@@ -631,35 +491,24 @@ function initPreloader() {
       percentage.textContent = Math.floor(width) + '%';
     }
   }, 70);
-
   const finishLoading = () => {
     clearInterval(interval);
-
-    // Smooth finish to 100%
     const finishInterval = setInterval(() => {
       if (width >= 100) {
         clearInterval(finishInterval);
-
         setTimeout(() => {
           preloader.classList.add('fade-out');
           body.classList.remove('loading');
-
-          // Start initial animations after preloader is gone
           initAnimations();
         }, 400);
       } else {
-        width += 1; // Increment by 1 as requested
+        width += 1;
         bar.style.width = width + '%';
         percentage.textContent = Math.floor(width) + '%';
       }
-    }, 8); // Fast but visible finish
+    }, 8);
   };
-
-  if (document.readyState === 'complete') {
-    finishLoading();
-  } else {
-    window.addEventListener('load', finishLoading);
-  }
+  if (document.readyState === 'complete') finishLoading(); else window.addEventListener('load', finishLoading);
 }
 
 const translations = {
@@ -747,7 +596,6 @@ const translations = {
     modal_try_site: "Перейти на сайт",
     swipe_hint: "свайпните для навигации",
     spotify_playing: "<span class=\"playing-dot\">●</span> Сейчас играет",
-
     privacy_intro: "Ваша конфиденциальность очень важна для меня. На этом сайте данные не собираются автоматически, за исключением стандартных логов сервера.",
     privacy_q1_title: "Какие данные я собираю?",
     privacy_q1_text: "Я не собираю личную информацию о посетителях сайта. Если вы связываетесь со мной через сторонние платформы (Telegram, Discord), ваши данные обрабатываются в соответствии с их политикой конфиденциальности.",
@@ -761,10 +609,8 @@ const translations = {
     terms_q2_title: "Отказ от ответственности",
     terms_q2_text: "Сайт предоставляется \"как есть\". Я не несу ответственности за любые технические ошибки или убытки, возникшие в результате использования информации с этого сайта.",
     terms_q3_title: "Изменения",
-    terms_q3_text: "Я оставляю за собой право изменять содержание сайта и данные условия в любое время без предварительного уведомления.",
-
+    terms_q3_text: "Я оставляю за собой право изменять содержание сайта и данные условия в любое время без предварительного уведомления."
   },
-
   en: {
     logo: "horr1ble",
     preloader_text: "Portfolio is loading...",
@@ -849,7 +695,6 @@ const translations = {
     modal_try_site: "Go to website",
     swipe_hint: "swipe for navigation",
     spotify_playing: "<span class=\"playing-dot\">●</span> Now playing",
-
     privacy_intro: "Your privacy is very important to me. On this site, data is not collected automatically, except for standard server logs.",
     privacy_q1_title: "What data do I collect?",
     privacy_q1_text: "I do not collect personal information about site visitors. If you contact me through third-party platforms (Telegram, Discord), your data is processed in accordance with their privacy policy.",
@@ -863,10 +708,8 @@ const translations = {
     terms_q2_title: "Disclaimer",
     terms_q2_text: "The site is provided \"as is\". I am not responsible for any technical errors or damages resulting from the use of information from this site.",
     terms_q3_title: "Changes",
-    terms_q3_text: "I reserve the right to change the content of the site and these terms at any time without prior notice.",
-
+    terms_q3_text: "I reserve the right to change the content of the site and these terms at any time without prior notice."
   }
-
 };
 
 function initI18n() {
@@ -874,52 +717,29 @@ function initI18n() {
   const pcLangWrapper = document.querySelector('.lang-selector-pc-wrapper');
   const pcLangBtn = document.querySelector('.lang-hamburger');
   const activeLangLabel = document.querySelector('.active-lang');
-
   const savedLang = localStorage.getItem('selectedLang');
   let currentLang = 'ru';
-
-  if (savedLang) {
-    currentLang = savedLang;
-  } else {
+  if (savedLang) currentLang = savedLang; else {
     const userLang = navigator.language || navigator.userLanguage;
-    if (userLang && !userLang.toLowerCase().includes('ru')) {
-      currentLang = 'en';
-    }
+    if (userLang && !userLang.toLowerCase().includes('ru')) currentLang = 'en';
   }
-
   const updateContent = (lang) => {
     document.querySelectorAll('[data-i18n]').forEach(el => {
       const key = el.getAttribute('data-i18n');
       if (translations[lang] && translations[lang][key]) {
         el.innerHTML = translations[lang][key];
-
-        // Clear cached full text for description truncation on mobile
-        if (el.classList.contains('project-modal-description')) {
-          delete el.dataset.fullText;
-        }
+        if (el.classList.contains('project-modal-description')) delete el.dataset.fullText;
       }
     });
-
-    // Re-run setup for active modal if it exists
     const activeModal = document.querySelector('.project-modal-overlay.active');
-    if (activeModal && typeof setupDescription === 'function') {
-      setupDescription(activeModal);
-    }
-
-    // Update active states in all selectors
+    if (activeModal && typeof setupDescription === 'function') setupDescription(activeModal);
     document.querySelectorAll('[data-lang]').forEach(btn => {
       btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
     });
-
-    if (activeLangLabel) {
-      activeLangLabel.textContent = lang.toUpperCase();
-    }
-
+    if (activeLangLabel) activeLangLabel.textContent = lang.toUpperCase();
     document.documentElement.lang = lang;
     localStorage.setItem('selectedLang', lang);
   };
-
-  // Lang selection click
   langSelectors.forEach(btn => {
     btn.addEventListener('click', (e) => {
       const selectedLang = btn.getAttribute('data-lang');
@@ -927,52 +747,37 @@ function initI18n() {
       if (pcLangWrapper) pcLangWrapper.classList.remove('active');
     });
   });
-
-  // PC Dropdown toggle
-  if (pcLangBtn) {
-    pcLangBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      pcLangWrapper.classList.toggle('active');
-    });
-  }
-
-  // Close dropdown on outside click
-  document.addEventListener('click', () => {
-    if (pcLangWrapper) pcLangWrapper.classList.remove('active');
+  if (pcLangBtn) pcLangBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    pcLangWrapper.classList.toggle('active');
   });
-
-  // Initial update
+  document.addEventListener('click', () => { if (pcLangWrapper) pcLangWrapper.classList.remove('active'); });
   updateContent(currentLang);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   optimizeForMobile();
-  initI18n(); // Инициализация многоязычности
-  initPreloader(); // Инициализация прелоадера
+  initI18n();
+  initPreloader();
   initProjectModals();
   initLegalModals();
   initSpotifyPlayer();
   initNavigation();
   initLightbox();
   animateStatNumbers();
-  initScrollSpy(); // Инициализация подсветки меню
+  initScrollSpy();
 });
 
 function setupDescription(modal) {
   if (window.innerWidth <= 768) {
     const description = modal.querySelector('.project-modal-description');
     if (description) {
-      if (!description.dataset.fullText) {
-        description.dataset.fullText = description.innerHTML;
-      }
-
+      if (!description.dataset.fullText) description.dataset.fullText = description.innerHTML;
       const fullText = description.dataset.fullText;
       if (fullText.length > 100) {
         const shortText = fullText.substring(0, 100);
-        // Use localized "more" text
         const moreText = localStorage.getItem('selectedLang') === 'en' ? ' more' : ' еще';
         description.innerHTML = `${shortText}<span class="read-more">... ${moreText}</span>`;
-
         const readMore = description.querySelector('.read-more');
         readMore.style.cursor = 'pointer';
         readMore.style.color = 'var(--gray-400)';
@@ -980,9 +785,7 @@ function setupDescription(modal) {
           e.stopPropagation();
           description.innerHTML = fullText;
         });
-      } else {
-        description.innerHTML = fullText;
-      }
+      } else description.innerHTML = fullText;
     }
   }
 }
@@ -991,26 +794,16 @@ function setupTechnologies(modal) {
   if (window.innerWidth <= 768) {
     const techContainer = modal.querySelector('.tech-icons');
     if (!techContainer) return;
-
     const existingBtn = techContainer.querySelector('.tech-more-btn');
-    if (existingBtn) {
-      existingBtn.remove();
-    }
-
+    if (existingBtn) existingBtn.remove();
     const items = techContainer.querySelectorAll('.tech-item');
     items.forEach(item => item.style.display = 'flex');
-
     if (items.length > 2) {
-      for (let i = 2; i < items.length; i++) {
-        items[i].style.display = 'none';
-      }
-
+      for (let i = 2; i < items.length; i++) items[i].style.display = 'none';
       const moreBtn = document.createElement('button');
       moreBtn.className = 'tech-more-btn';
       moreBtn.textContent = `+${items.length - 2}`;
-
       techContainer.appendChild(moreBtn);
-
       moreBtn.addEventListener('click', () => {
         items.forEach(item => item.style.display = 'flex');
         moreBtn.remove();
@@ -1021,46 +814,8 @@ function setupTechnologies(modal) {
     if (techContainer) {
       const items = techContainer.querySelectorAll('.tech-item');
       items.forEach(item => item.style.display = 'flex');
-
       const existingBtn = techContainer.querySelector('.tech-more-btn');
-      if (existingBtn) {
-        existingBtn.remove();
-      }
+      if (existingBtn) existingBtn.remove();
     }
   }
 }
-
-function setupNavigation(modal) {
-  const oldArrows = modal.querySelectorAll('.project-nav-arrow');
-  if (oldArrows) oldArrows.forEach(arrow => arrow.remove());
-
-  if (window.innerWidth > 1024) {
-    const prevBtn = document.createElement('button');
-    prevBtn.className = 'project-nav-arrow prev btn-press';
-    prevBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>';
-
-    const nextBtn = document.createElement('button');
-    nextBtn.className = 'project-nav-arrow next btn-press';
-    nextBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>';
-
-    prevBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      if (typeof window._navigateProject === 'function') {
-        window._navigateProject(-1);
-      }
-    });
-
-    nextBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      if (typeof window._navigateProject === 'function') {
-        window._navigateProject(1);
-      }
-    });
-
-    modal.appendChild(prevBtn);
-    modal.appendChild(nextBtn);
-  }
-}
-
-
-

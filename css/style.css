@@ -126,24 +126,46 @@ body::before {
   will-change: transform, box-shadow, background-color, border-color;
 }
 
-/* Apply hardware acceleration and font smoothing to text and icons within interactive elements */
-.social-icon svg,
-.nav-icon,
+.member-more,
+.member-name,
+.member-role,
+.studio-team-member,
 .info-label,
 .info-value,
-.tech-item span,
-.tech-item svg,
+.project-modal-button,
+.project-nav-btn,
+.studio-btn,
+.project-card-button,
+.spotify-link-btn,
+.spotify-play-btn,
+.spotify-control-btn,
+.lang-opt.pc,
+.btn-press,
+.skill-category,
+.project-card,
+.studio-card,
+.spotify-player,
+.project-card-title,
+.project-modal-title,
+.skill-category-title,
+.project-card-description,
+.skill-category-description,
+.studio-name,
+.studio-subtitle,
+.spotify-player-title,
 .nav-link,
-.skill-tag span,
-.studio-tag span {
-  /* Added .nav-link here for text smoothing */
+.tech-item,
+.skill-tag,
+.studio-tag,
+.project-modal-technologies h4 {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
   transform: translateZ(0);
-  will-change: transform;
-  -webkit-font-smoothing: subpixel-antialiased;
-  /* Force subpixel antialiasing for smoother text */
-  text-shadow: 0 0 1px rgba(0, 0, 0, 0.001);
-  /* Subtle text-shadow to force GPU rendering for text */
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  will-change: transform, box-shadow, background-color, border-color;
 }
 
 /* --- Preloader --- */
@@ -271,6 +293,10 @@ body.loading footer {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 16px;
+  /* Stabilize the entire content area */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 .navbar {
@@ -300,7 +326,13 @@ body.loading footer {
   gap: 8px;
   white-space: nowrap;
   transform-origin: center center;
-  /* Explicitly set transform origin */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform, background-color;
+  -webkit-font-smoothing: antialiased;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  transform: translate3d(0, 0, 0) scale(1);
 }
 
 .nav-icon {
@@ -359,7 +391,7 @@ body.loading footer {
   @media (hover: hover) {
     .nav-link:hover {
       color: var(--white);
-      transform: scale(1.05) translateZ(0);
+      transform: translate3d(0, 0, 0) scale(1.05);
       background: rgba(255, 255, 255, 0.1);
       border-color: rgba(255, 255, 255, 0.3);
       box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1), 0 5px 10px rgba(0, 0, 0, 0.2);
@@ -421,7 +453,7 @@ body.loading footer {
     background: rgba(255, 255, 255, 0.1);
     border-color: rgba(255, 255, 255, 0.3);
     box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1), 0 5px 10px rgba(0, 0, 0, 0.2);
-    transform: scale(1.05);
+    transform: scale(1.05) translateZ(0);
   }
 
   .lang-hamburger span {
@@ -711,10 +743,10 @@ body.loading footer {
 
   @media (hover: hover) {
     .nav-link:hover {
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.12);
       border-color: rgba(255, 255, 255, 0.3);
-      box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
-      transform: scale(1.02);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      transform: scale(1.02) translate3d(0, 0, 0);
       color: var(--white);
     }
   }
@@ -773,6 +805,7 @@ body.loading footer {
 
 .skills-section-large,
 .projects-section-large,
+.studio-section-large,
 .spotify-section-large {
   padding: 140px 16px;
 }
@@ -910,6 +943,9 @@ body.loading footer {
   overflow: hidden;
   background: rgba(255, 255, 255, 0.05);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  transform: translateZ(0);
 }
 
 @media (hover: hover) {
@@ -942,6 +978,16 @@ body.loading footer {
   margin: 0 auto;
 }
 
+.skills-section-large,
+.projects-section-large,
+.studio-section-large,
+.spotify-section-large {
+  position: relative;
+  /* Add perspective to the entire section to stabilize 3D transforms within */
+  perspective: 1200px;
+  -webkit-perspective: 1200px;
+}
+
 .skills-title {
   font-size: 2.5rem;
   font-weight: 800;
@@ -962,20 +1008,23 @@ body.loading footer {
 }
 
 .skill-category {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(0, 0, 0, 0.6) 100%);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(0, 0, 0, 0.8) 100%);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-radius: 24px;
   padding: 0;
   margin: 0;
   box-shadow: 0 25px 50px rgba(255, 255, 255, 0.05), 0 10px 30px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease, background-color 0.4s ease;
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
   border: 1px solid rgba(255, 255, 255, 0.1);
   overflow: hidden;
   position: relative;
   backface-visibility: hidden;
-  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
   will-change: transform;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
 }
 
 .skill-category::before {
@@ -1042,17 +1091,18 @@ body.loading footer {
 }
 
 .stat-item {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(0, 0, 0, 0.6) 100%);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(0, 0, 0, 0.8) 100%);
   backdrop-filter: blur(20px);
   border-radius: 20px;
   padding: 30px;
   text-align: center;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease, background-color 0.4s ease;
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
   position: relative;
   overflow: hidden;
   backface-visibility: hidden;
-  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
   will-change: transform, box-shadow;
   transform-style: preserve-3d;
 }
@@ -1137,7 +1187,7 @@ body.loading footer {
   padding: 24px;
   margin: 0;
   box-shadow: 0 25px 50px rgba(255, 255, 255, 0.05), 0 10px 30px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease, background 0.4s ease;
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease, border-color 0.3s ease, background 0.3s ease;
   border: 1px solid rgba(255, 255, 255, 0.1);
   overflow: hidden;
   position: relative;
@@ -1148,6 +1198,13 @@ body.loading footer {
   align-items: stretch;
   /* Заменил center на stretch для выравнивания */
   gap: 24px;
+  /* Stabilization fixes */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translate3d(0, 0, 0) scale(1);
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  will-change: transform;
 }
 
 .project-card::before {
@@ -1168,7 +1225,7 @@ body.loading footer {
 
 @media (hover: hover) {
   .project-card:hover {
-    transform: scale(1.02) !important;
+    transform: scale(1.02) translateZ(0) !important;
     z-index: 2;
     border-color: rgba(255, 255, 255, 0.2);
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(0, 0, 0, 0.5) 100%);
@@ -1218,6 +1275,10 @@ body.loading footer {
   margin: 10px 0 12px 0;
   color: var(--white);
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  /* Extra stabilization for the title text */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 @media (min-width: 769px) {
@@ -1245,21 +1306,29 @@ body.loading footer {
   text-decoration: none;
   font-weight: 700;
   transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-  border: none;
-  outline: none;
-  font-size: 1.1rem;
-  /* Removed backdrop-filter to fix rendering artifacts */
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
   cursor: pointer;
   margin-top: auto;
+  /* Stabilization fixes */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  will-change: transform, box-shadow, background-color, border-color;
+}
+
+.project-card-button span {
+  display: inline-block;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 @media (hover: hover) {
   .project-card-button:hover {
-    transform: scale(1.05);
-    /* Reduced scale */
+    transform: scale(1.05) translateZ(0);
     background: rgba(255, 255, 255, 0.1);
     border-color: rgba(255, 255, 255, 0.3);
     box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1), 0 5px 10px rgba(0, 0, 0, 0.2);
@@ -1443,6 +1512,13 @@ body.project-nav-active .project-modal-overlay {
   gap: 2px;
   min-width: 120px;
   transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  /* Stabilization fixes */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  will-change: transform, box-shadow, background-color, border-color;
 }
 
 @media (hover: hover) {
@@ -1491,6 +1567,13 @@ body.project-nav-active .project-modal-overlay {
   font-size: 1rem;
   font-weight: 500;
   transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  /* Stabilization fixes */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  will-change: transform;
 }
 
 .tech-item svg {
@@ -1527,7 +1610,8 @@ body.project-nav-active .project-modal-overlay {
   height: 100vh;
   pointer-events: none;
   z-index: 11000;
-  display: none; /* Скрыто на мобильных */
+  display: none;
+  /* Скрыто на мобильных */
   justify-content: center;
   align-items: center;
   opacity: 0;
@@ -1535,9 +1619,23 @@ body.project-nav-active .project-modal-overlay {
   transition: opacity 0.4s ease, visibility 0.4s ease;
 }
 
+/* Скрываем стрелки, если открыт лайтбокс */
+body.lightbox-active .project-global-nav {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* Блюрим контент проекта, когда открыто фото */
+body.lightbox-active .project-modal-content {
+  filter: blur(10px);
+  pointer-events: none;
+}
+
 @media (min-width: 1025px) {
   .project-global-nav {
-    display: flex; /* Показываем только на десктопе */
+    display: flex;
+    /* Показываем только на десктопе */
   }
 }
 
@@ -1570,6 +1668,7 @@ body.project-nav-active .project-modal-overlay {
     left: 50%;
     margin-left: -580px;
   }
+
   .nav-arrow-wrapper.next {
     right: 50%;
     margin-right: -580px;
@@ -1590,6 +1689,13 @@ body.project-nav-active .project-modal-overlay {
   color: #fff;
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  /* Stabilization fixes */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  will-change: transform;
 }
 
 .project-nav-btn svg {
@@ -1597,26 +1703,24 @@ body.project-nav-active .project-modal-overlay {
   height: 24px;
   fill: currentColor;
   transition: transform 0.4s ease;
+  transform: translateZ(0);
 }
 
 .nav-arrow-wrapper:hover .project-nav-btn {
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 100%);
   border-color: rgba(255, 255, 255, 0.3);
-  transform: scale(1.1);
-  box-shadow: 0 15px 40px rgba(255, 255, 255, 0.1);
+  transform: scale(1.1) translateZ(0);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
 }
 
-.nav-arrow-wrapper.prev:hover svg {
-  transform: translateX(-4px);
-}
-
+.nav-arrow-wrapper.prev:hover svg,
 .nav-arrow-wrapper.next:hover svg {
-  transform: translateX(4px);
+  transform: translateZ(0) !important;
 }
 
 /* Click effect */
 .nav-arrow-wrapper:active .project-nav-btn {
-  transform: scale(0.92);
+  transform: scale(0.92) translateZ(0);
 }
 
 @media (hover: hover) {
@@ -1634,19 +1738,29 @@ body.project-nav-active .project-modal-overlay {
   justify-content: center;
   background: rgba(255, 255, 255, 0.05);
   color: var(--white);
-  padding: 16px 32px;
-  border-radius: 16px;
+  padding: 12px 24px;
+  border-radius: 12px;
   text-decoration: none;
   font-weight: 700;
   transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-  border: none;
-  outline: none;
-  font-size: 1.2rem;
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
   cursor: pointer;
+  /* Stabilization fixes */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  will-change: transform, box-shadow, background-color, border-color;
+}
+
+.project-modal-button span {
+  display: inline-block;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 @media (hover: hover) {
@@ -1658,7 +1772,7 @@ body.project-nav-active .project-modal-overlay {
   }
 
   .project-modal-image-wrapper:hover {
-    transform: scale(1.08);
+    transform: scale(1.08) translate3d(0, 0, 0);
   }
 }
 
@@ -1793,7 +1907,7 @@ body.project-nav-active .project-modal-overlay {
 .spotify-player {
   width: 100%;
   max-width: 500px;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(0, 0, 0, 0.6) 100%);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(0, 0, 0, 0.8) 100%);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   padding: 40px;
@@ -1804,10 +1918,14 @@ body.project-nav-active .project-modal-overlay {
   color: var(--white);
   position: relative;
   overflow: hidden;
-  transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease, background 0.4s ease;
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+  /* Stabilization fixes */
   backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
   transform: translateZ(0);
-  will-change: transform, box-shadow, background-color, border-color;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  will-change: transform;
 }
 
 @media (hover: hover) {
@@ -2038,7 +2156,7 @@ body.project-nav-active .project-modal-overlay {
 
 @media (hover: hover) {
   .spotify-control-btn:hover {
-    transform: scale(1.15) translateZ(0);
+    transform: scale(1.15) translate3d(0, 0, 0);
     background: rgba(255, 255, 255, 0.1);
     border-color: rgba(255, 255, 255, 0.3);
     box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
@@ -2066,7 +2184,7 @@ body.project-nav-active .project-modal-overlay {
 
 @media (hover: hover) {
   .spotify-play-btn:hover {
-    transform: scale(1.15) translateZ(0);
+    transform: scale(1.15) translate3d(0, 0, 0);
     background: rgba(255, 255, 255, 0.1);
     border-color: rgba(255, 255, 255, 0.3);
     box-shadow: 0 18px 45px rgba(0, 0, 0, 0.6), 0 10px 30px rgba(0, 0, 0, 0.4);
@@ -2105,6 +2223,19 @@ body.project-nav-active .project-modal-overlay {
   font-size: 1.1rem;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  /* Stabilization fixes */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  will-change: transform, box-shadow, background-color, border-color;
+}
+
+.spotify-link-btn span {
+  display: inline-block;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 @media (hover: hover) {
@@ -2123,10 +2254,10 @@ body.project-nav-active .project-modal-overlay {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  z-index: 11000;
+  background: rgba(0, 0, 0, 0.9); /* Сделал чуть темнее для акцента */
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 12000; /* Повысил, чтобы быть выше стрелок навигации */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -2473,7 +2604,7 @@ body.scrolled-mode .lightbox-close {
   padding: 40px;
   margin: 0;
   box-shadow: 0 25px 50px rgba(255, 255, 255, 0.05), 0 10px 30px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease, background 0.4s ease;
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease, border-color 0.3s ease, background 0.3s ease;
   border: 1px solid rgba(255, 255, 255, 0.1);
   overflow: hidden;
   position: relative;
@@ -2481,6 +2612,13 @@ body.scrolled-mode .lightbox-close {
   display: flex;
   flex-direction: column;
   gap: 40px;
+  /* Stabilization fixes */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  will-change: transform;
 }
 
 @media (min-width: 769px) {
@@ -2509,7 +2647,7 @@ body.scrolled-mode .lightbox-close {
 
 @media (hover: hover) {
   .studio-card:hover {
-    transform: scale(1.02) !important;
+    transform: scale(1.02) translateZ(0) !important;
     border-color: rgba(255, 255, 255, 0.2);
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(0, 0, 0, 0.5) 100%);
     box-shadow: 0 35px 70px rgba(255, 255, 255, 0.08), 0 15px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15);
@@ -2586,7 +2724,8 @@ body.scrolled-mode .lightbox-close {
 }
 
 .studio-btn {
-  display: inline-flex;
+  display: flex;
+  width: fit-content;
   align-items: center;
   justify-content: center;
   background: rgba(255, 255, 255, 0.05);
@@ -2598,12 +2737,26 @@ body.scrolled-mode .lightbox-close {
   transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  /* Removed text-shadow to prevent sub-pixel rasterization jitter */
+  cursor: pointer;
+  /* Stabilization fixes */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  will-change: transform, box-shadow, background-color, border-color;
+}
+
+.studio-btn span {
+  display: inline-block;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 @media (hover: hover) {
   .studio-btn:hover {
-    transform: scale(1.05);
+    transform: scale(1.05) translateZ(0);
     background: rgba(255, 255, 255, 0.1);
     border-color: rgba(255, 255, 255, 0.3);
     box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1), 0 5px 10px rgba(0, 0, 0, 0.2);
@@ -2613,10 +2766,11 @@ body.scrolled-mode .lightbox-close {
 .studio-btn svg {
   margin-left: 8px;
   transition: transform 0.3s ease;
+  transform: translateZ(0);
 }
 
 .studio-btn:hover svg {
-  transform: translateX(4px);
+  transform: translateX(4px) translateZ(0);
 }
 
 .studio-team-section {
@@ -2740,7 +2894,7 @@ body.scrolled-mode .lightbox-close {
 .studio-team-member:hover .member-more {
   opacity: 1;
   color: var(--white);
-  transform: translateX(4px);
+  transform: translateX(4px) translateZ(0);
 }
 
 .member-more svg {
