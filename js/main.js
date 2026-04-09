@@ -226,7 +226,12 @@ function initProjectModals() {
     currentModal.querySelectorAll('.mobile-swipe-hint').forEach(hint => hint.style.display = 'none');
     nextModal.style.zIndex = '10002';
     nextModal.classList.add('active');
-    gsap.set(nextContent, { xPercent: xPercentOffset, opacity: 0, scale: 1 });
+
+    // Disable backdrop-filter during animation — it kills GPU performance on mobile
+    currentContent.classList.add('is-animating');
+    nextContent.classList.add('is-animating');
+
+    gsap.set(nextContent, { xPercent: xPercentOffset, opacity: 0, scale: 1, force3D: true });
     const tl = gsap.timeline({
       onComplete: () => {
         currentModal.classList.remove('active');
@@ -234,11 +239,14 @@ function initProjectModals() {
         nextModal.style.zIndex = '';
         gsap.set(currentContent, { clearProps: "all" });
         gsap.set(nextContent, { clearProps: "all" });
+        // Restore backdrop-filter after animation
+        currentContent.classList.remove('is-animating');
+        nextContent.classList.remove('is-animating');
         isNavigating = false;
       }
     });
-    tl.to(currentContent, { xPercent: -xPercentOffset, opacity: 0, duration: 0.5, ease: "power2.inOut" }, 0);
-    tl.to(nextContent, { xPercent: 0, opacity: 1, duration: 0.5, ease: "power2.inOut" }, 0);
+    tl.to(currentContent, { xPercent: -xPercentOffset, opacity: 0, duration: 0.35, ease: "power3.out", force3D: true }, 0);
+    tl.to(nextContent, { xPercent: 0, opacity: 1, duration: 0.35, ease: "power3.out", force3D: true }, 0);
     currentModalIndex = newIndex;
   }
 
