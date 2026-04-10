@@ -223,7 +223,6 @@ function initProjectModals() {
     const currentContent = currentModal.querySelector('.project-modal-content');
     const nextContent = nextModal.querySelector('.project-modal-content');
     const xPercentOffset = direction > 0 ? 100 : -100;
-    currentModal.querySelectorAll('.mobile-swipe-hint').forEach(hint => hint.style.display = 'none');
     nextModal.style.zIndex = '10002';
     nextModal.classList.add('active');
 
@@ -235,7 +234,6 @@ function initProjectModals() {
     const tl = gsap.timeline({
       onComplete: () => {
         currentModal.classList.remove('active');
-        currentModal.querySelectorAll('.mobile-swipe-hint').forEach(hint => hint.style.display = '');
         nextModal.style.zIndex = '';
         gsap.set(currentContent, { clearProps: "all" });
         gsap.set(nextContent, { clearProps: "all" });
