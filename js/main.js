@@ -195,7 +195,7 @@ function initProjectModals() {
     setupTechnologies(modal);
     currentModalIndex = modalIds.indexOf(modalId);
     const content = modal.querySelector('.project-modal-content');
-    gsap.fromTo(content, { scale: 0.9, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4, ease: "power2.out" });
+    gsap.fromTo(content, { opacity: 0, y: 0, scale: 1 }, { opacity: 1, y: 0, scale: 1, duration: 0.4, ease: "power2.out" });
   }
 
   function closeModal(modal) {
@@ -230,7 +230,7 @@ function initProjectModals() {
     currentContent.classList.add('is-animating');
     nextContent.classList.add('is-animating');
 
-    gsap.set(nextContent, { xPercent: xPercentOffset, opacity: 0, scale: 1, force3D: true });
+    gsap.set(nextContent, { xPercent: xPercentOffset, opacity: 0, y: 0, scale: 1, force3D: true });
     const tl = gsap.timeline({
       onComplete: () => {
         currentModal.classList.remove('active');
@@ -244,7 +244,7 @@ function initProjectModals() {
       }
     });
     tl.to(currentContent, { xPercent: -xPercentOffset, opacity: 0, duration: 0.35, ease: "power3.out", force3D: true }, 0);
-    tl.to(nextContent, { xPercent: 0, opacity: 1, duration: 0.35, ease: "power3.out", force3D: true }, 0);
+    tl.to(nextContent, { xPercent: 0, opacity: 1, y: 0, scale: 1, duration: 0.35, ease: "power3.out", force3D: true }, 0);
     currentModalIndex = newIndex;
   }
 
@@ -269,6 +269,7 @@ function initProjectModals() {
       touchStartX = e.changedTouches[0].screenX;
     }, { passive: true });
     modal.addEventListener('touchend', (e) => {
+      if (!modal.id.startsWith('project-modal-')) return;
       touchEndX = e.changedTouches[0].screenX;
       const swipeThreshold = 50;
       if (touchEndX < touchStartX - swipeThreshold) {
@@ -287,11 +288,11 @@ function initProjectModals() {
         });
       }
     } else if (e.key === 'ArrowLeft') {
-      const activeModal = document.querySelector('.project-modal-overlay.active');
-      if (activeModal && typeof navigateProject === 'function') navigateProject(-1);
+      const activeProjectModal = document.querySelector('.project-modal-overlay.active[id^="project-modal-"]');
+      if (activeProjectModal && typeof navigateProject === 'function') navigateProject(-1);
     } else if (e.key === 'ArrowRight') {
-      const activeModal = document.querySelector('.project-modal-overlay.active');
-      if (activeModal && typeof navigateProject === 'function') navigateProject(1);
+      const activeProjectModal = document.querySelector('.project-modal-overlay.active[id^="project-modal-"]');
+      if (activeProjectModal && typeof navigateProject === 'function') navigateProject(1);
     }
   });
   window._navigateProject = navigateProject;
@@ -465,7 +466,7 @@ function initLegalModals() {
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
     const content = modal.querySelector('.project-modal-content');
-    gsap.fromTo(content, { scale: 0.9, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "power2.out" });
+    gsap.fromTo(content, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" });
   }
   function closeLegalModal(modal) {
     modal.classList.remove('active');
