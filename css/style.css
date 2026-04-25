@@ -1778,6 +1778,27 @@ body.lightbox-active .project-modal-content {
   }
 }
 
+/* Ряд кнопок в модальном окне (Сайт + GitHub) */
+.project-modal-buttons-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+/* GitHub-кнопка — немного отличается цветом */
+.project-modal-button--github {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+@media (hover: hover) {
+  .project-modal-button--github:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+}
+
 .footer {
   background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.95) 100%);
   backdrop-filter: blur(20px);
