@@ -107,7 +107,6 @@ body::before {
   z-index: -1;
   /* Hardware acceleration for the background layer */
   transform: translateZ(0);
-  will-change: transform;
 }
 
 /* --- General Interactive Element Fixes --- */
@@ -218,8 +217,8 @@ body.loading footer {
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-radius: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 25px 50px rgba(255, 255, 255, 0.05), 0 10px 30px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  border: none;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.15), 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 .preloader-logo {
@@ -510,7 +509,7 @@ body.loading footer {
     -webkit-backdrop-filter: blur(20px);
     border-radius: 20px;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
     padding: 16px;
     opacity: 0;
     visibility: hidden;
@@ -683,7 +682,7 @@ body.loading footer {
     -webkit-backdrop-filter: blur(20px);
     border-radius: 20px;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
     padding: 16px;
     opacity: 0;
     visibility: hidden;
@@ -983,9 +982,6 @@ body.loading footer {
 .studio-section-large,
 .spotify-section-large {
   position: relative;
-  /* Add perspective to the entire section to stabilize 3D transforms within */
-  perspective: 1200px;
-  -webkit-perspective: 1200px;
 }
 
 .skills-title {
@@ -1014,9 +1010,9 @@ body.loading footer {
   border-radius: 24px;
   padding: 0;
   margin: 0;
-  box-shadow: 0 25px 50px rgba(255, 255, 255, 0.05), 0 10px 30px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.15), 0 10px 30px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease, background-color 0.3s ease;
+  border: none;
   overflow: hidden;
   position: relative;
   backface-visibility: hidden;
@@ -1046,9 +1042,8 @@ body.loading footer {
 @media (hover: hover) {
   .skill-category:hover {
     transform: scale(1.02) translateZ(0) !important;
-    border-color: rgba(255, 255, 255, 0.2);
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(0, 0, 0, 0.5) 100%);
-    box-shadow: 0 35px 70px rgba(255, 255, 255, 0.08), 0 15px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25), 0 15px 40px rgba(0, 0, 0, 0.4);
   }
 }
 
@@ -1096,7 +1091,8 @@ body.loading footer {
   border-radius: 20px;
   padding: 30px;
   text-align: center;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: none;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.15), 0 10px 30px rgba(0, 0, 0, 0.3);
   transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
   position: relative;
   overflow: hidden;
@@ -1126,9 +1122,8 @@ body.loading footer {
 @media (hover: hover) {
   .stat-item:hover {
     transform: scale(1.02) translateZ(0) !important;
-    border-color: rgba(255, 255, 255, 0.2);
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(0, 0, 0, 0.5) 100%);
-    box-shadow: 0 20px 40px rgba(255, 255, 255, 0.08), 0 10px 30px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25), 0 10px 30px rgba(0, 0, 0, 0.4);
   }
 }
 
@@ -1186,9 +1181,9 @@ body.loading footer {
   border-radius: 24px;
   padding: 24px;
   margin: 0;
-  box-shadow: 0 25px 50px rgba(255, 255, 255, 0.05), 0 10px 30px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease, border-color 0.3s ease, background 0.3s ease;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.15), 0 10px 30px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease, background 0.3s ease;
+  border: none;
   overflow: hidden;
   position: relative;
   z-index: 1;
@@ -1227,9 +1222,8 @@ body.loading footer {
   .project-card:hover {
     transform: scale(1.02) translateZ(0) !important;
     z-index: 2;
-    border-color: rgba(255, 255, 255, 0.2);
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(0, 0, 0, 0.5) 100%);
-    box-shadow: 0 35px 70px rgba(255, 255, 255, 0.08), 0 15px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25), 0 15px 40px rgba(0, 0, 0, 0.4);
   }
 }
 
@@ -1240,9 +1234,9 @@ body.loading footer {
   position: relative;
   overflow: hidden;
   border-radius: 24px;
-  border: 2px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+  border: none;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.18), 0 10px 30px rgba(0, 0, 0, 0.3);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
 .project-card-image {
@@ -1258,8 +1252,7 @@ body.loading footer {
 /* При наведении на карточку увеличивается рамка */
 .project-card:hover .project-card-image-wrapper {
   transform: scale(1.08);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 10px 30px rgba(255, 255, 255, 0.2);
-  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.35), 0 20px 50px rgba(0, 0, 0, 0.8);
 }
 
 .project-card-content {
@@ -1935,9 +1928,9 @@ body.lightbox-active .project-modal-content {
   -webkit-backdrop-filter: blur(20px);
   padding: 40px;
   border-radius: 28px;
-  box-shadow: 0 25px 50px rgba(255, 255, 255, 0.05), 0 10px 30px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.15), 0 10px 30px rgba(0, 0, 0, 0.3);
   margin: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: none;
   color: var(--white);
   position: relative;
   overflow: hidden;
@@ -1954,9 +1947,8 @@ body.lightbox-active .project-modal-content {
 @media (hover: hover) {
   .spotify-player:hover {
     transform: scale(1.02) translateZ(0) !important;
-    border-color: rgba(255, 255, 255, 0.2);
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(0, 0, 0, 0.5) 100%);
-    box-shadow: 0 35px 70px rgba(255, 255, 255, 0.08), 0 15px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25), 0 15px 40px rgba(0, 0, 0, 0.4);
   }
 }
 
@@ -2633,9 +2625,9 @@ body.scrolled-mode .lightbox-close {
   border-radius: 24px;
   padding: 40px;
   margin: 0;
-  box-shadow: 0 25px 50px rgba(255, 255, 255, 0.05), 0 10px 30px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease, border-color 0.3s ease, background 0.3s ease;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.15), 0 10px 30px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease, background 0.3s ease;
+  border: none;
   overflow: hidden;
   position: relative;
   z-index: 1;
@@ -2678,9 +2670,8 @@ body.scrolled-mode .lightbox-close {
 @media (hover: hover) {
   .studio-card:hover {
     transform: scale(1.02) translateZ(0) !important;
-    border-color: rgba(255, 255, 255, 0.2);
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(0, 0, 0, 0.5) 100%);
-    box-shadow: 0 35px 70px rgba(255, 255, 255, 0.08), 0 15px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25), 0 15px 40px rgba(0, 0, 0, 0.4);
   }
 }
 
