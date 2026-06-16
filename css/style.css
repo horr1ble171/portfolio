@@ -2632,6 +2632,16 @@ body.scrolled-mode .lightbox-close {
   .project-nav-arrow.btn-press:active {
     transform: translateY(-50%) scale(0.95);
   }
+
+  .contact-card.btn-press:active {
+    transform: translate3d(0, 0, 0) scale(0.95) !important;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.15), 0 2px 5px rgba(0, 0, 0, 0.2) !important;
+  }
+
+  .studio-btn.btn-press:active {
+    transform: translateZ(0) scale(0.95);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.15), 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
 }
 
 .mobile-swipe-hint {
