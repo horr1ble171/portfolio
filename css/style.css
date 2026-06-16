@@ -115,6 +115,7 @@ body::before {
 .nav-link,
 .info-box,
 .tech-item,
+.contact-card,
 .project-modal-button,
 .spotify-link-btn,
 .spotify-control-btn,
@@ -156,6 +157,9 @@ body::before {
 .tech-item,
 .skill-tag,
 .studio-tag,
+.contact-card,
+.contact-platform,
+.contact-handle,
 .project-modal-technologies h4 {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -2262,6 +2266,117 @@ body.lightbox-active .project-modal-content {
   }
 }
 
+.contacts-subtitle {
+  text-align: center;
+  color: var(--gray-400);
+  font-size: 1rem;
+  margin-top: -24px;
+  margin-bottom: 40px;
+  line-height: 1.5;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.4);
+}
+
+.contacts-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.contact-card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 28px 32px;
+  border-radius: 24px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(0, 0, 0, 0.8) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.15), 0 10px 30px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease, background-color 0.3s ease;
+  border: none;
+  overflow: hidden;
+  position: relative;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  text-decoration: none;
+  color: var(--white);
+}
+
+.contact-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, transparent 100%);
+  z-index: 1;
+}
+
+.contact-card>* {
+  position: relative;
+  z-index: 2;
+}
+
+@media (hover: hover) {
+  .contact-card:hover {
+    transform: scale(1.02) translateZ(0) !important;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(0, 0, 0, 0.5) 100%);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25), 0 15px 40px rgba(0, 0, 0, 0.4);
+  }
+}
+
+.contact-card-icon {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--gray-300);
+  transition: color 0.3s ease, background 0.3s ease;
+  flex-shrink: 0;
+}
+
+@media (hover: hover) {
+  .contact-card:hover .contact-card-icon {
+    color: var(--white);
+    background: rgba(255, 255, 255, 0.12);
+  }
+}
+
+.contact-card-icon svg {
+  width: 26px;
+  height: 26px;
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.contact-platform {
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--white);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+.contact-handle {
+  font-size: 0.9rem;
+  color: var(--gray-400);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
 .lightbox-modal {
   position: fixed;
   top: 0;
@@ -2269,7 +2384,6 @@ body.lightbox-active .project-modal-content {
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.9);
-  /* Сделал чуть темнее для акцента */
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   z-index: 12000;
@@ -2383,6 +2497,7 @@ body.scrolled-mode .lightbox-close {
   .project-item,
   .skill-category,
   .spotify-player,
+  .contact-card,
   .footer {
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);

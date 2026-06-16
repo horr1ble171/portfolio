@@ -98,7 +98,7 @@ function initAnimations() {
       });
     });
 
-    const cardsSelector = '.skill-category, .project-card, .studio-card, .studio-team-member, .spotify-player';
+    const cardsSelector = '.skill-category, .project-card, .studio-card, .studio-team-member, .contact-card';
     gsap.utils.toArray(cardsSelector).forEach((it, i) => {
       gsap.fromTo(it, { autoAlpha: 0, y: 30, scale: 0.95 }, {
         duration: 0.8,
@@ -130,7 +130,7 @@ function initAnimations() {
       });
     });
   } else {
-    const mobileElements = '.skills-section-large, .projects-section-large, .studio-section-large, .spotify-section-large, .skill-category, .project-card, .studio-card, .studio-team-member, .stat-item, .spotify-player';
+    const mobileElements = '.skills-section-large, .projects-section-large, .studio-section-large, .spotify-section-large, .skill-category, .project-card, .studio-card, .studio-team-member, .stat-item, .contact-card';
     gsap.utils.toArray(mobileElements).forEach(el => {
       gsap.fromTo(el, { autoAlpha: 0, y: 20 }, {
         duration: 0.6,
@@ -308,15 +308,6 @@ function animateClick(element, scaleTo) {
     overwrite: true,
     onComplete: () => { gsap.set(element, { clearProps: "all" }); }
   });
-}
-
-function initSpotifyPlayer() {
-  const playBtn = document.querySelector('.spotify-play-btn');
-  const prevBtn = document.querySelector('.prev-btn');
-  const nextBtn = document.querySelector('.next-btn');
-  if (playBtn) playBtn.addEventListener('click', function () { animateClick(this, 0.9); });
-  if (prevBtn) prevBtn.addEventListener('click', function () { animateClick(this, 0.85); });
-  if (nextBtn) nextBtn.addEventListener('click', function () { animateClick(this, 0.85); });
 }
 
 function initNavigation() {
@@ -526,7 +517,7 @@ const translations = {
     nav_skills: "Навыки",
     nav_projects: "Проекты",
     nav_studio: "Веб-студия",
-    nav_spotify: "Spotify",
+    nav_contacts: "Контакты",
     hero_subtitle: "разработчик telegram ботов<br> и сайтов",
     skills_title: "Мои навыки",
     skill_fullstack: "Full-Stack разработка",
@@ -609,12 +600,12 @@ const translations = {
     studio_tag_websites: "Веб-сайты",
     studio_tag_bots: "Telegram боты",
     member_role: "Full-stack Developer",
-    spotify_title: "Мой любимый альбом на Spotify",
+    contacts_title: "Контакты",
+    contacts_subtitle: "Пишите для заказа — открыт к предложениям",
     footer_subtitle: "Разработчик Telegram ботов и создатель продуктов",
     footer_studio: "Студия",
     footer_contacts: "Контакты",
     footer_rights: "© 2025 - 2026 horr1ble.space Все права защищены.",
-    spotify_open: "Открыть в Spotify",
     footer_privacy: "Политика конфиденциальности",
     footer_terms: "Условия использования",
     modal_start_date: "Дата начала",
@@ -629,7 +620,6 @@ const translations = {
     modal_try_site: "Перейти на сайт",
     modal_view_code: "Посмотреть код",
     swipe_hint: "свайпните для навигации",
-    spotify_playing: "<span class=\"playing-dot\">●</span> Сейчас играет",
     privacy_intro: "Ваша конфиденциальность очень важна для меня. На этом сайте данные не собираются автоматически, за исключением стандартных логов сервера.",
     privacy_q1_title: "<b>Какие данные я собираю?</b>",
     privacy_q1_text: "Я не собираю личную информацию о посетителях сайта. Если вы связываетесь со мной через сторонние платформы (Telegram, Discord), ваши данные обрабатываются в соответствии с их политикой конфиденциальности.",
@@ -652,7 +642,7 @@ const translations = {
     nav_skills: "Skills",
     nav_projects: "Projects",
     nav_studio: "Web Studio",
-    nav_spotify: "Spotify",
+    nav_contacts: "Contacts",
     hero_subtitle: "telegram bots and<br> websites developer",
     skills_title: "My Skills",
     skill_fullstack: "Full-Stack Development",
@@ -735,12 +725,12 @@ const translations = {
     studio_tag_websites: "Websites",
     studio_tag_bots: "Telegram Bots",
     member_role: "Full-stack Developer",
-    spotify_title: "My favorite album on Spotify",
+    contacts_title: "Contacts",
+    contacts_subtitle: "Write me for orders — open to suggestions",
     footer_subtitle: "Telegram bot developer and product creator",
     footer_studio: "Studio",
     footer_contacts: "Contacts",
     footer_rights: "© 2025 - 2026 horr1ble.space All rights reserved.",
-    spotify_open: "Open in Spotify",
     footer_privacy: "Privacy Policy",
     footer_terms: "Terms of Use",
     modal_start_date: "Start date",
@@ -755,7 +745,6 @@ const translations = {
     modal_try_site: "Go to website",
     modal_view_code: "View code",
     swipe_hint: "swipe for navigation",
-    spotify_playing: "<span class=\"playing-dot\">●</span> Now playing",
     privacy_intro: "Your privacy is very important to me. On this site, data is not collected automatically, except for standard server logs.",
     privacy_q1_title: "<b>What data do I collect?</b>",
     privacy_q1_text: "I do not collect personal information about site visitors. If you contact me through third-party platforms (Telegram, Discord), your data is processed in accordance with their privacy policy.",
@@ -822,7 +811,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initPreloader();
   initProjectModals();
   initLegalModals();
-  initSpotifyPlayer();
   initNavigation();
   initLightbox();
   animateStatNumbers();
