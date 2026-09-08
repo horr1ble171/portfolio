@@ -730,6 +730,20 @@
             </div>
           </div>
 
+          <div class="project-card" data-project-id="animeplayer">
+            <div class="project-card-image-wrapper">
+              <img src="images/project-13.jpg" alt="Обложка проекта AnimePlayer" class="project-card-image" loading="lazy" />
+            </div>
+            <div class="project-card-content">
+              <h3 class="project-card-title">
+                <span data-i18n="project_animeplayer_title">AnimePlayer</span>
+              </h3>
+              <button type="button" class="project-card-button btn-press" data-project-id="animeplayer">
+                <span data-i18n="more">Подробнее</span>
+              </button>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
@@ -2067,6 +2081,73 @@
             <span data-i18n="modal_view_code">Посмотреть код</span>
           </a>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="project-modal-overlay" id="project-modal-animeplayer">
+    <div class="project-modal-content">
+      <button type="button" class="project-modal-close btn-press" aria-label="Закрыть">
+        <svg viewBox="0 0 24 24">
+          <path
+            d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+        </svg>
+      </button>
+      <div class="project-modal-header">
+        <div class="project-modal-image-wrapper">
+          <img src="images/project-13.jpg" alt="Обложка проекта AnimePlayer" class="project-modal-image" loading="lazy" />
+        </div>
+        <div class="project-header-text">
+          <h3 class="project-modal-title" data-i18n="project_animeplayer_title">AnimePlayer</h3>
+          <div class="project-modal-info-grid">
+            <div class="info-box">
+              <span class="info-label" data-i18n="modal_start_date">Дата начала</span>
+              <span class="info-value">24.08.2026</span>
+            </div>
+            <div class="info-box">
+              <span class="info-label" data-i18n="modal_status">Статус</span>
+              <span class="info-value" data-i18n="modal_in_dev">В разработке</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="project-modal-body">
+        <p class="project-modal-description" data-i18n="project_animeplayer_desc">Сайт для просмотра аниме онлайн,
+          использующий API Anilibria.TV. Каталог с поиском и фильтрами, плеер с выбором серии и качества,
+          карточки тайтлов с описанием и постерами. Интерфейс адаптирован под любые устройства.</p>
+        <div class="project-modal-technologies">
+          <h4 data-i18n="modal_tech_title">Технологии:</h4>
+          <div class="tech-icons">
+            <div class="tech-item">
+              <svg class="w-6 h-6 text-white flex-shrink-0" viewBox="-11.5 -10.23174 23 20.46348" fill="none"
+                stroke="currentColor" stroke-width="1.5">
+                <circle r="2" fill="currentColor" />
+                <ellipse rx="11" ry="4.2" />
+                <ellipse rx="11" ry="4.2" transform="rotate(60)" />
+                <ellipse rx="11" ry="4.2" transform="rotate(120)" />
+              </svg>
+              <span>React 18+</span>
+            </div>
+            <div class="tech-item">
+              <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M0 12v12h24V0H0zm19.341-.956c.61.152 1.074.423 1.501.865.221.236.549.666.575.77.008.03-1.036.73-1.668 1.123-.023.015-.115-.084-.217-.236-.31-.45-.633-.644-1.128-.678-.728-.05-1.196.331-1.192.967a.88.88 0 0 0 .102.45c.16.331.458.53 1.39.933 1.719.74 2.454 1.227 2.911 1.92.51.773.625 2.008.278 2.926-.38.998-1.325 1.676-2.655 1.9-.411.073-1.386.062-1.828-.018-.964-.172-1.878-.648-2.442-1.273-.221-.243-.652-.88-.625-.925.011-.016.11-.077.22-.141.108-.061.511-.294.892-.515l.69-.4.145.214c.202.308.643.731.91.872.766.404 1.817.347 2.335-.118a.883.883 0 0 0 .313-.72c0-.278-.035-.4-.18-.61-.186-.266-.567-.49-1.649-.96-1.238-.533-1.771-.864-2.259-1.39a3.165 3.165 0 0 1-.659-1.2c-.091-.339-.114-1.189-.042-1.531.255-1.197 1.158-2.03 2.461-2.278.423-.08 1.406-.05 1.821.053zm-5.634 1.002l.008.983H10.59v8.876H8.38v-8.876H5.258v-.964c0-.534.011-.98.026-.99.012-.016 1.913-.024 4.217-.02l4.195.012z" />
+              </svg>
+              <span data-i18n="skill_tag_typescript">TypeScript</span>
+            </div>
+            <div class="tech-item">
+              <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M12.001,4.8c-3.2,0-5.2,1.6-6,4.8c1.2-1.6,2.6-2.2,4.2-1.8c0.913,0.228,1.565,0.89,2.288,1.624 C13.666,10.618,15.027,12,18.001,12c3.2,0,5.2-1.6,6-4.8c-1.2,1.6-2.6,2.2-4.2,1.8c-0.913-0.228-1.565-0.89-2.288-1.624 C16.337,6.182,14.976,4.8,12.001,4.8z M6.001,12c-3.2,0-5.2,1.6-6,4.8c1.2-1.6,2.6-2.2,4.2-1.8c0.913,0.228,1.565,0.89,2.288,1.624 c1.177,1.194,2.538,2.576,5.512,2.576c3.2,0,5.2-1.6,6-4.8c-1.2,1.6-2.6,2.2-4.2,1.8c-0.913-0.228-1.565-0.89-2.288-1.624 C10.337,13.382,8.976,12,6.001,12z" />
+              </svg>
+              <span data-i18n="skill_tag_tailwind">TailwindCSS</span>
+            </div>
+          </div>
+        </div>
+        <a class="project-modal-button btn-press" href="https://animeplayer-phi.vercel.app/" target="_blank"
+          rel="noopener noreferrer">
+          <span data-i18n="modal_try_site">Перейти на сайт</span>
+        </a>
       </div>
     </div>
   </div>
