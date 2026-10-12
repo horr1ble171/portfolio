@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.horr1ble.space/sitemap.xml
+Sitemap: https://horr1ble.space/sitemap.xml
