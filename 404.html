@@ -38,6 +38,10 @@
     .error-card {
       width: 100%;
       max-width: 640px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       text-align: center;
       padding: 56px 40px;
       background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(0, 0, 0, 0.6) 100%);
@@ -65,22 +69,17 @@
       font-weight: 900;
       letter-spacing: -0.04em;
       line-height: 1;
-      margin-bottom: 32px;
+      margin-bottom: 16px;
+    }
+    .error-title {
+      font-size: clamp(1.2rem, 3.5vw, 1.6rem);
+      font-weight: 700;
+      color: #fff;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+      margin: 0 0 28px;
     }
     .error-card .project-modal-button {
       text-decoration: none;
-    }
-    .error-card .project-modal-button--primary {
-      background: #fff;
-      color: #000;
-      border-color: #fff;
-      text-shadow: none;
-    }
-    @media (hover: hover) {
-      .error-card .project-modal-button--primary:hover {
-        background: rgba(255, 255, 255, 0.85);
-        border-color: #fff;
-      }
     }
     @media (max-width: 480px) {
       .error-card { padding: 40px 22px; }
@@ -94,7 +93,8 @@
   <main class="error-wrap">
     <div class="error-card">
       <div class="error-code shiny-text">404</div>
-      <a href="/" class="project-modal-button project-modal-button--primary btn-press">
+      <h1 class="error-title">Страница не найдена</h1>
+      <a href="/" class="project-modal-button btn-press">
         <span>На главную</span>
       </a>
     </div>
