@@ -1,11 +1,4 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "redirects": [
-    {
-      "source": "/:path*",
-      "has": [{ "type": "host", "value": "www.horr1ble.space" }],
-      "destination": "https://horr1ble.space/:path*",
-      "permanent": true
-    }
-  ]
+  "cleanUrls": true
 }
