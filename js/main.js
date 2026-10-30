@@ -149,7 +149,9 @@ function initAnimations() {
 }
 
 function initProjectModals() {
-  const openButtons = document.querySelectorAll('.project-card-button');
+  // Кнопка «Открыть все проекты» тоже имеет класс project-card-button,
+  // но у неё нет data-project-id — берём только кнопки проектов
+  const openButtons = document.querySelectorAll('.project-card-button[data-project-id]');
   const modals = document.querySelectorAll('.project-modal-overlay');
   let currentModalIndex = -1;
   const modalIds = [...new Set(Array.from(openButtons).map(btn => `project-modal-${btn.dataset.projectId}`))];
@@ -296,6 +298,131 @@ function initProjectModals() {
     }
   });
   window._navigateProject = navigateProject;
+}
+
+function refreshProjectsScrollTriggers() {
+  if (typeof ScrollTrigger === 'undefined') return;
+  requestAnimationFrame(() => ScrollTrigger.refresh());
+}
+
+function initProjectsToggle() {
+  const moreBtn = document.getElementById('projects-more-btn');
+  const moreList = document.getElementById('more-projects-list');
+  if (!moreBtn || !moreList) return;
+
+  const moreLabel = moreBtn.querySelector('span') || moreBtn;
+  const HEADER_OFFSET = 96;
+  let isOpen = false;
+  let isToggling = false;
+
+  const maxScroll = () => Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+  const clampScroll = (y) => Math.min(Math.max(0, y), maxScroll());
+
+  // Мгновенный перенос скролла (в CSS у html включён scroll-behavior: smooth)
+  const jumpTo = (y) => {
+    const root = document.documentElement;
+    const prev = root.style.scrollBehavior;
+    root.style.scrollBehavior = 'auto';
+    window.scrollTo(0, clampScroll(y));
+    root.style.scrollBehavior = prev;
+  };
+
+  // Текст кнопки меняется вместе с состоянием и корректно переводится через data-i18n
+  const setButtonState = (open) => {
+    const key = open ? 'close_all_projects' : 'open_all_projects';
+    const lang = document.documentElement.lang === 'en' ? 'en' : 'ru';
+    moreLabel.setAttribute('data-i18n', key);
+    if (translations[lang] && translations[lang][key]) moreLabel.textContent = translations[lang][key];
+    moreBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  };
+
+  setButtonState(false);
+
+  moreBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (isToggling) return;
+
+    animateClick(moreBtn, 0.95);
+    isToggling = true;
+
+    if (!isOpen) {
+      const scrollBefore = window.scrollY;
+      moreList.classList.remove('hidden');
+      moreList.classList.add('visible');
+      isOpen = true;
+      setButtonState(true);
+
+      // Принудительный reflow: браузер успевает применить свою коррекцию скролла
+      // (scroll anchoring), и мы сразу возвращаем точную позицию. Всё это —
+      // синхронно, в одном кадре, поэтому со скроллом пользователя не конфликтует.
+      // Список всегда раскрывается вниз, начиная с того места экрана, где была кнопка.
+      void moreList.offsetHeight;
+      jumpTo(scrollBefore);
+
+      gsap.set(moreList, { opacity: 0, y: 20 });
+      gsap.to(moreList, {
+        opacity: 1, y: 0, duration: 0.5, ease: 'power2.out',
+        onComplete: () => {
+          gsap.set(moreList, { clearProps: 'all' });
+          refreshProjectsScrollTriggers();
+
+          // Если начало списка спряталось под шапку — мягко подводим его.
+          // Запускаем строго ПОСЛЕ завершения ScrollTrigger.refresh(): он
+          // сохраняет и восстанавливает позицию скролла и иначе откатит анимацию.
+          // Подвод — короткий твин вместо нативного smooth scroll, и любое
+          // движение пользователя (колесо/тач) мгновенно его отменяет,
+          // чтобы скролл никогда не «дёргался» и не глох под анимацией.
+          requestAnimationFrame(() => requestAnimationFrame(() => {
+            const yNow = window.scrollY;
+            if (Math.abs(yNow - scrollBefore) > 2) return; // пользователь уже скроллит — не мешаем
+            const listTop = moreList.getBoundingClientRect().top;
+            if (listTop >= HEADER_OFFSET) return;
+            const align = { y: yNow };
+            let alignTween = null;
+            const removeAlignListeners = () => {
+              window.removeEventListener('wheel', stopAlign);
+              window.removeEventListener('touchstart', stopAlign);
+            };
+            const stopAlign = () => {
+              if (alignTween) alignTween.kill();
+              removeAlignListeners();
+            };
+            alignTween = gsap.to(align, {
+              y: clampScroll(yNow + listTop - HEADER_OFFSET),
+              duration: 0.25, ease: 'power2.out',
+              onUpdate: () => jumpTo(align.y),
+              onComplete: removeAlignListeners
+            });
+            window.addEventListener('wheel', stopAlign, { passive: true });
+            window.addEventListener('touchstart', stopAlign, { passive: true });
+          }));
+
+          isToggling = false;
+        }
+      });
+    } else {
+      // Закрытие — короткое затухание и мгновенная сборка секции
+      const btnViewportBefore = Math.max(HEADER_OFFSET, moreBtn.getBoundingClientRect().top);
+      gsap.to(moreList, {
+        opacity: 0, duration: 0.12, ease: 'power1.in',
+        onComplete: () => {
+          moreList.classList.remove('visible');
+          moreList.classList.add('hidden');
+          gsap.set(moreList, { clearProps: 'all' });
+          isOpen = false;
+          setButtonState(false);
+
+          // Кнопка остаётся ровно там, где была в момент клика, —
+          // без произвольных прыжков страницы
+          const drift = moreBtn.getBoundingClientRect().top - btnViewportBefore;
+          if (Math.abs(drift) > 0.5) jumpTo(window.scrollY + drift);
+
+          isToggling = false;
+          refreshProjectsScrollTriggers();
+        }
+      });
+    }
+  });
 }
 
 function animateClick(element, scaleTo) {
@@ -603,6 +730,9 @@ const translations = {
     project_job_task_title: "job task",
     project_job_task_desc: "Бот для управления вакансиями и приёма результатов работы. Администратор может публиковать текущее задание (например, раз в месяц менять вакансию), а работники отправляют выполненные результаты прямо в бота. Также через бота реализована обратная связь: администратор может общаться с пользователями. Бот ведёт статистику: показывает общее число пользователей и количество тех, кто успешно выполнил задание. (Бот находится во владении другого человека)",
     more: "Подробнее",
+    more_projects: "Больше проектов",
+    open_all_projects: "Открыть все проекты",
+    close_all_projects: "Закрыть все проекты",
     studio_title: "Веб-студия",
     studio_subtitle: "Создаем цифровые продукты от идеи до реализации.<br>Веб-сайты, Telegram и Discord боты, полный цикл разработки.",
     tag_discord_bots: "Discord боты",
@@ -739,6 +869,9 @@ const translations = {
     project_job_task_title: "job task",
     project_job_task_desc: "A bot for vacancy management and collecting completed work. The administrator can publish the current task (for example, update the vacancy once a month), and workers submit completed results directly to the bot. The bot also provides feedback chat between the administrator and users, and tracks statistics: total users and how many users successfully completed the task. (Bot is owned by another person)",
     more: "Details",
+    more_projects: "More projects",
+    open_all_projects: "Open all projects",
+    close_all_projects: "Close all projects",
     studio_title: "Web Studio",
     studio_subtitle: "We create digital products from idea to implementation.<br>Websites, Telegram and Discord bots, full development cycle.",
     tag_discord_bots: "Discord Bots",
@@ -837,6 +970,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initLightbox();
   animateStatNumbers();
   initScrollSpy();
+  initProjectsToggle();
 });
 
 function setupDescription(modal) {

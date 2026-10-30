@@ -651,7 +651,24 @@
         <h2 class="projects-title" data-i18n="projects_title">Мои проекты</h2>
 
         <div class="projects-grid">
-          <div class="project-card" data-project-id="music-bot">
+          <!-- Vectra Spatial — первый проект, занимает всю ширину строки -->
+          <div class="project-card project-card--full" data-project-id="vectra-spatial">
+            <div class="project-card-image-wrapper">
+              <img src="images/project-16.jpg" alt="Обложка проекта Vectra Spatial" class="project-card-image"
+                loading="lazy" />
+            </div>
+            <div class="project-card-content">
+              <h3 class="project-card-title">
+                <span data-i18n="project_vectra_title">Vectra Spatial</span>
+              </h3>
+              <button type="button" class="project-card-button btn-press" data-project-id="vectra-spatial">
+                <span data-i18n="more">Подробнее</span>
+              </button>
+            </div>
+          </div>
+
+          <div id="more-projects-list" class="more-projects-list hidden">
+            <div class="project-card" data-project-id="music-bot">
             <div class="project-card-image-wrapper">
               <img src="images/project-1.jpg" alt="Обложка проекта Music Bot" class="project-card-image"
                 loading="lazy" />
@@ -871,19 +888,13 @@
             </div>
           </div>
 
-          <div class="project-card" data-project-id="vectra-spatial">
-            <div class="project-card-image-wrapper">
-              <img src="images/project-16.jpg" alt="Обложка проекта Vectra Spatial" class="project-card-image"
-                loading="lazy" />
-            </div>
-            <div class="project-card-content">
-              <h3 class="project-card-title">
-                <span data-i18n="project_vectra_title">Vectra Spatial</span>
-              </h3>
-              <button type="button" class="project-card-button btn-press" data-project-id="vectra-spatial">
-                <span data-i18n="more">Подробнее</span>
-              </button>
-            </div>
+          </div>   <!-- close #more-projects-list -->
+
+          <div class="projects-more-wrapper">
+            <button type="button" class="project-card-button btn-press" id="projects-more-btn" aria-expanded="false"
+              aria-controls="more-projects-list">
+              <span data-i18n="open_all_projects">Открыть все проекты</span>
+            </button>
           </div>
 
         </div>

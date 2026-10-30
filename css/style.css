@@ -1176,6 +1176,60 @@ body.loading footer {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 32px;
+  /* браузер не должен сам «подтягивать» скролл при раскрытии списка проектов */
+  overflow-anchor: none;
+}
+
+/* Vectra Spatial — главный проект: своя строка, но уже полной ширины
+   (~1.5 ширины обычной карточки), по центру; на мобильных — вся ширина */
+.project-card--full {
+  grid-column: 1 / -1;
+  width: min(100%, 880px);
+  justify-self: center;
+}
+
+/* Кнопка "Открыть / Закрыть все проекты" — по центру, на всю ширину строки */
+.projects-more-wrapper {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: center;
+  margin: 48px 0 0 0;
+}
+
+/* Кнопка как у проектов ("Подробнее"), но с блюром, темнее и не прозрачная */
+.projects-more-wrapper .project-card-button {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+@media (hover: hover) {
+  .projects-more-wrapper .project-card-button:hover {
+    transform: scale(1.08) translateZ(0);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1), 0 5px 10px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.projects-more-wrapper .project-card-button:active {
+  transform: scale(0.95) translateZ(0);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Список скрытых проектов — тот же grid 2 в ряд, что и основной, на всю ширину */
+#more-projects-list {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+}
+#more-projects-list.hidden {
+  display: none;
+}
+#more-projects-list.visible {
+  display: grid;
+  opacity: 1;
 }
 
 .project-card {
@@ -2504,6 +2558,11 @@ body.scrolled-mode .lightbox-close {
   }
 
   .projects-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Скрытый список проектов тоже в одну колонку на мобильных */
+  #more-projects-list {
     grid-template-columns: 1fr;
   }
 
